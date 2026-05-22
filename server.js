@@ -13,34 +13,48 @@ app.get('/', (req, res) => {
 
 app.post('/api/ask', async (req, res) => {
   const { messages, system } = req.body;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
-  console.log('API 요청 받음:', JSON.stringify({ system: system?.slice(0,50), messages }));
+  console.log('API 요청 받음');
 
   if (!apiKey) {
     console.error('API 키 없음!');
-    return res.status(500).json({ error: 'ANTHROPIC_API_KEY 없음' });
+    return res.status(500).json({ error: 'GEMINI_API_KEY 없음' });
   }
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1200,
-        system,
-        messages
-      })
-    });
+    const contents = messages.map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }]
+    }));
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents,
+          generationConfig: { maxOutputTokens: 1200 }
+        })
+      }
+    );
 
     const data = await response.json();
-    console.log('Anthropic 응답 상태:', response.status, JSON.stringify(data).slice(0, 200));
-    res.json(data);
+    console.log('Gemini 응답 상태:', response.status);
+
+    if (!response.ok) {
+      return res.status(500).json({ error: data.error?.message || 'Gemini API 오류' });
+    }
+
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '답변 없음';
+
+    // Anthropic 형식으로 변환해서 반환 (프론트엔드 코드 변경 불필요)
+    res.json({
+      content: [{ type: 'text', text }]
+    });
+
   } catch (err) {
     console.error('에러:', err.message);
     res.status(500).json({ error: err.message });
