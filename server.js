@@ -17,7 +17,6 @@ app.post('/api/ask', async (req, res) => {
 
   if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY 없음' });
 
-  // 이미지가 있으면 vision 모드
   let parts = [];
   if (image) {
     parts.push({ inline_data: { mime_type: image.mimeType, data: image.base64 } });
@@ -27,58 +26,46 @@ app.post('/api/ask', async (req, res) => {
   const contents = [{ role: 'user', parts }];
 
   try {
-    // 사용 가능한 모델 자동 탐색
     const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
     const listData = await listRes.json();
-
     const models = listData?.models || [];
-    console.log('전체 모델 수:', models.length);
 
-    // 이미지가 있으면 vision 지원 모델, 없으면 일반 모델
-    let model;
-    if (image) {
-      model = models.find(m =>
-        m.supportedGenerationMethods?.includes('generateContent') &&
-        m.name.includes('gemini') &&
-        !m.name.includes('embedding') &&
-        (m.name.includes('flash') || m.name.includes('pro'))
-      );
-    } else {
-      model = models.find(m =>
-        m.supportedGenerationMethods?.includes('generateContent') &&
-        m.name.includes('gemini') &&
-        !m.name.includes('embedding')
-      );
-    }
+    // vision 지원 + generateContent 가능한 모델 선택
+    const model = models.find(m =>
+      m.supportedGenerationMethods?.includes('generateContent') &&
+      m.name.includes('gemini') &&
+      !m.name.includes('embedding') &&
+      !m.name.includes('aqa')
+    );
 
     if (!model) {
-      console.log('모델 없음, 전체:', JSON.stringify(models.map(m => m.name)));
-      return res.status(500).json({ error: '사용 가능한 Gemini 모델 없음' });
+      console.log('모델 목록:', JSON.stringify(models.map(m => m.name)));
+      return res.status(500).json({ error: '사용 가능한 모델 없음' });
     }
 
     const modelName = model.name.replace('models/', '');
-    console.log('사용 모델:', modelName, '이미지:', !!image);
+    console.log('사용 모델:', modelName, '/ 이미지:', !!image);
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
     const r = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents,
-        generationConfig: { maxOutputTokens: 1500 }
-      })
+      body: JSON.stringify({ contents, generationConfig: { maxOutputTokens: 1500 } })
     });
 
     const data = await r.json();
-    console.log('응답 status:', r.status, JSON.stringify(data).slice(0, 200));
+    console.log('응답 status:', r.status);
 
     if (!r.ok) return res.status(500).json({ error: data.error?.message || 'API 오류' });
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '답변 없음';
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '답변을 생성하지 못했습니다.';
+    console.log('응답 텍스트 길이:', text.length);
+
+    // 프론트엔드 호환 형식으로 반환
     res.json({ content: [{ type: 'text', text }] });
 
   } catch (err) {
-    console.error(err.message);
+    console.error('서버 오류:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
