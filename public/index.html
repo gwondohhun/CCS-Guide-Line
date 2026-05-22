@@ -559,6 +559,18 @@ function fill(t) {
   ta.focus();
 }
 
+let selectedImg = null;
+
+function clearImg() {
+  selectedImg = null;
+  const wrap = document.getElementById('img-preview-wrap');
+  if (wrap) { wrap.style.display = 'none'; wrap.innerHTML = ''; }
+  const inp = document.getElementById('img-input');
+  if (inp) inp.value = '';
+}
+
+
+
 async function ask() {
   const ta = document.getElementById('qi');
   const q = ta.value.trim();
@@ -637,6 +649,20 @@ async function ask() {
   ch.scrollTop = ch.scrollHeight;
 }
 
+function handleImageFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    selectedImg = { base64: ev.target.result.split(',')[1], mimeType: file.type };
+    const wrap = document.getElementById('img-preview-wrap');
+    wrap.style.display = 'block';
+    wrap.innerHTML = `<div style="position:relative;display:inline-block;">
+      <img src="${ev.target.result}" style="max-height:80px;border-radius:8px;border:1px solid var(--bdr2);">
+      <button onclick="clearImg()" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--muted);border:none;cursor:pointer;font-size:10px;color:white;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>`;
+  };
+  reader.readAsDataURL(file);
+}
+
 // Drag & drop
 document.addEventListener('dragenter', e => {
   if (e.dataTransfer.types.includes('Files')) {
@@ -667,24 +693,7 @@ document.addEventListener('paste', e => {
   }
 });
 
-function handleImageFile(file) {
-  const reader = new FileReader();
-  reader.onload = ev => {
-    selectedImg = { base64: ev.target.result.split(',')[1], mimeType: file.type };
-    const wrap = document.getElementById('img-preview-wrap');
-    wrap.style.display = 'block';
-    wrap.innerHTML = `<div style="position:relative;display:inline-block;">
-      <img src="${ev.target.result}" style="max-height:80px;border-radius:8px;border:1px solid var(--bdr2);">
-      <button onclick="clearImg()" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--muted);border:none;cursor:pointer;font-size:10px;color:white;display:flex;align-items:center;justify-content:center;">✕</button>
-    </div>`;
-  };
-  reader.readAsDataURL(file);
-}
 
-function onImgSelect(e) {
-  const file = e.target.files[0];
-  if (file) handleImageFile(file);
-}
 
 function fmt(t) {
   return t
