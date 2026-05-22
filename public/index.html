@@ -361,30 +361,151 @@ Knee: PDFS TR2500-4000 TE30-50 slice3-4mm / 3T:PAT GRAPPA/SENSE2 / 1.5T:PAT1-2
 TE 원본유지 / SliceOS 10%이상 / Recon=ACQ 약50%
 PAT: Philips=SENSE/CS-SENSE / Siemens=GRAPPA / GE=ASSET,ARC / Canon=SPEEDER,RAPID
 
-=== KNOWN ISSUE DB ===
-1. Boundary artifact(TR-TI): TR/TI 균형 깨짐→ventricle/cortex 검은 윤곽선
-   해결: Siemens=freeze자동 / GE=TI Auto / Philips=테이블 수동
-2. TOF ICA Pseudo-stenosis: Intravoxel dephasing→ICA 신호소실(협착오인)
-   해결: AcqVoxelSlice 1.0→0.6mm / SlicePartialFourier off / SwiftMR 처리로 크게 개선
-3. Venetian blind(TOF): slab경계 신호불균일→overlap 증가
-4. PAT residual(SENSE/ARC): PAT factor 과도→factor 감소
-5. EPI distortion(DWI): B0불균일→PAT최대3 / MUSE / FOV 350이하
-6. FID artifact(GRE): refocusing pulse→Echo Spacing증가 or crusher gradient
-7. Aliasing(CS-SENSE): CS-SENSE 알고리즘→acquisition FOV 증가
-8. Gibbs(Truncation): SwiftMR reconstruction으로 개선
+=== KNOWN ISSUE DB - BRAIN / NEURO ===
+1. Boundary artifact (TR-TI artifact):
+   원인: TR과 TI 균형 깨짐→ventricle/cortex 경계 검은 윤곽선
+   해결: Siemens=freeze 기능으로 TR 변경시 TI 자동조정 / GE=TI Auto / Philips=테이블 수동입력
+   주의: TR 9000/TI 2500 기준 비율 유지
 
-=== 현장 이슈 해결 사례 ===
-1. Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 CS연산 부정확→SENSE로 변경
-2. 강북삼성 Motion Free(Philips 3T): PhaseOversampling 차이→PO동일설정(v3.0.13.3+수정)
-3. TOF MIP 혈관끊김: SPF off→해결, slice resolution 근본원인
-4. GE MR30.1 소스리턴(인천건협): 장비재등록으로 해결
-5. Shoulder FS불량: Echo spacing 과다→ES 최대한 낮춤 / shim범위 FOV맞게(넓히면 외곽FS불량)
-6. GE 1.5T HD16 NPW+ASSET: 동시사용불가→둘 중 하나 선택
-7. 광주미래 Abdomen DWI전송이슈: b-value 소스 합쳐짐→scan item 재등록 or 서비스재시작
-8. Siemens 복부 slice간 신호꺼짐: flow artifact / Fat saturation 세팅 확인
-9. GE Pioneer 3.0T MR30.1 Real Time Field Adjustment: 실시간 필드조정 이슈
+2. TOF ICA Pseudo-stenosis artifact:
+   원인: Intravoxel dephasing→ICA 신호소실(협착 오인 가능)
+   해결: AcqVoxelSlice 1.0→0.6mm 감소 / SlicePartialFourier off(100%에 가깝게) / SwiftMR로 크게 개선(super-resolution 효과)
+   실험결과: in-plane 해상도 개선은 효과 미미, slice방향이 핵심
 
-한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. TI관련 질문 시 테이블 값 직접 인용.`;
+3. Venetian blind artifact (Brain TOF):
+   원인: slab 경계 신호 불균일
+   해결: overlap 증가
+
+4. PAT residual artifact (SENSE/ARC):
+   원인: acceleration factor 과도
+   해결: PAT factor 감소
+
+5. EPI distortion artifact (DWI):
+   원인: B0 불균일 / FOV 과다
+   해결: PAT factor 최대3 / MUSE 사용 / FOV 350 이하 권장
+
+6. FID artifact (GRE):
+   원인: refocusing pulse
+   해결: Echo Spacing 증가 or crusher gradient 사용
+
+7. FID artifact (Spin Echo):
+   원인: refocusing pulse (SE 계열)
+   해결: SE→TSE 또는 TSE-IR로 변환
+
+8. Aliasing artifact (CS-SENSE):
+   원인: CS-SENSE 재구성 알고리즘
+   해결: acquisition FOV 증가
+
+9. Gibbs (Truncation) artifact:
+   해결: SwiftMR reconstruction으로 개선 가능
+
+10. Flow artifact (Brain):
+    원인: 혈류 신호
+    해결: Flow compensation 설정 / Phase dir 변경
+
+11. Slice aliasing artifact (3D):
+    원인: 3D sequence slice 경계
+    해결: Slice oversampling 10% 이상 증가
+
+12. Motion artifact (patient-induced):
+    해결: 환자 고정 강화 후 재스캔
+
+=== KNOWN ISSUE DB - SPINE ===
+1. Fat Suppression inhomogeneity (Spine):
+   원인: B0 불균일로 FS 불균등
+   해결: STIR 또는 DIXON FS로 변환 / shim 범위 조정
+
+2. Folding artifact (small FOV aliasing):
+   원인: phase 방향 FOV 부족
+   해결: acquisition FOV 증가 / phase oversampling 증가
+
+3. PAT residual artifact (Spine):
+   원인: acceleration factor 과도
+   해결: PAT factor 감소
+
+4. Cross talk artifact:
+   원인: stack 간 overlap 과다
+   해결: stack 간 overlap 최소화
+
+5. Cross talk (Flow void):
+   원인: concatenation 부족
+   해결: concatenation 증가
+
+6. Streaking artifact:
+   원인: blade coverage 부족 (PROPELLER/BLADE 계열)
+   해결: blade coverage 증가
+
+7. Metal artifact (Spine):
+   원인: 금속 임플란트 주변 자기장 왜곡
+   해결: SEMAC (Slice-Encoding for Metal Artifact Correction) 적용 / VAT / MARS / TE 최솟값 사용
+
+8. Slice Aliasing (Spine):
+   원인: 3D sequence 경계
+   해결: slice oversampling 증가
+
+9. Insufficient overlap (Whole Spine):
+   원인: station 간 overlap 부족
+   해결: station 간 overlap 증가
+
+10. Motion (breath-induced, Spine):
+    해결: 환자 안정화 후 재스캔 / breath-hold 기법
+
+=== KNOWN ISSUE DB - MSK (Upper/Lower) ===
+1. FID artifact (MSK):
+   원인: refocusing pulse
+   해결: Echo Spacing 증가 or crusher gradient
+
+2. Aliasing artifact (MSK):
+   원인: phase 방향 FOV 부족
+   해결: Phase oversampling 증가
+
+3. Slice aliasing artifact (MSK 3D):
+   해결: Slice oversampling 증가
+
+4. Folding artifact (MSK):
+   원인: phase 방향 FOV 부족
+   해결: Phase oversampling 증가
+
+5. Flow artifact (MSK SAG/AXL):
+   원인: 혈관 흐름 신호
+   해결: Flow compensation ON / saturation band 추가
+
+6. PAT residual artifact (MSK):
+   해결: PAT factor 감소
+
+7. Metal artifact (MSK):
+   원인: 금속 임플란트
+   해결: SEMAC / MARS / Metal artifact reduction sequence 적용
+
+8. Herringbone artifact:
+   원인: k-space 데이터 오류
+   해결: 재스캔
+
+9. Motion artifact (breath-induced, MSK Humerus 등):
+   해결: 호흡 안정화 후 재스캔
+
+10. FS inhomogeneity (MSK):
+    원인: B0 불균일
+    해결: shim 범위 FOV에 맞게 조정 / DIXON FS 사용
+
+=== 현장 이슈 해결 사례 (clinical_cs_discussion) ===
+1. Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 CS 연산 부정확→SENSE로 변경
+2. 강북삼성 Motion Free (Philips Ingenia CX 3T): Phase Oversampling 차이→PO 동일설정 (v3.0.13.3+에서 수정됨)
+3. TOF MIP 혈관끊김 (국제성모): SPF off→해결, slice resolution이 근본원인
+4. GE MR30.1 소스리턴 (인천건협): 장비 재등록으로 해결 (GE MR30.1 known issue)
+5. Shoulder FS 불량: Echo spacing 과다→ES 가이드라인 내 최대한 낮춤 / shim 범위 FOV 맞게 (넓히면 외곽FS 불량 악화)
+6. GE 1.5T HD16 NPW+ASSET: 동시사용 불가 (GE 기기 제한)→둘 중 하나 선택
+7. 광주미래 Abdomen DWI 전송이슈: b-value 원본소스 합쳐져 ADC와 묶임→scan item 재등록 or 서비스 재시작
+8. Siemens 복부 slice간 신호꺼짐: flow artifact 가능성 / Fat saturation 세팅 확인
+9. GE Pioneer 3.0T MR30.1 Real Time Field Adjustment: 실시간 필드조정 이슈 확인 중
+10. Philips 3D TSE MSK PD FS water signal 저하: Echo spacing 과다→ES 낮추고 가이드라인 준수
+11. Philips 3D T1 TFE: CS SENSE 옵션 확인 / Head Base Coil 유무 체크
+12. Brain T1WI white matter contrast 개선 요청: TE 낮춤(10.2→9.4) / TR 조정(470→620) 후 contrast 개선
+13. Siemens Vida XA50 PC Venography: 시퀀스 설정 및 velocity encoding 확인
+14. GE Signal Excite 1.5T 15.0버전 이슈: 구버전 소프트웨어 제한사항 확인 필요
+15. Philips DWI 하얀거 (EPI distortion): B0 불균일→PAT 증가 / MUSE 적용
+
+한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. TI관련 질문 시 테이블 값 직접 인용. artifact 질문 시 원인과 해결방법 함께 제시.`;
 
 let part = 'all', busy = false;
 
