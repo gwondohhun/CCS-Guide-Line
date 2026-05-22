@@ -17,7 +17,6 @@ app.post('/api/ask', async (req, res) => {
 
   if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY 없음' });
 
-  // system 프롬프트를 첫 번째 user 메시지에 합쳐서 전달
   const contents = [
     {
       role: 'user',
@@ -25,7 +24,7 @@ app.post('/api/ask', async (req, res) => {
     }
   ];
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
   try {
     const r = await fetch(url, {
