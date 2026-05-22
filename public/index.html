@@ -300,15 +300,20 @@ body::before {
       </div>
     </div>
     <div class="iarea">
+      <div id="img-preview-wrap" style="display:none;margin-bottom:8px;"></div>
       <div class="ibox">
-        <textarea id="qi" placeholder="파라미터, artifact, 이슈 해결 등 질문하세요..." rows="1"
+        <label for="img-input" style="cursor:pointer;display:flex;align-items:center;padding:0 4px;flex-shrink:0;" title="이미지 업로드로 artifact 분석">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="1.8" style="stroke:var(--muted)"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </label>
+        <input type="file" id="img-input" accept="image/*" style="display:none" onchange="onImgSelect(event)">
+        <textarea id="qi" placeholder="이미지 업로드 또는 파라미터, artifact 질문하세요..." rows="1"
           oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ask();}"></textarea>
         <button class="sbtn" id="sbtn" onclick="ask()" aria-label="전송">
           <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
-      <div class="hint"><kbd>Enter</kbd> 전송 &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> 줄바꿈</div>
+      <div class="hint"><kbd>Enter</kbd> 전송 &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> 줄바꿈 &nbsp;·&nbsp; 📎 이미지 업로드로 artifact 분석</div>
     </div>
   </div>
 </div>
