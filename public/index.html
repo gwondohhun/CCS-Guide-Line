@@ -619,10 +619,15 @@ async function ask() {
       throw new Error(e.error || 'HTTP ' + r.status);
     }
     const d = await r.json();
-    const txt = d.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '답변 없음';
+    const txt = d.content?.filter(b => b.type === 'text').map(b => b.text).join('')
+      || d.candidates?.[0]?.content?.parts?.[0]?.text
+      || '답변 없음';
     const ac = document.getElementById('ac');
-    ac.id = ''; ac.classList.remove('loading');
-    ac.innerHTML = fmt(txt);
+    if (ac) {
+      ac.id = '';
+      ac.classList.remove('loading');
+      ac.innerHTML = fmt(txt);
+    }
   } catch(e) {
     const ac = document.getElementById('ac');
     if (ac) { ac.classList.remove('loading'); ac.innerHTML = `<span style="color:#f87171">오류: ${e.message}</span>`; }
