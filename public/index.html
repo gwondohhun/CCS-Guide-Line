@@ -4,155 +4,255 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MRI Parameter Guide — AIRS Medical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0e17;--surf:#111827;--surf2:#1a2234;--surf3:#212d42;--bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.12);--tx:#e8ecf4;--muted:#6b7a99;--blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);--blue-bdr:rgba(59,130,246,0.3);--vs-bg:rgba(59,130,246,0.15);--vs-tx:#93c5fd;--vp-bg:rgba(16,185,129,0.15);--vp-tx:#6ee7b7;--vg-bg:rgba(245,158,11,0.15);--vg-tx:#fcd34d;--vc-bg:rgba(244,114,182,0.15);--vc-tx:#f9a8d4;}
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-.layout{display:flex;height:100vh;overflow:hidden;position:relative;z-index:1;}
+:root {
+  --bg:#0a0e17; --surf:#111827; --surf2:#1a2234; --surf3:#212d42;
+  --bdr:rgba(255,255,255,0.07); --bdr2:rgba(255,255,255,0.12);
+  --tx:#e8ecf4; --muted:#6b7a99;
+  --blue:#3b82f6; --blue-dim:rgba(59,130,246,0.12); --blue-bdr:rgba(59,130,246,0.3);
+  --vs-bg:rgba(59,130,246,0.15); --vs-tx:#93c5fd;
+  --vp-bg:rgba(16,185,129,0.15); --vp-tx:#6ee7b7;
+  --vg-bg:rgba(245,158,11,0.15); --vg-tx:#fcd34d;
+  --vc-bg:rgba(244,114,182,0.15); --vc-tx:#f9a8d4;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
+
+.layout { display: flex; height: 100vh; overflow: hidden; position: relative; z-index: 1; }
 
 /* Sidebar */
-.sb{width:220px;flex-shrink:0;background:var(--surf);border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow-y:auto;}
-.sb::-webkit-scrollbar{width:3px;}.sb::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px;}
-.brand{padding:16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;}
-.brand-ico{width:34px;height:34px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.brand-ico svg{width:18px;height:18px;fill:#e0f0ff;}
-.brand-name{font-size:13px;font-weight:600;color:var(--tx);}
-.brand-sub{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
-
-/* Tab switcher */
-.tab-switch{display:flex;margin:10px 10px 6px;background:var(--surf2);border-radius:8px;padding:3px;}
-.tab-btn{flex:1;padding:6px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border-radius:6px;transition:all .15s;}
-.tab-btn.on{background:var(--blue-dim);color:var(--blue);}
-
-.sb-sec{padding:10px 10px 4px;}
-.sb-lbl{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;padding:0 6px;margin-bottom:4px;}
-.pb{width:100%;display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:left;transition:all .13s;margin-bottom:2px;}
-.pb:hover{background:var(--surf2);color:var(--tx);}
-.pb.on{background:var(--blue-dim);color:var(--blue);border-color:var(--blue-bdr);}
-.pb .dot{width:5px;height:5px;border-radius:50%;background:var(--muted);flex-shrink:0;}
-.pb.on .dot{background:var(--blue);}
-.sb-div{height:1px;background:var(--bdr);margin:6px 10px;}
-.vleg{margin:6px 10px 10px;padding:9px 11px;background:var(--surf2);border:1px solid var(--bdr);border-radius:8px;}
-.vleg-t{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;}
-.vrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:11px;color:var(--muted);}
-.vdot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.sb {
+  width: 220px; flex-shrink: 0;
+  background: var(--surf); border-right: 1px solid var(--bdr);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.sb::-webkit-scrollbar { width: 3px; }
+.sb::-webkit-scrollbar-thumb { background: var(--bdr2); border-radius: 2px; }
+.brand {
+  padding: 18px 16px; border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 11px;
+}
+.brand-ico {
+  width: 36px; height: 36px; background: var(--blue);
+  border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.brand-ico svg { width: 20px; height: 20px; fill: #e0f0ff; }
+.brand-name { font-size: 14px; font-weight: 600; color: var(--tx); line-height: 1.2; }
+.brand-sub { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; }
+.sb-sec { padding: 12px 10px 6px; }
+.sb-lbl {
+  font-size: 10px; font-weight: 600; color: var(--muted);
+  letter-spacing: .08em; text-transform: uppercase; padding: 0 7px; margin-bottom: 5px;
+}
+.pb {
+  width: 100%; display: flex; align-items: center; gap: 9px;
+  padding: 7px 9px; border: 1px solid transparent;
+  border-radius: 8px; background: transparent;
+  color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px;
+  cursor: pointer; text-align: left; transition: all .13s; margin-bottom: 2px;
+}
+.pb:hover { background: var(--surf2); color: var(--tx); }
+.pb.on { background: var(--blue-dim); color: var(--blue); border-color: var(--blue-bdr); }
+.pb .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted); flex-shrink: 0; transition: background .13s;
+}
+.pb.on .dot { background: var(--blue); }
+.sb-div { height: 1px; background: var(--bdr); margin: 7px 12px; }
+.vleg {
+  margin: 6px 10px 12px; padding: 10px 12px;
+  background: var(--surf2); border: 1px solid var(--bdr); border-radius: 9px;
+}
+.vleg-t { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.vrow { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 12px; color: var(--muted); }
+.vdot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 
 /* Main */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.topbar{padding:12px 20px;border-bottom:1px solid var(--bdr);background:var(--surf);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.tb-l{font-size:13px;color:var(--muted);}
-.tb-l strong{color:var(--tx);font-weight:500;}
-.tb-r{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
-.live{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar {
+  padding: 14px 22px; border-bottom: 1px solid var(--bdr);
+  background: var(--surf);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.tb-l { font-size: 13px; color: var(--muted); }
+.tb-l strong { color: var(--tx); font-weight: 500; }
+.tb-r { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.live {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22c55e; box-shadow: 0 0 6px #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
-/* Chat panel */
-.chat-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;background:var(--bg);}
-.chat::-webkit-scrollbar{width:4px;}.chat::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px;}
-.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;padding:40px 20px;}
-.empty-ico{width:56px;height:56px;background:var(--blue-dim);border:1px solid var(--blue-bdr);border-radius:14px;display:flex;align-items:center;justify-content:center;}
-.empty-ico svg{width:28px;height:28px;stroke:var(--blue);fill:none;stroke-width:1.5;}
-.empty h2{font-size:18px;font-weight:500;color:var(--tx);}
-.empty p{font-size:13px;color:var(--muted);max-width:340px;line-height:1.65;}
-.qgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;width:100%;max-width:520px;}
-.qb{padding:10px 12px;background:var(--surf);border:1px solid var(--bdr2);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:left;line-height:1.4;transition:all .15s;}
-.qb:hover{background:var(--surf2);color:var(--tx);border-color:var(--blue-bdr);}
-.ql{display:block;font-size:10px;color:var(--blue);font-weight:600;letter-spacing:.04em;margin-bottom:3px;}
-.msg-u{display:flex;justify-content:flex-end;animation:fu .18s ease;}
-.bubble{background:var(--blue);color:#fff;padding:9px 14px;border-radius:14px 14px 4px 14px;font-size:13px;max-width:70%;line-height:1.55;}
-.msg-a{display:flex;gap:10px;align-items:flex-start;animation:fu .2s ease;}
-@keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
-.av{width:30px;height:30px;background:var(--blue-dim);border:1px solid var(--blue-bdr);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.av svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:2;}
-.acard{flex:1;background:var(--surf);border:1px solid var(--bdr);border-radius:3px 14px 14px 14px;padding:13px 16px;font-size:13px;line-height:1.75;color:var(--tx);min-width:0;}
-.acard.loading{color:var(--muted);display:flex;align-items:center;gap:8px;}
-.acard h4{font-size:12px;font-weight:600;color:var(--tx);margin:11px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--bdr);}
-.acard h4:first-child{margin-top:0;}
-.acard ul{padding-left:1.1rem;margin:3px 0 7px;}
-.acard li{margin-bottom:3px;}
-.acard strong{font-weight:500;}
-.vtag{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 7px;border-radius:4px;margin:0 2px;font-family:'DM Mono',monospace;}
+/* Chat */
+.chat {
+  flex: 1; overflow-y: auto; padding: 22px;
+  display: flex; flex-direction: column; gap: 18px;
+  background: var(--bg); scroll-behavior: smooth;
+}
+.chat::-webkit-scrollbar { width: 4px; }
+.chat::-webkit-scrollbar-thumb { background: var(--bdr2); border-radius: 2px; }
+
+/* Empty state */
+.empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 28px; text-align: center; padding: 40px 20px;
+}
+.empty-ico {
+  width: 60px; height: 60px; background: var(--blue-dim);
+  border: 1px solid var(--blue-bdr); border-radius: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.empty-ico svg { width: 30px; height: 30px; stroke: var(--blue); fill: none; stroke-width: 1.5; }
+.empty h2 { font-size: 20px; font-weight: 500; color: var(--tx); }
+.empty p { font-size: 14px; color: var(--muted); max-width: 360px; line-height: 1.65; }
+.qgrid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px; width: 100%; max-width: 560px;
+}
+.qb {
+  padding: 11px 13px; background: var(--surf);
+  border: 1px solid var(--bdr2); border-radius: 9px;
+  color: var(--muted); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer; text-align: left;
+  line-height: 1.4; transition: all .15s;
+}
+.qb:hover { background: var(--surf2); color: var(--tx); border-color: var(--blue-bdr); }
+.ql { display: block; font-size: 10px; color: var(--blue); font-weight: 600; letter-spacing: .04em; margin-bottom: 4px; }
+
+/* Messages */
+.msg-u { display: flex; justify-content: flex-end; animation: fu .18s ease; }
+.bubble {
+  background: var(--blue); color: #fff;
+  padding: 10px 16px; border-radius: 16px 16px 4px 16px;
+  font-size: 14px; max-width: 70%; line-height: 1.55;
+}
+.msg-a { display: flex; gap: 11px; align-items: flex-start; animation: fu .2s ease; }
+@keyframes fu { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+.av {
+  width: 32px; height: 32px; background: var(--blue-dim);
+  border: 1px solid var(--blue-bdr); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.av svg { width: 17px; height: 17px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.acard {
+  flex: 1; background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: 4px 16px 16px 16px;
+  padding: 14px 18px; font-size: 14px;
+  line-height: 1.75; color: var(--tx); min-width: 0;
+}
+.acard.loading { color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.acard h4 {
+  font-size: 13px; font-weight: 600; color: var(--tx);
+  margin: 13px 0 5px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--bdr);
+}
+.acard h4:first-child { margin-top: 0; }
+.acard ul { padding-left: 1.2rem; margin: 4px 0 8px; }
+.acard li { margin-bottom: 4px; }
+.acard strong { font-weight: 500; }
+.vtag {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 4px; margin: 0 2px;
+  font-family: 'DM Mono', monospace;
+}
 .vs{background:var(--vs-bg);color:var(--vs-tx);}
 .vp{background:var(--vp-bg);color:var(--vp-tx);}
 .vg{background:var(--vg-bg);color:var(--vg-tx);}
 .vc{background:var(--vc-bg);color:var(--vc-tx);}
-.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--muted);margin:0 2px;animation:db 1.2s ease-in-out infinite;}
-.dots span:nth-child(2){animation-delay:.2s;}.dots span:nth-child(3){animation-delay:.4s;}
-@keyframes db{0%,80%,100%{transform:translateY(0);opacity:.4;}40%{transform:translateY(-4px);opacity:1;}}
-.iarea{padding:12px 20px 16px;background:var(--surf);border-top:1px solid var(--bdr);flex-shrink:0;}
-.img-preview{display:none;margin-bottom:8px;}
-.ibox{display:flex;gap:8px;align-items:flex-end;background:var(--surf2);border:1px solid var(--bdr2);border-radius:13px;padding:9px 11px 9px 14px;transition:border-color .15s;}
-.ibox:focus-within{border-color:var(--blue-bdr);}
-.img-btn{display:flex;align-items:center;cursor:pointer;padding:0 3px;flex-shrink:0;opacity:.5;transition:opacity .15s;}
-.img-btn:hover{opacity:1;}
-.ibox textarea{flex:1;border:none;outline:none;background:transparent;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:13px;resize:none;line-height:1.5;min-height:22px;max-height:100px;}
-.ibox textarea::placeholder{color:var(--muted);}
-.sbtn{width:34px;height:34px;background:var(--blue);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;}
-.sbtn:hover{opacity:.85;transform:scale(1.04);}
-.sbtn:disabled{opacity:.3;cursor:not-allowed;transform:none;}
-.sbtn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;}
-.hint{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;}
-.hint kbd{background:var(--surf3);border:1px solid var(--bdr2);border-radius:3px;padding:1px 4px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
 
-/* Issue DB panel */
-.db-panel{flex:1;display:none;flex-direction:column;overflow:hidden;}
-.db-panel.on{display:flex;}
-.db-toolbar{padding:12px 20px;border-bottom:1px solid var(--bdr);background:var(--surf);display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.db-search{flex:1;background:var(--surf2);border:1px solid var(--bdr2);border-radius:8px;padding:7px 12px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
-.db-search::placeholder{color:var(--muted);}
-.db-search:focus{border-color:var(--blue-bdr);}
-.db-filter{display:flex;gap:6px;}
-.df{padding:5px 12px;border:1px solid var(--bdr2);border-radius:20px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .13s;}
-.df:hover{background:var(--surf2);color:var(--tx);}
-.df.on{background:var(--blue-dim);color:var(--blue);border-color:var(--blue-bdr);}
-.db-content{flex:1;overflow-y:auto;padding:20px;}
-.db-content::-webkit-scrollbar{width:4px;}.db-content::-webkit-scrollbar-thumb{background:var(--bdr2);}
-.db-section{margin-bottom:24px;}
-.db-section-title{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--bdr);}
-.db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
-.issue-card{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:13px 15px;cursor:pointer;transition:all .15s;}
-.issue-card:hover{border-color:var(--bdr2);background:var(--surf2);}
-.issue-card.expanded{border-color:var(--blue-bdr);background:var(--surf2);}
-.issue-name{font-size:13px;font-weight:500;color:var(--tx);margin-bottom:4px;line-height:1.4;}
-.issue-tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:8px;}
-.tag-brain{background:rgba(139,92,246,.15);color:#a78bfa;}
-.tag-spine{background:rgba(16,185,129,.15);color:#6ee7b7;}
-.tag-msk{background:rgba(245,158,11,.15);color:#fcd34d;}
-.tag-field{background:rgba(239,68,68,.15);color:#fca5a5;}
-.issue-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bdr);}
-.issue-card.expanded .issue-detail{display:block;}
-.detail-row{display:flex;gap:8px;margin-bottom:6px;font-size:12px;line-height:1.5;}
-.detail-label{color:var(--muted);flex-shrink:0;width:36px;}
-.detail-val{color:var(--tx);}
-.detail-val .vtag{font-size:10px;}
-.ask-btn{margin-top:10px;width:100%;padding:7px;background:var(--blue-dim);border:1px solid var(--blue-bdr);border-radius:7px;color:var(--blue);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;}
-.ask-btn:hover{background:var(--blue);color:#fff;}
-.no-result{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;}
+.dots span {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--muted); margin: 0 2px;
+  animation: db 1.2s ease-in-out infinite;
+}
+.dots span:nth-child(2){animation-delay:.2s;} .dots span:nth-child(3){animation-delay:.4s;}
+@keyframes db{0%,80%,100%{transform:translateY(0);opacity:.4;}40%{transform:translateY(-5px);opacity:1;}}
 
-/* Drop overlay */
+/* Input */
+.iarea {
+  padding: 14px 22px 18px;
+  background: var(--surf); border-top: 1px solid var(--bdr); flex-shrink: 0;
+}
+.ibox {
+  display: flex; gap: 10px; align-items: flex-end;
+  background: var(--surf2); border: 1px solid var(--bdr2);
+  border-radius: 14px; padding: 10px 12px 10px 16px;
+  transition: border-color .15s;
+}
+.ibox:focus-within { border-color: var(--blue-bdr); }
+.ibox textarea {
+  flex: 1; border: none; outline: none;
+  background: transparent; color: var(--tx);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  resize: none; line-height: 1.5;
+  min-height: 24px; max-height: 120px;
+}
+.ibox textarea::placeholder { color: var(--muted); }
+.sbtn {
+  width: 36px; height: 36px; background: var(--blue);
+  border: none; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: all .15s;
+}
+.sbtn:hover { opacity: .85; transform: scale(1.05); }
+.sbtn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+.sbtn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; }
+.hint {
+  font-size: 11px; color: var(--muted);
+  text-align: center; margin-top: 8px;
+}
 .drop-overlay{display:none;position:fixed;inset:0;background:rgba(59,130,246,.08);border:3px dashed var(--blue);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:12px;pointer-events:none;}
-.drop-overlay.on{display:flex;}
-.drop-overlay p{font-size:16px;font-weight:500;color:var(--blue);}
-@media(max-width:680px){.sb{display:none;}.qgrid{grid-template-columns:1fr;}.db-grid{grid-template-columns:1fr;}}
+.drop-overlay.active{display:flex;}
+.drop-overlay svg{width:48px;height:48px;stroke:var(--blue);fill:none;stroke-width:1.5;}
+.drop-overlay p{font-size:18px;font-weight:500;color:var(--blue);}
+.hint kbd {
+  background: var(--surf3); border: 1px solid var(--bdr2);
+  border-radius: 4px; padding: 1px 5px;
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted);
+}
+
+@media(max-width:680px){ .sb{display:none;} .qgrid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
-<div class="drop-overlay" id="dropOverlay">
-  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+<div class="drop-overlay" id="drop-overlay">
+  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
   <p>이미지를 놓으면 artifact 분석을 시작합니다</p>
 </div>
 <div class="layout">
   <aside class="sb">
     <div class="brand">
-      <div class="brand-ico"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
-      <div><div class="brand-name">MRI Param Guide</div><div class="brand-sub">AIRS Medical CCS</div></div>
-    </div>
-    <div class="tab-switch">
-      <button class="tab-btn on" id="tabChat" onclick="switchTab('chat')">💬 질문</button>
-      <button class="tab-btn" id="tabDB" onclick="switchTab('db')">📋 이슈 DB</button>
+      <div class="brand-ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">MRI Param Guide</div>
+        <div class="brand-sub">AIRS Medical CCS</div>
+      </div>
     </div>
     <div class="sb-sec">
       <div class="sb-lbl">부위 선택</div>
@@ -175,7 +275,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div class="sb-div"></div>
     <div class="vleg">
-      <div class="vleg-t">제조사</div>
+      <div class="vleg-t">제조사 색상</div>
       <div class="vrow"><div class="vdot" style="background:#3b82f6"></div>Siemens</div>
       <div class="vrow"><div class="vdot" style="background:#10b981"></div>Philips</div>
       <div class="vrow"><div class="vdot" style="background:#f59e0b"></div>GE</div>
@@ -188,338 +288,543 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       <div class="tb-l">MRI Parameter Guide <strong id="plabel">· 전체 부위</strong></div>
       <div class="tb-r"><div class="live"></div>AI 응답 준비됨</div>
     </div>
-
-    <!-- Chat Panel -->
-    <div class="chat-panel" id="chatPanel">
-      <div class="chat" id="chat">
-        <div class="empty" id="empty">
-          <div class="empty-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
-          <div><h2>파라미터 질문을 입력하세요</h2><p>부위를 선택하고 예시를 눌러 시작하거나, 이미지를 드래그해서 artifact 분석을 받아보세요.</p></div>
-          <div class="qgrid">
-            <button class="qb" onclick="fill('Brain T1WI TR별 적정 TI값은?')"><span class="ql">Brain · TI</span>TR별 적정 TI값은?</button>
-            <button class="qb" onclick="fill('FLAIR TR별 TI 권장값은?')"><span class="ql">Brain · FLAIR</span>FLAIR TR별 TI값은?</button>
-            <button class="qb" onclick="fill('Brain Boundary artifact 원인과 해결법은?')"><span class="ql">Known Issue</span>Boundary artifact 해결법은?</button>
-            <button class="qb" onclick="fill('TOF ICA artifact 원인과 해결법은?')"><span class="ql">Known Issue</span>TOF ICA artifact 해결법은?</button>
-            <button class="qb" onclick="fill('Philips eTHRIVE Dynamic CS 주의사항은?')"><span class="ql">Philips</span>eTHRIVE CS 주의사항은?</button>
-            <button class="qb" onclick="fill('Shoulder FS 불량 원인과 해결법은?')"><span class="ql">MSK</span>Shoulder FS 불량 해결법은?</button>
-          </div>
+    <div class="chat" id="chat">
+      <div class="empty" id="empty">
+        <div class="empty-ico">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
         </div>
-      </div>
-      <div class="iarea">
-        <div class="img-preview" id="imgPreview"></div>
-        <div class="ibox">
-          <label class="img-btn" for="imgInput" title="이미지 업로드">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </label>
-          <input type="file" id="imgInput" accept="image/*" style="display:none">
-          <textarea id="qi" placeholder="이미지 드래그·붙여넣기 또는 파라미터, artifact 질문하세요..." rows="1"
-            oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"
-            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ask();}"></textarea>
-          <button class="sbtn" id="sbtn" onclick="ask()" aria-label="전송">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </button>
+        <div>
+          <h2>파라미터 질문을 입력하세요</h2>
+          <p>좌측에서 부위를 선택하고 아래 예시를 눌러 시작하거나, 직접 질문을 입력하세요.</p>
         </div>
-        <div class="hint"><kbd>Enter</kbd> 전송 · <kbd>Shift+Enter</kbd> 줄바꿈 · 이미지 드래그·붙여넣기로 artifact 분석</div>
+        <div class="qgrid">
+          <button class="qb" onclick="fill('Brain T1WI TR별 적정 TI값 테이블을 알려줘')"><span class="ql">Brain · TI Table</span>TR별 적정 TI값은?</button>
+          <button class="qb" onclick="fill('FLAIR 시퀀스 TR별 TI 권장값 테이블은?')"><span class="ql">Brain · FLAIR</span>FLAIR TR별 TI값은?</button>
+          <button class="qb" onclick="fill('Brain Boundary artifact 원인과 해결 방법은?')"><span class="ql">Known Issue</span>Boundary artifact 해결법은?</button>
+          <button class="qb" onclick="fill('TOF ICA pseudo-stenosis artifact 원인과 해결법은?')"><span class="ql">Known Issue</span>TOF ICA artifact 해결법은?</button>
+          <button class="qb" onclick="fill('Philips eTHRIVE Dynamic CS 사용 시 주의사항은?')"><span class="ql">Philips · CS</span>eTHRIVE CS 주의사항은?</button>
+          <button class="qb" onclick="fill('Shoulder FS가 잘 안 먹는 원인과 해결법은?')"><span class="ql">MSK · Shoulder</span>Shoulder FS 불량 해결법은?</button>
+        </div>
       </div>
     </div>
-
-    <!-- Issue DB Panel -->
-    <div class="db-panel" id="dbPanel">
-      <div class="db-toolbar">
-        <input class="db-search" id="dbSearch" placeholder="artifact 이름, 원인, 해결방법 검색..." oninput="renderDB()">
-        <div class="db-filter">
-          <button class="df on" data-cat="all" onclick="setDBCat(this)">전체</button>
-          <button class="df" data-cat="brain" onclick="setDBCat(this)">Brain</button>
-          <button class="df" data-cat="spine" onclick="setDBCat(this)">Spine</button>
-          <button class="df" data-cat="msk" onclick="setDBCat(this)">MSK</button>
-          <button class="df" data-cat="field" onclick="setDBCat(this)">현장사례</button>
-        </div>
+    <div class="iarea">
+      <div id="img-preview-wrap" style="display:none;margin-bottom:8px;"></div>
+      <div class="ibox">
+        <label for="img-input" style="cursor:pointer;display:flex;align-items:center;padding:0 4px;flex-shrink:0;" title="이미지 업로드로 artifact 분석">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke-width="1.8" style="stroke:var(--muted)"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </label>
+        <input type="file" id="img-input" accept="image/*" style="display:none" onchange="onImgSelect(event)">
+        <textarea id="qi" placeholder="이미지 업로드 또는 파라미터, artifact 질문하세요..." rows="1"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ask();}"></textarea>
+        <button class="sbtn" id="sbtn" onclick="ask()" aria-label="전송">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
       </div>
-      <div class="db-content" id="dbContent"></div>
+      <div class="hint"><kbd>Enter</kbd> 전송 &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> 줄바꿈 &nbsp;·&nbsp; 이미지 드래그, 붙여넣기, 또는 📎 클릭으로 artifact 분석</div>
     </div>
   </div>
 </div>
 
 <script>
-const ISSUES = {
-  brain: [
-    {name:'Boundary artifact (TR-TI)',cause:'TR과 TI 균형 깨짐 → ventricle/cortex 경계에 검은 윤곽선 발생',solution:'Siemens: freeze 기능으로 TR 변경시 TI 자동조정\nGE: TI Auto 설정\nPhilips: TI VALUE TABLE 참조하여 수동 입력',tip:'TR 9000 / TI 2500 기준 비율 유지'},
-    {name:'TOF ICA Pseudo-stenosis',cause:'Intravoxel dephasing → ICA 신호소실 (협착으로 오인 가능)',solution:'AcqVoxelSlice 1.0 → 0.6mm 감소\nSlice Partial Fourier off (100%에 가깝게)\nSwiftMR 처리로 크게 개선 (super-resolution 효과)',tip:'in-plane 해상도 개선은 효과 미미, slice 방향이 핵심'},
-    {name:'Venetian blind artifact (TOF)',cause:'slab 경계에서 신호 불균일 발생',solution:'overlap 증가'},
-    {name:'PAT residual artifact (SENSE/ARC)',cause:'acceleration factor 과도',solution:'PAT factor 감소'},
-    {name:'EPI distortion artifact (DWI)',cause:'B0 불균일 / FOV 과다',solution:'PAT factor 최대 3\nMUSE 사용\nFOV 350 이하 권장'},
-    {name:'FID artifact (GRE)',cause:'refocusing pulse',solution:'Echo Spacing 증가 or crusher gradient 사용'},
-    {name:'FID artifact (Spin Echo)',cause:'refocusing pulse (SE 계열)',solution:'SE → TSE 또는 TSE-IR로 변환'},
-    {name:'Aliasing artifact (CS-SENSE)',cause:'CS-SENSE 재구성 알고리즘',solution:'acquisition FOV 증가'},
-    {name:'Gibbs (Truncation) artifact',cause:'k-space 데이터 부족',solution:'SwiftMR reconstruction으로 개선 가능'},
-    {name:'Flow artifact (Brain)',cause:'혈류 신호',solution:'Flow compensation 설정\nPhase dir 변경'},
-    {name:'Slice aliasing artifact (3D)',cause:'3D sequence slice 경계',solution:'Slice oversampling 10% 이상 증가'},
-    {name:'Motion artifact',cause:'환자 움직임',solution:'환자 고정 강화 후 재스캔'},
-  ],
-  spine: [
-    {name:'Fat Suppression inhomogeneity',cause:'B0 불균일로 FS 불균등',solution:'STIR 또는 DIXON FS로 변환\nshim 범위 조정'},
-    {name:'Folding artifact (small FOV)',cause:'phase 방향 FOV 부족',solution:'acquisition FOV 증가\nphase oversampling 증가'},
-    {name:'PAT residual artifact',cause:'acceleration factor 과도',solution:'PAT factor 감소'},
-    {name:'Cross talk artifact',cause:'stack 간 overlap 과다',solution:'stack 간 overlap 최소화'},
-    {name:'Cross talk (Flow void)',cause:'concatenation 부족',solution:'concatenation 증가'},
-    {name:'Streaking artifact',cause:'blade coverage 부족 (PROPELLER/BLADE 계열)',solution:'blade coverage 증가'},
-    {name:'Metal artifact (Spine)',cause:'금속 임플란트 주변 자기장 왜곡',solution:'SEMAC 적용\nVAT / MARS\nTE 최솟값 사용'},
-    {name:'Slice aliasing (Spine)',cause:'3D sequence 경계',solution:'slice oversampling 증가'},
-    {name:'Insufficient overlap (Whole Spine)',cause:'station 간 overlap 부족',solution:'station 간 overlap 증가'},
-    {name:'Motion (breath-induced)',cause:'호흡 움직임',solution:'환자 안정화 후 재스캔\nbreath-hold 기법'},
-  ],
-  msk: [
-    {name:'FID artifact (MSK)',cause:'refocusing pulse',solution:'Echo Spacing 증가 or crusher gradient'},
-    {name:'Aliasing artifact (MSK)',cause:'phase 방향 FOV 부족',solution:'Phase oversampling 증가'},
-    {name:'Slice aliasing artifact (MSK 3D)',cause:'3D sequence 경계',solution:'Slice oversampling 증가'},
-    {name:'Folding artifact (MSK)',cause:'phase 방향 FOV 부족',solution:'Phase oversampling 증가'},
-    {name:'Flow artifact (SAG/AXL)',cause:'혈관 흐름 신호',solution:'Flow compensation ON\nsaturation band 추가'},
-    {name:'PAT residual artifact (MSK)',cause:'PAT factor 과도',solution:'PAT factor 감소'},
-    {name:'Metal artifact (MSK)',cause:'금속 임플란트',solution:'SEMAC / MARS 적용'},
-    {name:'Herringbone artifact',cause:'k-space 데이터 오류',solution:'재스캔'},
-    {name:'Motion artifact (breath)',cause:'호흡 움직임',solution:'호흡 안정화 후 재스캔'},
-    {name:'FS inhomogeneity (MSK)',cause:'B0 불균일',solution:'shim 범위 FOV에 맞게 조정\nDIXON FS 사용'},
-  ],
-  field: [
-    {name:'Philips eTHRIVE Dynamic CS',cause:'Head Base Coil 없을 때 CS 연산 부정확',solution:'SENSE로 변경'},
-    {name:'강북삼성 Motion Free (Philips 3T)',cause:'Phase Oversampling 차이',solution:'PO 동일하게 설정 (v3.0.13.3+에서 수정됨)'},
-    {name:'TOF MIP 혈관끊김 (국제성모)',cause:'slice resolution 부족',solution:'SPF off → 해결\nslice resolution이 근본 원인'},
-    {name:'GE MR30.1 소스리턴 (인천건협)',cause:'GE MR30.1 known issue',solution:'장비 재등록으로 해결'},
-    {name:'Shoulder FS 불량',cause:'Echo spacing 과다 / shim 범위 과다',solution:'ES 가이드라인 내 최대한 낮춤\nshim 범위 FOV에 맞게 설정'},
-    {name:'GE 1.5T HD16 NPW + ASSET 동시사용',cause:'GE 기기 제한',solution:'NPW와 ASSET/ARC 중 하나만 선택'},
-    {name:'광주미래 Abdomen DWI 전송이슈',cause:'b-value 원본소스 합쳐져 ADC와 묶임',solution:'scan item 재등록 or 서비스 재시작'},
-    {name:'Siemens 복부 slice간 신호꺼짐',cause:'flow artifact 가능성',solution:'Fat saturation 세팅 확인'},
-    {name:'Philips 3D TSE MSK PD FS water signal 저하',cause:'Echo spacing 과다',solution:'ES 낮추고 가이드라인 준수'},
-    {name:'Brain T1WI WM contrast 개선',cause:'TE/TR 파라미터 조정 필요',solution:'TE 10.2→9.4 ms\nTR 470→620 ms'},
-    {name:'GE Pioneer 3.0T Real Time Field Adjustment',cause:'실시간 필드조정 이슈',solution:'CCS팀 문의 (gwon.dohhun@airsmed.com)'},
-    {name:'Philips 3D T1 TFE CS SENSE 이슈',cause:'Head Base Coil 유무 미확인',solution:'CS SENSE 옵션 확인\nHead Base Coil 유무 체크'},
-  ]
-};
+const SYS = `당신은 MRI Clinical CS 전문가입니다. AIRS Medical Clinical CS Online Training Center의 Parameter Guide Line과 Known Issue DB, 그리고 실제 현장 이슈 해결 사례를 기반으로 답변합니다.
 
-const CAT_LABEL = {brain:'Brain / Neuro',spine:'Spine',msk:'MSK',field:'현장 이슈 사례'};
-const CAT_TAG = {brain:'tag-brain',spine:'tag-spine',msk:'tag-msk',field:'tag-field'};
-const CAT_NAME = {brain:'Brain',spine:'Spine',msk:'MSK',field:'현장사례'};
+=== TI VALUE TABLE ===
+T1WI (MP-RAGE/TFE/BRAVO) 3T:
+TR 1500→TI 692 | TR 1600→TI 734 | TR 1700→TI 776 | TR 1800→TI 818
+TR 1900→TI 859 | TR 2000→TI 900 | TR 2100→TI 940 | TR 2200→TI 980
+TR 2300→TI 1019 | TR 2400→TI 1058 | TR 2500→TI 1096 | TR 2600→TI 1134
+TR 2700→TI 1172 | TR 2800→TI 1209 | TR 2900→TI 1246 | TR 3000→TI 1282
 
-let part='all', busy=false, selectedImg=null, dbCat='all';
+FLAIR (T2 IR TSE) 3T:
+TR 7000→TI 2215 | TR 7500→TI 2297 | TR 8000→TI 2372 | TR 8500→TI 2439
+TR 9000→TI 2500 | TR 9500→TI 2555 | TR 10000→TI 2605 | TR 10500→TI 2650
+TR 11000→TI 2691 | TR 11500→TI 2728 | TR 12000→TI 2760
 
-function switchTab(tab) {
-  document.getElementById('chatPanel').style.display = tab==='chat' ? 'flex' : 'none';
-  document.getElementById('dbPanel').classList.toggle('on', tab==='db');
-  document.getElementById('tabChat').classList.toggle('on', tab==='chat');
-  document.getElementById('tabDB').classList.toggle('on', tab==='db');
-  if(tab==='db') renderDB();
-}
+TI 설정 방식:
+- Siemens: freeze 기능 → TR 변경 시 TI 자동 조정
+- GE: TI Auto 설정 가능
+- Philips: Auto 없음, 위 테이블 참조하여 수동 입력
+
+=== BRAIN (3T) ===
+[T1WI IR 3D / MP-RAGE, TFE, BRAVO]
+TE: 원본유지(2.3, 4.6ms in-phase) / TR: 7-12ms / TI: 위 테이블 참조
+Freq voxel: 0.8-1.0mm / Phase voxel: 0.9-1.2mm (scan% 80%이상)
+PAT: Philips SENSE slice2(CS SENSE 4-5) / Siemens GRAPPA 2-3(factor3→phaseOS30%) / GE ASSET/ARC 2-2.5 / Canon SPEEDER 1.7-2.0
+ACQ Slice: 0.9-1.2mm / Recon: 0.45-0.6mm (Siemens:SliceRes50% / Philips:ReconVoxel / GE:ZIP2 / Canon:FineReconON)
+Phase dir: COR=RL, AXI=RL, SAG=AP / SliceOS 10%이상 / FlipAngle 8-15°
+
+[T1 IR TSE / T1 FLAIR - 2D]
+TE: 15-25ms / TR: 1600-2200ms / TI: 734-980ms (테이블 확인)
+Freq voxel: 0.5-0.7mm / Phase voxel: 0.6-0.8mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(phaseOS 10%) / GE ASSET/ARC 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 9-12ms / ETD: 50ms 이하(ETL×ES=ETD) / ETL: 3-5 / Refocusing flip angle: 110-150°
+Phase dir: AX=RL, COR=RL, SAG=AP / Flow comp: AX=Slice, COR=Freq, SAG=Freq
+
+[T2 FLAIR / T2 IR TSE]
+TR: 9000ms이상 / TI: 위 테이블 참조 / TE: 90-120ms / ETL: 20-30
+
+[SWI / 3D GRE]
+TE: 원본유지 / TR: minimum
+Freq voxel: 0.6-0.8mm / Phase voxel: 0.7-1.0mm(scan% 60%이상)
+PAT: Philips SENSE P 2-2.5, S 1-1.5 (CS SENSE 4-6) / Siemens GRAPPA 2-3(factor3→phaseOS30%) / GE ASSET/ARC 2-2.5
+ACQ Slice: 2-3mm / Recon Slice: 1-1.5mm / Phase dir: RL / SliceOS 10%이상 / FlipAngle 18-20°
+
+[TOF / 3D GRE MRA]
+TE: 원본유지(3T: 3.45-3.69ms out-of-phase) / TR: 20-27ms
+Freq voxel: 0.5-0.6mm / Phase voxel: 0.9-1.2mm(scan% 60%이상)
+PAT: Philips SENSE 2-2.5(CS SENSE 4-5) / Siemens GRAPPA 2-3(factor3→phaseOS30%) / GE ASSET/ARC 2-2.5 / Canon SPEEDER 1.7-2.0
+ACQ Slice: 1.0-1.4mm / Recon Slice: 0.5-0.7mm / Phase dir: RL / SliceOS 10%이상 / FlipAngle 18-25°
+
+[T2* GRE / 2D FFE - Brain]
+TE: 16-18ms / TR: 500-800ms / Freq voxel: 0.7-0.8mm / Phase voxel: 0.9-1.1mm(scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(phaseOS 10%) / GE ASSET/ARC 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 8-10ms / FlipAngle: 16-20°(원본유지) / Phase dir: AX=RL, COR=RL, SAG=AP
+
+[DWI]
+b-value: 0, 1000 / TE: 최솟값 / TR: 4000ms이상 / PAT 최대3 / MUSE로 distortion 감소
+
+=== CERVICAL SPINE ===
+[T2WI / 2D TSE]
+TE: 90-120ms / TR: 2500-6000ms (Drive기능: Siemens=Restore, Philips=Drive, GE=Fast Recovery, Canon=T2 Plus)
+Freq voxel: AX 0.5-0.65mm, SAG 0.6-0.8mm / Phase voxel: AX 0.6-0.8mm, SAG 0.9-1.2mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2.0 / Canon SPEEDER off-1.7
+NEX: AX=2, SAG=1-2(2권장) / Echo spacing: 9-12ms / ETD: 180-240ms / ETL: 15-26 / Refocusing FA: 110-150°
+Phase dir: AX=AP(OS 30%이상), SAG=FH(OS 70%이상) / Flow comp: AX=Slice, SAG=Freq
+
+[T2* GRE or Multi Echo GRE - AXL]
+TE: 14-20ms / TR: 450-800ms / Freq voxel: 0.6-0.7mm / Phase voxel: 0.7-0.8mm(scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(phaseOS 10%) / GE ASSET/ARC 1.75-2.0 / Canon SPEEDER 1.5-1.7
+FlipAngle: 20-30°(원본유지) / Phase dir: AX=RL(OS 20-40%)
+
+[T1WI / T1 FLAIR / T1WI FS]
+PAT: Philips SENSE 1-2 / Siemens GRAPPA off-2 / GE off-2 / Canon off-1.7 / NEX: AX=2, SAG=1-2(2권장)
+
+[DIXON FS (T2WI/T1WI)]
+Freq voxel: SAG 0.85-1.1mm / Phase voxel: 0.9-1.1mm(scan% 70%이상)
+
+=== LUMBAR SPINE (3T) ===
+[T2WI / 2D TSE]
+TE: 90-120ms / TR: 2500-6000ms (Drive기능 사용)
+Freq voxel: AX 0.5-0.7mm, SAG 0.55-0.75mm / Phase voxel: AX 0.6-0.8mm, SAG 0.8-1.0mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2.0 / Canon SPEEDER off-1.7
+NEX: AX=1-2(2권장), SAG=1-2(2권장) / Echo spacing: 9-12ms / ETD: 180-240ms / ETL: 15-26 / Refocusing FA: 110-150°
+Phase dir: AX=AP(OS 40%이상), SAG=FH(OS 70%이상) / Flow comp: AX=Slice, SAG=Freq
+
+[T1WI / T1WI FS / T2 STIR]
+PAT: 동일 적용 / STIR TI: 150-180ms
+
+=== THORACIC SPINE ===
+T2WI: C-Spine과 동일 파라미터 / Phase dir: SAG=FH, AXI=RL
+
+=== MSK - SHOULDER (3T) ===
+[PDWI FS / 2D TSE - 주요 시퀀스]
+TE: 25-35ms / TR: 2300-6000ms (Drive기능 사용)
+Freq voxel: 0.4-0.55mm / Phase voxel: 0.50-0.7mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2.0 / Canon SPEEDER off-1.7
+NEX: 1 / Echo spacing: 8.5-11ms / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 40%이상), COR=FH(OS 70%이상), SAG=FH(OS 70%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+
+[T1WI]
+TE: 최솟값 / TR: 400-700ms / PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+
+[T2 STIR / T2WI FS]
+TE: 90-120ms / TR: 2000-5000ms / STIR TI: 150ms 내외
+
+[T2* GRE or Multi Echo GRE]
+TE: 14-20ms / TR: 450-800ms / FlipAngle: 20-30° (원본유지) / Canon SPEEDER 1.5-1.7
+
+=== MSK - KNEE (3T) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms (Drive기능 사용)
+Freq voxel: 0.4-0.55mm / Phase voxel: 0.50-0.7mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2.0 / Canon SPEEDER off-1.7
+NEX: 1 / Echo spacing: 8.5-11ms / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
+Phase dir: AX=RL(OS 10%이상), COR=RL(OS 20%이상), SAG=FH(OS 60%이상)
+[PDWI FS 1.5T] Freq voxel: 0.45-0.55mm / Phase dir: AX=RL(OS 20%이상), COR=RL(OS 20%이상), SAG=FH(OS 60%이상)
+
+=== MSK - HIP JOINT (1.5T 기준) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms / Freq voxel: 0.75-0.95mm / Phase voxel: 0.95-1.2mm (scan% 70%이상)
+PAT: Philips SENSE 2-2.5 / Siemens GRAPPA off-2(COR PAT3 가능) / GE ASSET/ARC 2.0-2.5 / Canon SPEEDER 2
+NEX: AX=1-2, COR=1-2(2권장), SAG=1 / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 20%이상), COR=RL(OS 30%이상), SAG=FH(OS 50%이상)
+
+=== MSK - ANKLE (3T) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms / Freq voxel: 0.4-0.5mm / Phase voxel: 0.50-0.65mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+NEX: 1 / ETD: 90ms 이하 / ETL: 6-20 / Refocusing FA: 110-130°
+Phase dir: AX=RL(OS 20%이상), COR=RL(OS 20%이상), SAG=FH(OS 70%이상)
+
+=== MSK - WRIST (3T) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms / Freq voxel: 0.35-0.45mm / Phase voxel: 0.40-0.55mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+NEX: 1 / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
+Phase dir: AX=RL(OS 10%이상), COR=FH(OS 50%이상), SAG=AP(OS 20%이상)
+
+=== MSK - ELBOW (1.5T 기준) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms / Freq voxel: 0.4-0.55mm / Phase voxel: 0.50-0.65mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+NEX: 1 / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 20%이상), COR=FH(OS 50%이상), SAG=FH(OS 50%이상)
+
+=== MSK - FOOT (1.5T 기준) ===
+[PDWI FS / 2D TSE]
+TE: 25-35ms / TR: 2300-6000ms / Freq voxel: 0.45-0.55mm / Phase voxel: 0.6-0.75mm (scan% 70%이상)
+PAT: Philips SENSE 1.5-2.0 / Siemens GRAPPA off-2 / GE off-2 / Canon off-2
+NEX: 1 / ETD: 90ms 이하 / ETL: 6-20 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 10%이상), COR=RL(OS 20%이상), SAG=AP(OS 10%이상)
+
+=== WHOLE SPINE (3T) ===
+[T2WI / 2D TSE - 2~3 station]
+TE: 90-120ms / TR: 2500-6000ms (Drive기능 사용)
+Freq voxel: 0.6-0.8mm / Phase voxel: 0.9-1.2mm (scan% 60%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+NEX: 1 / ETD: 180-240ms / ETL: 15-26 / Refocusing FA: 110-130°
+Phase dir: SAG=FH(OS 70%이상), COR=FH(OS 70%이상) / station 간 overlap 충분히 확보
+
+=== 공통 원칙 ===
+TE: 특별한 경우 외 원본유지 / SliceOS 10%이상 / Recon=ACQ 약50%
+PAT 명칭: Philips=SENSE/CS-SENSE / Siemens=GRAPPA / GE=ASSET,ARC / Canon=SPEEDER,RAPID
+Drive 기능(TR 증가 시): Siemens=Restore / Philips=Drive / GE=Fast Recovery / Canon=T2 Plus
+Echo spacing은 bandwidth에 sync / ETD=ETL×ES / ETD 초과 시 image quality 저하
+
+=== KNOWN ISSUE DB - BRAIN / NEURO ===
+1. Boundary artifact (TR-TI artifact):
+   원인: TR과 TI 균형 깨짐→ventricle/cortex 경계 검은 윤곽선
+   해결: Siemens=freeze 기능으로 TR 변경시 TI 자동조정 / GE=TI Auto / Philips=테이블 수동입력
+   주의: TR 9000/TI 2500 기준 비율 유지
+
+2. TOF ICA Pseudo-stenosis artifact:
+   원인: Intravoxel dephasing→ICA 신호소실(협착 오인 가능)
+   해결: AcqVoxelSlice 1.0→0.6mm 감소 / SlicePartialFourier off(100%에 가깝게) / SwiftMR로 크게 개선(super-resolution 효과)
+   실험결과: in-plane 해상도 개선은 효과 미미, slice방향이 핵심
+
+3. Venetian blind artifact (Brain TOF):
+   원인: slab 경계 신호 불균일
+   해결: overlap 증가
+
+4. PAT residual artifact (SENSE/ARC):
+   원인: acceleration factor 과도
+   해결: PAT factor 감소
+
+5. EPI distortion artifact (DWI):
+   원인: B0 불균일 / FOV 과다
+   해결: PAT factor 최대3 / MUSE 사용 / FOV 350 이하 권장
+
+6. FID artifact (GRE):
+   원인: refocusing pulse
+   해결: Echo Spacing 증가 or crusher gradient 사용
+
+7. FID artifact (Spin Echo):
+   원인: refocusing pulse (SE 계열)
+   해결: SE→TSE 또는 TSE-IR로 변환
+
+8. Aliasing artifact (CS-SENSE):
+   원인: CS-SENSE 재구성 알고리즘
+   해결: acquisition FOV 증가
+
+9. Gibbs (Truncation) artifact:
+   해결: SwiftMR reconstruction으로 개선 가능
+
+10. Flow artifact (Brain):
+    원인: 혈류 신호
+    해결: Flow compensation 설정 / Phase dir 변경
+
+11. Slice aliasing artifact (3D):
+    원인: 3D sequence slice 경계
+    해결: Slice oversampling 10% 이상 증가
+
+12. Motion artifact (patient-induced):
+    해결: 환자 고정 강화 후 재스캔
+
+=== KNOWN ISSUE DB - SPINE ===
+1. Fat Suppression inhomogeneity (Spine):
+   원인: B0 불균일로 FS 불균등
+   해결: STIR 또는 DIXON FS로 변환 / shim 범위 조정
+
+2. Folding artifact (small FOV aliasing):
+   원인: phase 방향 FOV 부족
+   해결: acquisition FOV 증가 / phase oversampling 증가
+
+3. PAT residual artifact (Spine):
+   원인: acceleration factor 과도
+   해결: PAT factor 감소
+
+4. Cross talk artifact:
+   원인: stack 간 overlap 과다
+   해결: stack 간 overlap 최소화
+
+5. Cross talk (Flow void):
+   원인: concatenation 부족
+   해결: concatenation 증가
+
+6. Streaking artifact:
+   원인: blade coverage 부족 (PROPELLER/BLADE 계열)
+   해결: blade coverage 증가
+
+7. Metal artifact (Spine):
+   원인: 금속 임플란트 주변 자기장 왜곡
+   해결: SEMAC (Slice-Encoding for Metal Artifact Correction) 적용 / VAT / MARS / TE 최솟값 사용
+
+8. Slice Aliasing (Spine):
+   원인: 3D sequence 경계
+   해결: slice oversampling 증가
+
+9. Insufficient overlap (Whole Spine):
+   원인: station 간 overlap 부족
+   해결: station 간 overlap 증가
+
+10. Motion (breath-induced, Spine):
+    해결: 환자 안정화 후 재스캔 / breath-hold 기법
+
+=== KNOWN ISSUE DB - MSK (Upper/Lower) ===
+1. FID artifact (MSK):
+   원인: refocusing pulse
+   해결: Echo Spacing 증가 or crusher gradient
+
+2. Aliasing artifact (MSK):
+   원인: phase 방향 FOV 부족
+   해결: Phase oversampling 증가
+
+3. Slice aliasing artifact (MSK 3D):
+   해결: Slice oversampling 증가
+
+4. Folding artifact (MSK):
+   원인: phase 방향 FOV 부족
+   해결: Phase oversampling 증가
+
+5. Flow artifact (MSK SAG/AXL):
+   원인: 혈관 흐름 신호
+   해결: Flow compensation ON / saturation band 추가
+
+6. PAT residual artifact (MSK):
+   해결: PAT factor 감소
+
+7. Metal artifact (MSK):
+   원인: 금속 임플란트
+   해결: SEMAC / MARS / Metal artifact reduction sequence 적용
+
+8. Herringbone artifact:
+   원인: k-space 데이터 오류
+   해결: 재스캔
+
+9. Motion artifact (breath-induced, MSK Humerus 등):
+   해결: 호흡 안정화 후 재스캔
+
+10. FS inhomogeneity (MSK):
+    원인: B0 불균일
+    해결: shim 범위 FOV에 맞게 조정 / DIXON FS 사용
+
+=== 현장 이슈 해결 사례 (clinical_cs_discussion) ===
+1. Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 CS 연산 부정확→SENSE로 변경
+2. 강북삼성 Motion Free (Philips Ingenia CX 3T): Phase Oversampling 차이→PO 동일설정 (v3.0.13.3+에서 수정됨)
+3. TOF MIP 혈관끊김 (국제성모): SPF off→해결, slice resolution이 근본원인
+4. GE MR30.1 소스리턴 (인천건협): 장비 재등록으로 해결 (GE MR30.1 known issue)
+5. Shoulder FS 불량: Echo spacing 과다→ES 가이드라인 내 최대한 낮춤 / shim 범위 FOV 맞게 (넓히면 외곽FS 불량 악화)
+6. GE 1.5T HD16 NPW+ASSET: 동시사용 불가 (GE 기기 제한)→둘 중 하나 선택
+7. 광주미래 Abdomen DWI 전송이슈: b-value 원본소스 합쳐져 ADC와 묶임→scan item 재등록 or 서비스 재시작
+8. Siemens 복부 slice간 신호꺼짐: flow artifact 가능성 / Fat saturation 세팅 확인
+9. GE Pioneer 3.0T MR30.1 Real Time Field Adjustment: 실시간 필드조정 이슈 확인 중
+10. Philips 3D TSE MSK PD FS water signal 저하: Echo spacing 과다→ES 낮추고 가이드라인 준수
+11. Philips 3D T1 TFE: CS SENSE 옵션 확인 / Head Base Coil 유무 체크
+12. Brain T1WI white matter contrast 개선 요청: TE 낮춤(10.2→9.4) / TR 조정(470→620) 후 contrast 개선
+13. Siemens Vida XA50 PC Venography: 시퀀스 설정 및 velocity encoding 확인
+14. GE Signal Excite 1.5T 15.0버전 이슈: 구버전 소프트웨어 제한사항 확인 필요
+15. Philips DWI 하얀거 (EPI distortion): B0 불균일→PAT 증가 / MUSE 적용
+
+=== 답변 방식 ===
+당신은 MRI 전문가로서 질문의 의도를 파악하고 가이드라인 내에서 최선의 답변을 제공합니다.
+
+[질문 해석 원칙]
+- 질문이 짧거나 구어체여도 의도를 파악해서 답변 (예: "Brain TI 얼마야?" → T1WI TI값 안내)
+- 오타나 약어도 문맥으로 판단 (예: "flair ti" → FLAIR TI값, "바운더리 아티팩트" → Boundary artifact)
+- 부위 선택이 되어있으면 해당 부위 중심으로 답변
+- 이미지가 첨부되면 MRI artifact 분석 → 원인 → 해결방법 순서로 답변
+
+[답변 원칙]
+1. 가이드라인과 Known Issue DB에 있는 내용을 중심으로 답변
+2. TI값은 반드시 위 TI VALUE TABLE 수치만 인용 (절대 임의로 만들지 말 것)
+3. 가이드라인에 완전히 없는 내용은 "가이드라인에 없는 내용입니다. CCS팀(gwon.dohhun@airsmed.com)에 문의하세요." 안내
+4. 제조사별 차이가 있으면 Siemens / Philips / GE / Canon 구분해서 설명
+5. 파라미터 수치는 범위로 명확히 제시
+6. Artifact 질문 시: 원인 → 해결방법 순서로 간결하게
+7. 한국어로 답변, 전문용어는 영어 그대로 사용 가능
+
+[이미지 분석 시]
+- 이미지에서 보이는 artifact 종류 먼저 파악
+- Known Issue DB와 매칭해서 원인 설명
+- 구체적인 해결 파라미터 제시
+- 어떤 제조사 장비인지 이미지에서 판단 가능하면 해당 제조사 해결법 우선 제시`;
+
+let part = 'all', busy = false;
 
 function setPart(el) {
-  document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.pb').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
-  part=el.dataset.part;
-  document.getElementById('plabel').textContent='· '+(part==='all'?'전체 부위':part);
-}
-
-function setDBCat(el) {
-  document.querySelectorAll('.df').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  dbCat=el.dataset.cat;
-  renderDB();
-}
-
-function renderDB() {
-  const q = document.getElementById('dbSearch').value.toLowerCase();
-  const content = document.getElementById('dbContent');
-  let html = '';
-  let total = 0;
-
-  const cats = dbCat==='all' ? Object.keys(ISSUES) : [dbCat];
-  cats.forEach(cat => {
-    const items = ISSUES[cat].filter(i =>
-      !q || i.name.toLowerCase().includes(q) || i.cause.toLowerCase().includes(q) || i.solution.toLowerCase().includes(q)
-    );
-    if(!items.length) return;
-    total += items.length;
-    html += `<div class="db-section">
-      <div class="db-section-title">${CAT_LABEL[cat]} <span style="font-weight:400;color:var(--muted)">(${items.length}건)</span></div>
-      <div class="db-grid">`;
-    items.forEach((issue,idx) => {
-      const id = `issue_${cat}_${idx}`;
-      const sol = issue.solution.replace(/\n/g,'<br>');
-      const tip = issue.tip ? `<div class="detail-row"><span class="detail-label" style="color:var(--blue);width:auto;margin-right:4px;">💡</span><span class="detail-val" style="color:var(--muted);font-size:11px;">${issue.tip}</span></div>` : '';
-      html += `<div class="issue-card" id="${id}" onclick="toggleIssue('${id}','${cat}','${issue.name.replace(/'/g,"\\'")}')">
-        <div><span class="issue-tag ${CAT_TAG[cat]}">${CAT_NAME[cat]}</span></div>
-        <div class="issue-name">${issue.name}</div>
-        <div class="issue-detail">
-          <div class="detail-row"><span class="detail-label">원인</span><span class="detail-val">${issue.cause}</span></div>
-          <div class="detail-row"><span class="detail-label">해결</span><span class="detail-val">${sol}</span></div>
-          ${tip}
-          <button class="ask-btn" onclick="askFromDB(event,'${issue.name.replace(/'/g,"\\'")}')">💬 이 이슈 AI에게 더 물어보기</button>
-        </div>
-      </div>`;
-    });
-    html += `</div></div>`;
-  });
-
-  if(!total) html = `<div class="no-result">검색 결과가 없습니다.<br><span style="font-size:12px;color:var(--muted)">다른 키워드로 검색해보세요</span></div>`;
-  content.innerHTML = html;
-}
-
-function toggleIssue(id, cat, name) {
-  const card = document.getElementById(id);
-  card.classList.toggle('expanded');
-}
-
-function askFromDB(e, name) {
-  e.stopPropagation();
-  switchTab('chat');
-  fill(`${name} 에 대해 더 자세히 설명해줘`);
+  part = el.dataset.part;
+  document.getElementById('plabel').textContent = '· ' + (part === 'all' ? '전체 부위' : part);
 }
 
 function fill(t) {
-  const ta=document.getElementById('qi');
-  ta.value=t;ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,100)+'px';ta.focus();
+  const ta = document.getElementById('qi');
+  ta.value = t;
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+  ta.focus();
 }
 
-function setImg(file) {
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    selectedImg={base64:ev.target.result.split(',')[1],mimeType:file.type};
-    const p=document.getElementById('imgPreview');
-    p.style.display='block';
-    p.innerHTML=`<div style="position:relative;display:inline-block;">
-      <img src="${ev.target.result}" style="max-height:75px;border-radius:7px;border:1px solid var(--bdr2);">
-      <button onclick="clearImg()" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--muted);border:none;cursor:pointer;color:white;font-size:10px;display:flex;align-items:center;justify-content:center;">✕</button>
+let selectedImg = null;
+
+function clearImg() {
+  selectedImg = null;
+  const wrap = document.getElementById('img-preview-wrap');
+  if (wrap) { wrap.style.display = 'none'; wrap.innerHTML = ''; }
+  const inp = document.getElementById('img-input');
+  if (inp) inp.value = '';
+}
+
+
+
+async function ask() {
+  const ta = document.getElementById('qi');
+  const q = ta.value.trim();
+  if ((!q && !selectedImg) || busy) return;
+  busy = true;
+  document.getElementById('sbtn').disabled = true;
+
+  const imgSnap = selectedImg;
+  const displayQ = q || '이 MRI 이미지에서 artifact를 분석해주세요';
+
+  const ch = document.getElementById('chat');
+  const em = document.getElementById('empty');
+  if (em) em.remove();
+
+  // 사용자 메시지 (이미지 있으면 미리보기 포함)
+  const um = document.createElement('div');
+  um.className = 'msg-u';
+  if (imgSnap) {
+    um.innerHTML = `<div class="bubble" style="display:flex;flex-direction:column;gap:6px;max-width:70%;">
+      <img src="data:${imgSnap.mimeType};base64,${imgSnap.base64}" style="max-width:220px;max-height:160px;border-radius:8px;object-fit:contain;">
+      <span>${displayQ.replace(/</g,'&lt;')}</span>
+    </div>`;
+  } else {
+    um.innerHTML = `<div class="bubble">${q.replace(/</g,'&lt;')}</div>`;
+  }
+  ch.appendChild(um);
+
+  ta.value = ''; ta.style.height = 'auto';
+  clearImg();
+
+  const am = document.createElement('div');
+  am.className = 'msg-a';
+  am.innerHTML = `
+    <div class="av"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg></div>
+    <div style="flex:1;min-width:0">
+      <div class="acard loading" id="ac">
+        <div class="dots"><span></span><span></span><span></span></div>
+        ${imgSnap ? 'MRI 이미지 분석 중...' : '가이드라인 검색 중...'}
+      </div>
+    </div>`;
+  ch.appendChild(am);
+  ch.scrollTop = ch.scrollHeight;
+
+  const ctx = part !== 'all' ? `[${part}]\n` : '';
+  const userMsg = ctx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
+
+  try {
+    const body = { system: SYS, messages: [{ role: 'user', content: userMsg }] };
+    if (imgSnap) body.image = imgSnap;
+
+    const r = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({}));
+      throw new Error(e.error || 'HTTP ' + r.status);
+    }
+    const d = await r.json();
+    const txt = d.content?.filter(b => b.type === 'text').map(b => b.text).join('')
+      || d.candidates?.[0]?.content?.parts?.[0]?.text
+      || '답변 없음';
+    const ac = document.getElementById('ac');
+    if (ac) {
+      ac.id = '';
+      ac.classList.remove('loading');
+      ac.innerHTML = fmt(txt);
+    }
+  } catch(e) {
+    const ac = document.getElementById('ac');
+    if (ac) { ac.classList.remove('loading'); ac.innerHTML = `<span style="color:#f87171">오류: ${e.message}</span>`; }
+  }
+  busy = false;
+  document.getElementById('sbtn').disabled = false;
+  ch.scrollTop = ch.scrollHeight;
+}
+
+function handleImageFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    selectedImg = { base64: ev.target.result.split(',')[1], mimeType: file.type };
+    const wrap = document.getElementById('img-preview-wrap');
+    wrap.style.display = 'block';
+    wrap.innerHTML = `<div style="position:relative;display:inline-block;">
+      <img src="${ev.target.result}" style="max-height:80px;border-radius:8px;border:1px solid var(--bdr2);">
+      <button onclick="clearImg()" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--muted);border:none;cursor:pointer;font-size:10px;color:white;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>`;
   };
   reader.readAsDataURL(file);
 }
 
-function clearImg() {
-  selectedImg=null;
-  const p=document.getElementById('imgPreview');
-  p.style.display='none';p.innerHTML='';
-  document.getElementById('imgInput').value='';
-}
-
-document.getElementById('imgInput').addEventListener('change',e=>{if(e.target.files[0])setImg(e.target.files[0]);});
-document.addEventListener('dragenter',e=>{if(e.dataTransfer.types.includes('Files'))document.getElementById('dropOverlay').classList.add('on');});
-document.addEventListener('dragleave',e=>{if(!e.relatedTarget||e.relatedTarget===document.documentElement)document.getElementById('dropOverlay').classList.remove('on');});
-document.addEventListener('dragover',e=>e.preventDefault());
-document.addEventListener('drop',e=>{
-  e.preventDefault();document.getElementById('dropOverlay').classList.remove('on');
-  const file=[...e.dataTransfer.files].find(f=>f.type.startsWith('image/'));
-  if(file)setImg(file);
-});
-document.addEventListener('paste',e=>{
-  const item=[...e.clipboardData.items].find(i=>i.type.startsWith('image/'));
-  if(item){const file=item.getAsFile();if(file)setImg(file);}
-});
-
-const SYS=`당신은 MRI Clinical CS 전문가입니다. AIRS Medical Clinical CS Online Training Center의 Parameter Guide Line과 Known Issue DB, 실제 현장 이슈 해결 사례를 기반으로 답변합니다.
-
-=== TI VALUE TABLE ===
-T1WI 3T: TR1500→692|TR1600→734|TR1700→776|TR1800→818|TR1900→859|TR2000→900|TR2100→940|TR2200→980|TR2300→1019|TR2400→1058|TR2500→1096|TR2600→1134|TR2700→1172|TR2800→1209|TR2900→1246|TR3000→1282
-FLAIR 3T: TR7000→2215|TR7500→2297|TR8000→2372|TR8500→2439|TR9000→2500|TR9500→2555|TR10000→2605|TR10500→2650|TR11000→2691|TR11500→2728|TR12000→2760
-TI설정: Siemens=freeze자동/GE=TI Auto/Philips=위테이블 수동
-
-=== BRAIN ===
-T1WI IR 3D 3T: TE원본유지(2.3,4.6ms)/TR 7-12ms/TI 위테이블/Freq 0.8-1.0mm/Phase 0.9-1.2mm/scan%80%이상
-PAT: Philips SENSE2(CS SENSE 4-5)/Siemens GRAPPA 2-3(factor3→phaseOS30%)/GE ASSET/ARC 2-2.5/Canon SPEEDER 1.7-2.0
-ACQ Slice 0.9-1.2mm/Recon 0.45-0.6mm(Siemens:SliceRes50%/Philips:ReconVoxel/GE:ZIP2/Canon:FineReconON)
-Phase dir: COR=RL AXI=RL SAG=AP/SliceOS 10%이상/FlipAngle 8-15°
-T1 FLAIR: TR8000-9000/TI위테이블/ETL16-24 | T2 FLAIR: TR9000이상/TI위테이블/TE90-120/ETL20-30
-SWI: TR20-30/Flip15-20°/voxel0.5-0.8mm/AXI=AP | TOF: TR20-35/Flip15-25°/slab최대60mm/overlap20-25%
-DWI: b=0,1000/TE최솟값/TR4000이상/PAT최대3/MUSE | T2*GRE: Flip16-20°/TE15-25ms
-
-=== SPINE ===
-C-Spine: T2SAG TR3000-5000 TE90-120 slice3mm/T1SAG TR400-700/STIR TI150ms/SAG=AP AXI=RL
-T-Spine: T2SAG TR3000-5000 TE90-120 slice3-4mm/SAG=FH AXI=RL
-L-Spine: T2SAG TR3500-5000 TE100-130 slice3-4mm/T1SAG TR500-800/STIR TI150-180ms/SAG=FH AXI=RL
-
-=== MSK ===
-Shoulder/Elbow/Wrist/Hip/Ankle: PDFS TR2500-5000 TE30-50 slice3-4mm/T1 TR400-700/PAT2
-Knee: PDFS TR2500-4000 TE30-50 slice3-4mm/3T:PAT GRAPPA/SENSE2/1.5T:PAT1-2
-
-=== 공통 ===
-TE원본유지/SliceOS 10%이상/Recon=ACQ약50%
-PAT: Philips=SENSE/CS-SENSE/Siemens=GRAPPA/GE=ASSET,ARC/Canon=SPEEDER,RAPID
-
-=== KNOWN ISSUE DB ===
-Brain: Boundary(TR/TI균형깨짐→경계윤곽선/Siemens:freeze,GE:Auto,Philips:수동), TOF ICA(Intravoxel dephasing→신호소실/AcqVoxelSlice감소/SPF off/SwiftMR개선), Venetian blind(overlap증가), PAT residual(factor감소), EPI distortion(PAT최대3/MUSE/FOV350이하), FID(EchoSpacing증가/crusherGradient), Aliasing CS-SENSE(FOV증가), Gibbs(SwiftMR개선), Flow(FlowComp/PhaseDir변경), SliceAliasing(SliceOS증가), Motion(환자고정)
-Spine: FS inhomogeneity(STIR/DIXON로 변환/shim조정), Folding(FOV증가/phaseOS증가), PAT residual(factor감소), Cross talk(overlap최소화), Cross talk FlowVoid(concatenation증가), Streaking(bladeCoverage증가), Metal(SEMAC/VAT/MARS/TE최솟값), SliceAliasing(SliceOS증가), InsufficientOverlap(overlap증가), Motion(환자안정화/breath-hold)
-MSK: FID(EchoSpacing증가/crusher), Aliasing(PhaseOS증가), SliceAliasing(SliceOS증가), Folding(PhaseOS증가), Flow(FlowComp/satBand), PAT residual(factor감소), Metal(SEMAC/MARS), Herringbone(재스캔), Motion(호흡안정화), FS inhomogeneity(shim/DIXON)
-
-=== 현장 이슈 사례 ===
-Philips eTHRIVE Dynamic CS: Head Base Coil없으면→SENSE변경
-강북삼성 Motion Free(Philips 3T): PhaseOS차이→PO동일설정(v3.0.13.3+수정)
-TOF MIP 혈관끊김: SPF off→해결
-GE MR30.1 소스리턴(인천건협): 장비재등록
-Shoulder FS불량: ES최대한낮춤/shim범위FOV맞게
-GE 1.5T HD16 NPW+ASSET: 동시사용불가→하나선택
-광주미래 Abdomen DWI전송: scan item재등록 or 서비스재시작
-Siemens복부 slice간신호꺼짐: FlowArtifact/FatSat확인
-Philips 3D TSE MSK PD FS저하: ES낮춤
-Brain T1WI WM contrast개선: TE10.2→9.4/TR470→620
-
-=== 답변 원칙 ===
-- 질문 의도 파악(짧은질문/구어체/오타 모두 OK)
-- TI값은 반드시 위 테이블 수치만 인용
-- 가이드라인에 없으면 "CCS팀(gwon.dohhun@airsmed.com)에 문의하세요" 안내
-- 이미지 분석시: artifact종류→원인→해결방법 순서
-- 제조사별 차이 구분/한국어로 간결하게`;
-
-async function ask() {
-  const ta=document.getElementById('qi');
-  const q=ta.value.trim();
-  if((!q&&!selectedImg)||busy)return;
-  busy=true;document.getElementById('sbtn').disabled=true;
-  const imgSnap=selectedImg;
-  const displayQ=q||'이 MRI 이미지에서 artifact를 분석해주세요';
-  const em=document.getElementById('empty');if(em)em.remove();
-  const ch=document.getElementById('chat');
-  const um=document.createElement('div');um.className='msg-u';
-  if(imgSnap){
-    um.innerHTML=`<div class="bubble" style="display:flex;flex-direction:column;gap:5px;max-width:70%;">
-      <img src="data:${imgSnap.mimeType};base64,${imgSnap.base64}" style="max-width:200px;max-height:150px;border-radius:7px;object-fit:contain;">
-      <span>${displayQ.replace(/</g,'&lt;')}</span></div>`;
-  }else{um.innerHTML=`<div class="bubble">${q.replace(/</g,'&lt;')}</div>`;}
-  ch.appendChild(um);
-  ta.value='';ta.style.height='auto';clearImg();
-  const msgId='ac_'+Date.now();
-  const am=document.createElement('div');am.className='msg-a';
-  am.innerHTML=`<div class="av"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg></div>
-    <div style="flex:1;min-width:0"><div class="acard loading" id="${msgId}">
-      <div class="dots"><span></span><span></span><span></span></div>
-      ${imgSnap?'MRI 이미지 분석 중...':'가이드라인 검색 중...'}
-    </div></div>`;
-  ch.appendChild(am);ch.scrollTop=ch.scrollHeight;
-  const ctx=part!=='all'?`[${part}]\n`:'';
-  const userMsg=ctx+(q||'이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
-  try{
-    const body={system:SYS,messages:[{role:'user',content:userMsg}]};
-    if(imgSnap)body.image=imgSnap;
-    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const d=await r.json();
-    if(!r.ok)throw new Error(d.error||'HTTP '+r.status);
-    const txt=d.content?.[0]?.text||'답변 없음';
-    const ac=document.getElementById(msgId);
-    if(ac){ac.classList.remove('loading');ac.innerHTML=fmt(txt);}
-  }catch(e){
-    const ac=document.getElementById(msgId);
-    if(ac){ac.classList.remove('loading');ac.innerHTML=`<span style="color:#f87171">오류: ${e.message}</span>`;}
+// Drag & drop
+document.addEventListener('dragenter', e => {
+  if (e.dataTransfer.types.includes('Files')) {
+    document.getElementById('drop-overlay').classList.add('active');
   }
-  busy=false;document.getElementById('sbtn').disabled=false;ch.scrollTop=ch.scrollHeight;
-}
+});
+document.addEventListener('dragleave', e => {
+  if (!e.relatedTarget || e.relatedTarget === document.documentElement) {
+    document.getElementById('drop-overlay').classList.remove('active');
+  }
+});
+document.addEventListener('dragover', e => { e.preventDefault(); });
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  document.getElementById('drop-overlay').classList.remove('active');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    handleImageFile(file);
+  }
+});
 
-function fmt(t){
+// Paste image
+document.addEventListener('paste', e => {
+  const item = [...e.clipboardData.items].find(i => i.type.startsWith('image/'));
+  if (item) {
+    const file = item.getAsFile();
+    if (file) handleImageFile(file);
+  }
+});
+
+
+
+function fmt(t) {
   return t
-    .replace(/\*\*(Siemens[^*]*)\*\*/g,'<span class="vtag vs">$1</span>')
-    .replace(/\*\*(Philips[^*]*)\*\*/g,'<span class="vtag vp">$1</span>')
-    .replace(/\*\*(GE[^*]*)\*\*/g,'<span class="vtag vg">$1</span>')
-    .replace(/\*\*(Canon[^*]*)\*\*/g,'<span class="vtag vc">$1</span>')
-    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
-    .replace(/^#{1,3} (.+)$/gm,'<h4>$1</h4>')
-    .replace(/^- (.+)$/gm,'<li>$1</li>')
-    .replace(/(<li>[^<]*<\/li>\n?)+/g,m=>`<ul>${m}</ul>`)
-    .replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');
+    .replace(/\*\*(Siemens[^*]*)\*\*/g, '<span class="vtag vs">$1</span>')
+    .replace(/\*\*(Philips[^*]*)\*\*/g, '<span class="vtag vp">$1</span>')
+    .replace(/\*\*(GE[^*]*)\*\*/g, '<span class="vtag vg">$1</span>')
+    .replace(/\*\*(Canon[^*]*)\*\*/g, '<span class="vtag vc">$1</span>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/^#{1,3} (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>[^<]*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
 }
 </script>
 </body>
