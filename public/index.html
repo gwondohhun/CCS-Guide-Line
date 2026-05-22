@@ -562,19 +562,32 @@ function fill(t) {
 async function ask() {
   const ta = document.getElementById('qi');
   const q = ta.value.trim();
-  if (!q || busy) return;
+  if (!q && !selectedImg || busy) return;
   busy = true;
   document.getElementById('sbtn').disabled = true;
-  ta.value = ''; ta.style.height = 'auto';
+
+  const imgSnap = selectedImg;
+  const displayQ = q || '이 MRI 이미지에서 artifact를 분석해주세요';
 
   const ch = document.getElementById('chat');
   const em = document.getElementById('empty');
   if (em) em.remove();
 
+  // 사용자 메시지 (이미지 있으면 미리보기 포함)
   const um = document.createElement('div');
   um.className = 'msg-u';
-  um.innerHTML = `<div class="bubble">${q.replace(/</g,'&lt;')}</div>`;
+  if (imgSnap) {
+    um.innerHTML = `<div class="bubble" style="display:flex;flex-direction:column;gap:6px;max-width:70%;">
+      <img src="data:${imgSnap.mimeType};base64,${imgSnap.base64}" style="max-width:220px;max-height:160px;border-radius:8px;object-fit:contain;">
+      <span>${displayQ.replace(/</g,'&lt;')}</span>
+    </div>`;
+  } else {
+    um.innerHTML = `<div class="bubble">${q.replace(/</g,'&lt;')}</div>`;
+  }
   ch.appendChild(um);
+
+  ta.value = ''; ta.style.height = 'auto';
+  clearImg();
 
   const am = document.createElement('div');
   am.className = 'msg-a';
@@ -583,21 +596,23 @@ async function ask() {
     <div style="flex:1;min-width:0">
       <div class="acard loading" id="ac">
         <div class="dots"><span></span><span></span><span></span></div>
-        가이드라인 검색 중...
+        ${imgSnap ? 'MRI 이미지 분석 중...' : '가이드라인 검색 중...'}
       </div>
     </div>`;
   ch.appendChild(am);
   ch.scrollTop = ch.scrollHeight;
 
   const ctx = part !== 'all' ? `[${part}]\n` : '';
+  const userMsg = ctx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
+
   try {
+    const body = { system: SYS, messages: [{ role: 'user', content: userMsg }] };
+    if (imgSnap) body.image = imgSnap;
+
     const r = await fetch('/api/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system: SYS,
-        messages: [{ role: 'user', content: ctx + q }]
-      })
+      body: JSON.stringify(body)
     });
     if (!r.ok) {
       const e = await r.json().catch(() => ({}));
