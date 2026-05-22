@@ -17,10 +17,13 @@ app.post('/api/ask', async (req, res) => {
 
   if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY 없음' });
 
-  const contents = messages.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: m.content }]
-  }));
+  // system 프롬프트를 첫 번째 user 메시지에 합쳐서 전달
+  const contents = [
+    {
+      role: 'user',
+      parts: [{ text: `[시스템 지시사항]\n${system}\n\n[질문]\n${messages[0].content}` }]
+    }
+  ];
 
   const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
@@ -29,14 +32,13 @@ app.post('/api/ask', async (req, res) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: system }] },
         contents,
         generationConfig: { maxOutputTokens: 1200 }
       })
     });
 
     const data = await r.json();
-    console.log('status:', r.status, JSON.stringify(data).slice(0, 200));
+    console.log('status:', r.status, JSON.stringify(data).slice(0, 300));
 
     if (!r.ok) return res.status(500).json({ error: data.error?.message || 'API 오류' });
 
