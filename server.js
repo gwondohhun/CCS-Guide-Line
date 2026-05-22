@@ -15,8 +15,11 @@ app.post('/api/ask', async (req, res) => {
   const { messages, system } = req.body;
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
+  console.log('API 요청 받음:', JSON.stringify({ system: system?.slice(0,50), messages }));
+
   if (!apiKey) {
-    return res.status(500).json({ error: 'ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.' });
+    console.error('API 키 없음!');
+    return res.status(500).json({ error: 'ANTHROPIC_API_KEY 없음' });
   }
 
   try {
@@ -36,8 +39,10 @@ app.post('/api/ask', async (req, res) => {
     });
 
     const data = await response.json();
+    console.log('Anthropic 응답 상태:', response.status, JSON.stringify(data).slice(0, 200));
     res.json(data);
   } catch (err) {
+    console.error('에러:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
