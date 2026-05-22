@@ -562,7 +562,7 @@ function fill(t) {
 async function ask() {
   const ta = document.getElementById('qi');
   const q = ta.value.trim();
-  if (!q && !selectedImg || busy) return;
+  if ((!q && !selectedImg) || busy) return;
   busy = true;
   document.getElementById('sbtn').disabled = true;
 
