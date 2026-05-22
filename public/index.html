@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MRI Parameter Guide — AIRS Medical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0e17; --surf:#111827; --surf2:#1a2234; --surf3:#212d42;
+  --bdr:rgba(255,255,255,0.07); --bdr2:rgba(255,255,255,0.12);
+  --tx:#e8ecf4; --muted:#6b7a99;
+  --blue:#3b82f6; --blue-dim:rgba(59,130,246,0.12); --blue-bdr:rgba(59,130,246,0.3);
+  --vs-bg:rgba(59,130,246,0.15); --vs-tx:#93c5fd;
+  --vp-bg:rgba(16,185,129,0.15); --vp-tx:#6ee7b7;
+  --vg-bg:rgba(245,158,11,0.15); --vg-tx:#fcd34d;
+  --vc-bg:rgba(244,114,182,0.15); --vc-tx:#f9a8d4;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
+
+.layout { display: flex; height: 100vh; overflow: hidden; position: relative; z-index: 1; }
+
+/* Sidebar */
+.sb {
+  width: 220px; flex-shrink: 0;
+  background: var(--surf); border-right: 1px solid var(--bdr);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.sb::-webkit-scrollbar { width: 3px; }
+.sb::-webkit-scrollbar-thumb { background: var(--bdr2); border-radius: 2px; }
+.brand {
+  padding: 18px 16px; border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 11px;
+}
+.brand-ico {
+  width: 36px; height: 36px; background: var(--blue);
+  border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.brand-ico svg { width: 20px; height: 20px; fill: #e0f0ff; }
+.brand-name { font-size: 14px; font-weight: 600; color: var(--tx); line-height: 1.2; }
+.brand-sub { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; }
+.sb-sec { padding: 12px 10px 6px; }
+.sb-lbl {
+  font-size: 10px; font-weight: 600; color: var(--muted);
+  letter-spacing: .08em; text-transform: uppercase; padding: 0 7px; margin-bottom: 5px;
+}
+.pb {
+  width: 100%; display: flex; align-items: center; gap: 9px;
+  padding: 7px 9px; border: 1px solid transparent;
+  border-radius: 8px; background: transparent;
+  color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px;
+  cursor: pointer; text-align: left; transition: all .13s; margin-bottom: 2px;
+}
+.pb:hover { background: var(--surf2); color: var(--tx); }
+.pb.on { background: var(--blue-dim); color: var(--blue); border-color: var(--blue-bdr); }
+.pb .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted); flex-shrink: 0; transition: background .13s;
+}
+.pb.on .dot { background: var(--blue); }
+.sb-div { height: 1px; background: var(--bdr); margin: 7px 12px; }
+.vleg {
+  margin: 6px 10px 12px; padding: 10px 12px;
+  background: var(--surf2); border: 1px solid var(--bdr); border-radius: 9px;
+}
+.vleg-t { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.vrow { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 12px; color: var(--muted); }
+.vdot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+/* Main */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar {
+  padding: 14px 22px; border-bottom: 1px solid var(--bdr);
+  background: var(--surf);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.tb-l { font-size: 13px; color: var(--muted); }
+.tb-l strong { color: var(--tx); font-weight: 500; }
+.tb-r { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.live {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22c55e; box-shadow: 0 0 6px #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+/* Chat */
+.chat {
+  flex: 1; overflow-y: auto; padding: 22px;
+  display: flex; flex-direction: column; gap: 18px;
+  background: var(--bg); scroll-behavior: smooth;
+}
+.chat::-webkit-scrollbar { width: 4px; }
+.chat::-webkit-scrollbar-thumb { background: var(--bdr2); border-radius: 2px; }
+
+/* Empty state */
+.empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 28px; text-align: center; padding: 40px 20px;
+}
+.empty-ico {
+  width: 60px; height: 60px; background: var(--blue-dim);
+  border: 1px solid var(--blue-bdr); border-radius: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.empty-ico svg { width: 30px; height: 30px; stroke: var(--blue); fill: none; stroke-width: 1.5; }
+.empty h2 { font-size: 20px; font-weight: 500; color: var(--tx); }
+.empty p { font-size: 14px; color: var(--muted); max-width: 360px; line-height: 1.65; }
+.qgrid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px; width: 100%; max-width: 560px;
+}
+.qb {
+  padding: 11px 13px; background: var(--surf);
+  border: 1px solid var(--bdr2); border-radius: 9px;
+  color: var(--muted); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer; text-align: left;
+  line-height: 1.4; transition: all .15s;
+}
+.qb:hover { background: var(--surf2); color: var(--tx); border-color: var(--blue-bdr); }
+.ql { display: block; font-size: 10px; color: var(--blue); font-weight: 600; letter-spacing: .04em; margin-bottom: 4px; }
+
+/* Messages */
+.msg-u { display: flex; justify-content: flex-end; animation: fu .18s ease; }
+.bubble {
+  background: var(--blue); color: #fff;
+  padding: 10px 16px; border-radius: 16px 16px 4px 16px;
+  font-size: 14px; max-width: 70%; line-height: 1.55;
+}
+.msg-a { display: flex; gap: 11px; align-items: flex-start; animation: fu .2s ease; }
+@keyframes fu { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+.av {
+  width: 32px; height: 32px; background: var(--blue-dim);
+  border: 1px solid var(--blue-bdr); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.av svg { width: 17px; height: 17px; stroke: var(--blue); fill: none; stroke-width: 2; }
+.acard {
+  flex: 1; background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: 4px 16px 16px 16px;
+  padding: 14px 18px; font-size: 14px;
+  line-height: 1.75; color: var(--tx); min-width: 0;
+}
+.acard.loading { color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.acard h4 {
+  font-size: 13px; font-weight: 600; color: var(--tx);
+  margin: 13px 0 5px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--bdr);
+}
+.acard h4:first-child { margin-top: 0; }
+.acard ul { padding-left: 1.2rem; margin: 4px 0 8px; }
+.acard li { margin-bottom: 4px; }
+.acard strong { font-weight: 500; }
+.vtag {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 4px; margin: 0 2px;
+  font-family: 'DM Mono', monospace;
+}
+.vs{background:var(--vs-bg);color:var(--vs-tx);}
+.vp{background:var(--vp-bg);color:var(--vp-tx);}
+.vg{background:var(--vg-bg);color:var(--vg-tx);}
+.vc{background:var(--vc-bg);color:var(--vc-tx);}
+
+.dots span {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--muted); margin: 0 2px;
+  animation: db 1.2s ease-in-out infinite;
+}
+.dots span:nth-child(2){animation-delay:.2s;} .dots span:nth-child(3){animation-delay:.4s;}
+@keyframes db{0%,80%,100%{transform:translateY(0);opacity:.4;}40%{transform:translateY(-5px);opacity:1;}}
+
+/* Input */
+.iarea {
+  padding: 14px 22px 18px;
+  background: var(--surf); border-top: 1px solid var(--bdr); flex-shrink: 0;
+}
+.ibox {
+  display: flex; gap: 10px; align-items: flex-end;
+  background: var(--surf2); border: 1px solid var(--bdr2);
+  border-radius: 14px; padding: 10px 12px 10px 16px;
+  transition: border-color .15s;
+}
+.ibox:focus-within { border-color: var(--blue-bdr); }
+.ibox textarea {
+  flex: 1; border: none; outline: none;
+  background: transparent; color: var(--tx);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  resize: none; line-height: 1.5;
+  min-height: 24px; max-height: 120px;
+}
+.ibox textarea::placeholder { color: var(--muted); }
+.sbtn {
+  width: 36px; height: 36px; background: var(--blue);
+  border: none; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: all .15s;
+}
+.sbtn:hover { opacity: .85; transform: scale(1.05); }
+.sbtn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+.sbtn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; }
+.hint {
+  font-size: 11px; color: var(--muted);
+  text-align: center; margin-top: 8px;
+}
+.hint kbd {
+  background: var(--surf3); border: 1px solid var(--bdr2);
+  border-radius: 4px; padding: 1px 5px;
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted);
+}
+
+@media(max-width:680px){ .sb{display:none;} .qgrid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sb">
+    <div class="brand">
+      <div class="brand-ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">MRI Param Guide</div>
+        <div class="brand-sub">AIRS Medical CCS</div>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">부위 선택</div>
+      <button class="pb on" data-part="all" onclick="setPart(this)"><span class="dot"></span>전체</button>
+      <button class="pb" data-part="Brain" onclick="setPart(this)"><span class="dot"></span>Brain</button>
+      <button class="pb" data-part="Cervical Spine" onclick="setPart(this)"><span class="dot"></span>Cervical Spine</button>
+      <button class="pb" data-part="Thoracic Spine" onclick="setPart(this)"><span class="dot"></span>Thoracic Spine</button>
+      <button class="pb" data-part="Lumbar Spine" onclick="setPart(this)"><span class="dot"></span>Lumbar Spine</button>
+      <button class="pb" data-part="Whole Spine" onclick="setPart(this)"><span class="dot"></span>Whole Spine</button>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">MSK</div>
+      <button class="pb" data-part="Shoulder" onclick="setPart(this)"><span class="dot"></span>Shoulder</button>
+      <button class="pb" data-part="Elbow" onclick="setPart(this)"><span class="dot"></span>Elbow</button>
+      <button class="pb" data-part="Wrist" onclick="setPart(this)"><span class="dot"></span>Wrist</button>
+      <button class="pb" data-part="Hip Joint" onclick="setPart(this)"><span class="dot"></span>Hip Joint</button>
+      <button class="pb" data-part="Knee" onclick="setPart(this)"><span class="dot"></span>Knee</button>
+      <button class="pb" data-part="Ankle" onclick="setPart(this)"><span class="dot"></span>Ankle</button>
+      <button class="pb" data-part="Foot" onclick="setPart(this)"><span class="dot"></span>Foot</button>
+    </div>
+    <div class="sb-div"></div>
+    <div class="vleg">
+      <div class="vleg-t">제조사 색상</div>
+      <div class="vrow"><div class="vdot" style="background:#3b82f6"></div>Siemens</div>
+      <div class="vrow"><div class="vdot" style="background:#10b981"></div>Philips</div>
+      <div class="vrow"><div class="vdot" style="background:#f59e0b"></div>GE</div>
+      <div class="vrow"><div class="vdot" style="background:#f472b6"></div>Canon</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-l">MRI Parameter Guide <strong id="plabel">· 전체 부위</strong></div>
+      <div class="tb-r"><div class="live"></div>AI 응답 준비됨</div>
+    </div>
+    <div class="chat" id="chat">
+      <div class="empty" id="empty">
+        <div class="empty-ico">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <div>
+          <h2>파라미터 질문을 입력하세요</h2>
+          <p>좌측에서 부위를 선택하고 아래 예시를 눌러 시작하거나, 직접 질문을 입력하세요.</p>
+        </div>
+        <div class="qgrid">
+          <button class="qb" onclick="fill('Brain T1WI TR별 적정 TI값 테이블을 알려줘')"><span class="ql">Brain · TI Table</span>TR별 적정 TI값은?</button>
+          <button class="qb" onclick="fill('FLAIR 시퀀스 TR별 TI 권장값 테이블은?')"><span class="ql">Brain · FLAIR</span>FLAIR TR별 TI값은?</button>
+          <button class="qb" onclick="fill('Brain Boundary artifact 원인과 해결 방법은?')"><span class="ql">Known Issue</span>Boundary artifact 해결법은?</button>
+          <button class="qb" onclick="fill('TOF ICA pseudo-stenosis artifact 원인과 해결법은?')"><span class="ql">Known Issue</span>TOF ICA artifact 해결법은?</button>
+          <button class="qb" onclick="fill('Philips eTHRIVE Dynamic CS 사용 시 주의사항은?')"><span class="ql">Philips · CS</span>eTHRIVE CS 주의사항은?</button>
+          <button class="qb" onclick="fill('Shoulder FS가 잘 안 먹는 원인과 해결법은?')"><span class="ql">MSK · Shoulder</span>Shoulder FS 불량 해결법은?</button>
+        </div>
+      </div>
+    </div>
+    <div class="iarea">
+      <div class="ibox">
+        <textarea id="qi" placeholder="파라미터, artifact, 이슈 해결 등 질문하세요..." rows="1"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ask();}"></textarea>
+        <button class="sbtn" id="sbtn" onclick="ask()" aria-label="전송">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+      <div class="hint"><kbd>Enter</kbd> 전송 &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> 줄바꿈</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SYS = `당신은 MRI Clinical CS 전문가입니다. AIRS Medical Clinical CS Online Training Center의 Parameter Guide Line과 Known Issue DB, 그리고 실제 현장 이슈 해결 사례를 기반으로 답변합니다.
+
+=== TI VALUE TABLE ===
+T1WI (MP-RAGE/TFE/BRAVO) 3T:
+TR 1500→TI 692 | TR 1600→TI 734 | TR 1700→TI 776 | TR 1800→TI 818
+TR 1900→TI 859 | TR 2000→TI 900 | TR 2100→TI 940 | TR 2200→TI 980
+TR 2300→TI 1019 | TR 2400→TI 1058 | TR 2500→TI 1096 | TR 2600→TI 1134
+TR 2700→TI 1172 | TR 2800→TI 1209 | TR 2900→TI 1246 | TR 3000→TI 1282
+
+FLAIR (T2 IR TSE) 3T:
+TR 7000→TI 2215 | TR 7500→TI 2297 | TR 8000→TI 2372 | TR 8500→TI 2439
+TR 9000→TI 2500 | TR 9500→TI 2555 | TR 10000→TI 2605 | TR 10500→TI 2650
+TR 11000→TI 2691 | TR 11500→TI 2728 | TR 12000→TI 2760
+
+TI 설정 방식:
+- Siemens: freeze 기능 → TR 변경 시 TI 자동 조정
+- GE: TI Auto 설정 가능
+- Philips: Auto 없음, 위 테이블 참조하여 수동 입력
+
+=== BRAIN PARAMETER ===
+T1WI IR 3D (MP-RAGE/TFE/BRAVO) 3T:
+- TE 원본유지(3T: 2.3, 4.6ms) / TR 7-12ms / TI 위 테이블 참조
+- Freq voxel 0.8-1.0mm / Phase voxel 0.9-1.2mm / scan% 80%이상
+- PAT: Philips SENSE slice2(CS SENSE 4-5) / Siemens GRAPPA 2-3(factor3→phaseOS 30%) / GE ASSET/ARC 2-2.5 / Canon SPEEDER 1.7-2.0
+- ACQ Slice 0.9-1.2mm / Recon 0.45-0.6mm
+  Siemens:SliceRes50% / Philips:ReconVoxel / GE:ZIP2 / Canon:FineReconON
+- Phase dir: COR=RL AXI=RL SAG=AP / SliceOS 10%이상 / FlipAngle 8-15°
+T1 FLAIR: TR 8000-9000ms / TI 테이블 / ETL 16-24 / PAT SENSE2/GRAPPA2/ASSET2
+T2 FLAIR: TR 9000ms이상 / TI 테이블 / TE 90-120ms / ETL 20-30
+SWI: TR 20-30ms / Flip 15-20° / voxel 0.5-0.8mm / PhaseDir AXI=AP
+TOF: TR 20-35ms / Flip 15-25° / slab 최대60mm / overlap 20-25%
+DWI: b=0,1000 / TE최솟값 / TR 4000ms이상 / PAT 최대3 / MUSE로 distortion감소
+T2* GRE: Flip 16-20° / TE 15-25ms
+
+=== SPINE ===
+C-Spine: T2SAG TR3000-5000 TE90-120 slice3mm / T1SAG TR400-700 / STIR TI150ms / PhaseDir SAG=AP AXI=RL
+T-Spine: T2SAG TR3000-5000 TE90-120 slice3-4mm / PhaseDir SAG=FH AXI=RL
+L-Spine: T2SAG TR3500-5000 TE100-130 slice3-4mm / T1SAG TR500-800 / STIR TI150-180ms / PhaseDir SAG=FH AXI=RL
+
+=== MSK ===
+Shoulder/Elbow/Wrist/Hip/Ankle: PDFS TR2500-5000 TE30-50 slice3-4mm / T1 TR400-700 / PAT2
+Knee: PDFS TR2500-4000 TE30-50 slice3-4mm / 3T:PAT GRAPPA/SENSE2 / 1.5T:PAT1-2
+
+=== 공통 ===
+TE 원본유지 / SliceOS 10%이상 / Recon=ACQ 약50%
+PAT: Philips=SENSE/CS-SENSE / Siemens=GRAPPA / GE=ASSET,ARC / Canon=SPEEDER,RAPID
+
+=== KNOWN ISSUE DB ===
+1. Boundary artifact(TR-TI): TR/TI 균형 깨짐→ventricle/cortex 검은 윤곽선
+   해결: Siemens=freeze자동 / GE=TI Auto / Philips=테이블 수동
+2. TOF ICA Pseudo-stenosis: Intravoxel dephasing→ICA 신호소실(협착오인)
+   해결: AcqVoxelSlice 1.0→0.6mm / SlicePartialFourier off / SwiftMR 처리로 크게 개선
+3. Venetian blind(TOF): slab경계 신호불균일→overlap 증가
+4. PAT residual(SENSE/ARC): PAT factor 과도→factor 감소
+5. EPI distortion(DWI): B0불균일→PAT최대3 / MUSE / FOV 350이하
+6. FID artifact(GRE): refocusing pulse→Echo Spacing증가 or crusher gradient
+7. Aliasing(CS-SENSE): CS-SENSE 알고리즘→acquisition FOV 증가
+8. Gibbs(Truncation): SwiftMR reconstruction으로 개선
+
+=== 현장 이슈 해결 사례 ===
+1. Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 CS연산 부정확→SENSE로 변경
+2. 강북삼성 Motion Free(Philips 3T): PhaseOversampling 차이→PO동일설정(v3.0.13.3+수정)
+3. TOF MIP 혈관끊김: SPF off→해결, slice resolution 근본원인
+4. GE MR30.1 소스리턴(인천건협): 장비재등록으로 해결
+5. Shoulder FS불량: Echo spacing 과다→ES 최대한 낮춤 / shim범위 FOV맞게(넓히면 외곽FS불량)
+6. GE 1.5T HD16 NPW+ASSET: 동시사용불가→둘 중 하나 선택
+7. 광주미래 Abdomen DWI전송이슈: b-value 소스 합쳐짐→scan item 재등록 or 서비스재시작
+8. Siemens 복부 slice간 신호꺼짐: flow artifact / Fat saturation 세팅 확인
+9. GE Pioneer 3.0T MR30.1 Real Time Field Adjustment: 실시간 필드조정 이슈
+
+한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. TI관련 질문 시 테이블 값 직접 인용.`;
+
+let part = 'all', busy = false;
+
+function setPart(el) {
+  document.querySelectorAll('.pb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  part = el.dataset.part;
+  document.getElementById('plabel').textContent = '· ' + (part === 'all' ? '전체 부위' : part);
+}
+
+function fill(t) {
+  const ta = document.getElementById('qi');
+  ta.value = t;
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+  ta.focus();
+}
+
+async function ask() {
+  const ta = document.getElementById('qi');
+  const q = ta.value.trim();
+  if (!q || busy) return;
+  busy = true;
+  document.getElementById('sbtn').disabled = true;
+  ta.value = ''; ta.style.height = 'auto';
+
+  const ch = document.getElementById('chat');
+  const em = document.getElementById('empty');
+  if (em) em.remove();
+
+  const um = document.createElement('div');
+  um.className = 'msg-u';
+  um.innerHTML = `<div class="bubble">${q.replace(/</g,'&lt;')}</div>`;
+  ch.appendChild(um);
+
+  const am = document.createElement('div');
+  am.className = 'msg-a';
+  am.innerHTML = `
+    <div class="av"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg></div>
+    <div style="flex:1;min-width:0">
+      <div class="acard loading" id="ac">
+        <div class="dots"><span></span><span></span><span></span></div>
+        가이드라인 검색 중...
+      </div>
+    </div>`;
+  ch.appendChild(am);
+  ch.scrollTop = ch.scrollHeight;
+
+  const ctx = part !== 'all' ? `[${part}]\n` : '';
+  try {
+    const r = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: SYS,
+        messages: [{ role: 'user', content: ctx + q }]
+      })
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({}));
+      throw new Error(e.error || 'HTTP ' + r.status);
+    }
+    const d = await r.json();
+    const txt = d.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '답변 없음';
+    const ac = document.getElementById('ac');
+    ac.id = ''; ac.classList.remove('loading');
+    ac.innerHTML = fmt(txt);
+  } catch(e) {
+    const ac = document.getElementById('ac');
+    if (ac) { ac.classList.remove('loading'); ac.innerHTML = `<span style="color:#f87171">오류: ${e.message}</span>`; }
+  }
+  busy = false;
+  document.getElementById('sbtn').disabled = false;
+  ch.scrollTop = ch.scrollHeight;
+}
+
+function fmt(t) {
+  return t
+    .replace(/\*\*(Siemens[^*]*)\*\*/g, '<span class="vtag vs">$1</span>')
+    .replace(/\*\*(Philips[^*]*)\*\*/g, '<span class="vtag vp">$1</span>')
+    .replace(/\*\*(GE[^*]*)\*\*/g, '<span class="vtag vg">$1</span>')
+    .replace(/\*\*(Canon[^*]*)\*\*/g, '<span class="vtag vc">$1</span>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/^#{1,3} (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>[^<]*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
+}
+</script>
+</body>
+</html>
