@@ -700,7 +700,6 @@ mark {
 .vg { background: rgba(139,92,246,.14); color: var(--ge); border: 1px solid rgba(139,92,246,.25); }
 .vc { background: rgba(239,68,68,.14); color: var(--canon); border: 1px solid rgba(239,68,68,.25); }
 
-/* ── SCROLLBAR ───────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
@@ -1561,7 +1560,7 @@ async function ask() {
   const am = document.createElement('div');
   am.className = 'msg ai loading';
   am.id = msgId;
-  am.textContent = '답변 생성 중...';
+  am.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
   ch.appendChild(am);
   ch.scrollTop = ch.scrollHeight;
 
@@ -1569,32 +1568,27 @@ async function ask() {
   const userText = partCtx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
 
   try {
-    let messageContent;
+    const body = {
+      system: SYS,
+      messages: [{ role: 'user', content: userText }]
+    };
+
     if (selImg) {
-      const b64 = selImg.src.split(',')[1];
-      const mime = selImg.src.split(';')[0].split(':')[1];
-      messageContent = [
-        {type: 'image', source: {type: 'base64', media_type: mime, data: b64}},
-        {type: 'text', text: userText}
-      ];
-    } else {
-      messageContent = userText;
+      body.image = {
+        base64: selImg.src.split(',')[1],
+        mimeType: selImg.src.split(';')[0].split(':')[1]
+      };
     }
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/ask', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYS,
-        messages: [{role: 'user', content: messageContent}]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error?.message || 'HTTP ' + res.status);
-    const txt = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '답변 없음';
+    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+    const txt = data.content?.[0]?.text || '답변 없음';
     const ac = document.getElementById(msgId);
     if (ac) { ac.classList.remove('loading'); ac.innerHTML = fmt(txt); }
   } catch(e) {
