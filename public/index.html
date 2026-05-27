@@ -1271,7 +1271,7 @@ const ISSUES = {
   field: [
     {name:'Philips eTHRIVE Dynamic CS',cause:'Head Base Coil 없을 때 CS 연산 부정확',solution:'SENSE로 변경'},
     {name:'강북삼성 Motion Free (Philips 3T)',cause:'Phase Oversampling 차이',solution:'PO 동일하게 설정 (v3.0.13.3+에서 수정됨)'},
-    {name:'TOF MIP 혈관끊김 (국제성모)',cause:'slice resolution 부족',solution:'SPF off → 해결\nslice resolution이 근본 원인'},
+    {name:'TOF MIP 혈관끊김 (국제성모)',cause:'Slice Partial Fourier(SPF) on → 혈관 신호 소실',solution:'SPF(Slice Partial Fourier) off → 해결\nSPF가 근본 원인 (slice resolution은 부차적)'},
     {name:'GE MR30.1 소스리턴 (인천건협)',cause:'GE MR30.1 known issue',solution:'장비 재등록으로 해결'},
     {name:'Shoulder FS 불량',cause:'Echo spacing 과다 / shim 범위 과다',solution:'ES 가이드라인 내 최대한 낮춤\nshim 범위 FOV에 맞게 설정'},
     {name:'GE 1.5T HD16 NPW + ASSET 동시사용',cause:'GE 기기 제한',solution:'NPW와 ASSET/ARC 중 하나만 선택'},
@@ -1323,7 +1323,7 @@ PAT: 최대 3 / FOV: 350 이하 권장 / MUSE 사용 시 artifact 감소
 
 [TOF / 3D GRE]
 TE: out-of-phase (3T: ~2.3ms, 1.5T: ~4.6ms) / TR: 20-35ms
-Voxel slice: 0.6mm 이하 권장 / SPF: off 권장
+Voxel slice: 0.6mm 이하 권장 / SPF(Slice Partial Fourier): off 권장 (on 시 혈관 신호 소실)
 
 [SWI / 3D GRE]
 TE: 19-23ms (3T) / TR: 27-35ms / FA: 15°
@@ -1452,7 +1452,7 @@ MSK: FID, Aliasing, Folding, Flow, PAT residual, Metal, Herringbone, FS inhomoge
 현장 이슈 해결 사례:
 - Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 SENSE로 변경
 - 강북삼성 Motion Free (Philips 3T): Phase Oversampling 동일설정 (v3.0.13.3+에서 수정됨)
-- TOF MIP 혈관끊김 (국제성모): SPF off → 해결
+- TOF MIP 혈관끊김 (국제성모): SPF(Slice Partial Fourier) off → 해결
 - GE MR30.1 소스리턴 (인천건협): 장비 재등록
 - Shoulder FS 불량: ES 낮춤 + shim FOV 맞춤
 - GE 1.5T HD16: NPW + ASSET/ARC 동시사용 불가
@@ -1463,7 +1463,10 @@ MSK: FID, Aliasing, Folding, Flow, PAT residual, Metal, Herringbone, FS inhomoge
 - Philips 3D T1 TFE: CS SENSE + Head Base Coil 확인
 - Philips DWI EPI distortion: PAT 증가 / MUSE 적용
 
-한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. artifact 질문 시 원인과 해결방법 함께 제시.`;
+한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. artifact 질문 시 원인과 해결방법 함께 제시.
+
+답변이 길어지거나 더 자세한 내용이 필요할 경우 마지막에 반드시 아래 링크를 안내하세요:
+📎 더 자세한 내용은 노션 가이드라인을 참고하세요 → https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link`;
 
 // ============ STATE ============
 const CAT_LABEL = {brain:'Brain / Neuro', spine:'Spine', msk:'MSK', field:'현장 이슈 사례'};
@@ -1611,6 +1614,7 @@ function fmt(t) {
     .replace(/^#{1,3} (.+)$/gm, '<h4>$1</h4>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/(<li>[^<]*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(77,159,255,.35)">$1</a>')
     .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
 }
 
