@@ -446,6 +446,7 @@ body {
 .tag-spine  { background: rgba(52,211,153,.1);   color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
 .tag-msk    { background: rgba(251,146,60,.1);   color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
 .tag-field  { background: rgba(248,113,113,.1);  color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
+.tag-case   { background: rgba(34,211,238,.1);   color: var(--cyan);   border: 1px solid rgba(34,211,238,.2); }
 
 .db-card-name { font-size: 12.5px; font-weight: 600; flex: 1; line-height: 1.35; letter-spacing: -.1px; }
 .db-chevron { font-size: 9px; color: var(--text3); transition: transform .2s; flex-shrink: 0; }
@@ -787,6 +788,7 @@ mark {
         <button class="df" data-cat="spine"  onclick="setDBCat(this)">Spine</button>
         <button class="df" data-cat="msk"    onclick="setDBCat(this)">MSK</button>
         <button class="df" data-cat="field"  onclick="setDBCat(this)">현장사례</button>
+        <button class="df" data-cat="case"   onclick="setDBCat(this)">📖 Case Study</button>
       </div>
       <span class="db-count-pill" id="dbCount">—</span>
     </div>
@@ -1230,19 +1232,18 @@ mark {
 <script>
 const ISSUES = {
   brain: [
-    {name:'Boundary artifact (TR-TI)',cause:'TR과 TI 균형 깨짐 → ventricle/cortex 경계에 검은 윤곽선 발생',solution:'Siemens: freeze 기능으로 TR 변경 시 TI 자동조정\nGE: TI Auto 설정\nPhilips: TI VALUE TABLE 참조하여 수동 입력',tip:'TR 9000 / TI 2500 기준 비율 유지'},
-    {name:'TOF ICA Pseudo-stenosis',cause:'Intravoxel dephasing → ICA 신호소실 (협착으로 오인 가능)',solution:'AcqVoxelSlice 1.0 → 0.6mm 감소\nSlice Partial Fourier off (100%에 가깝게)\nSwiftMR 처리로 크게 개선 (super-resolution 효과)',tip:'in-plane 해상도 개선은 효과 미미, slice 방향이 핵심',
-      images:['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==']},
-    {name:'Venetian blind artifact (TOF)',cause:'slab 경계에서 신호 불균일 발생',solution:'overlap 증가'},
-    {name:'PAT residual artifact (SENSE/ARC)',cause:'acceleration factor 과도',solution:'PAT factor 감소'},
-    {name:'EPI distortion artifact (DWI)',cause:'B0 불균일 / FOV 과다',solution:'PAT factor 최대 3\nMUSE 사용\nFOV 350 이하 권장'},
-    {name:'FID artifact (GRE)',cause:'refocusing pulse',solution:'Echo Spacing 증가 or crusher gradient 사용'},
-    {name:'FID artifact (Spin Echo)',cause:'refocusing pulse (SE 계열)',solution:'SE → TSE 또는 TSE-IR로 변환'},
-    {name:'Aliasing artifact (CS-SENSE)',cause:'CS-SENSE 재구성 알고리즘',solution:'acquisition FOV 증가'},
-    {name:'Gibbs (Truncation) artifact',cause:'k-space 데이터 부족',solution:'SwiftMR reconstruction으로 개선 가능'},
-    {name:'Flow artifact (Brain)',cause:'혈류 신호',solution:'Flow compensation 설정\nPhase dir 변경'},
-    {name:'Slice aliasing artifact (3D)',cause:'3D sequence slice 경계',solution:'Slice oversampling 10% 이상 증가'},
-    {name:'Motion artifact (patient)',cause:'환자 움직임',solution:'환자 고정 강화 후 재스캔'},
+    {name:'Boundary artifact (TR-TI)',cause:'TR과 TI 균형 깨짐 → ventricle/cortex 경계에 검은 윤곽선 발생',solution:'Siemens: freeze 기능으로 TR 변경 시 TI 자동조정 (TR 9000/TI 2500 비율 유지)\nGE: TI Auto 설정\nPhilips: 수동 입력 — TI VALUE TABLE 참조',tip:'TR·TI 비율이 깨지는 것이 원인; 비율 유지가 핵심'},
+    {name:'TOF ICA Pseudo-stenosis',cause:'Intravoxel dephasing → ICA 신호소실 (협착으로 오인 가능)\n슬라이스 방향 해상도 부족이 주원인',solution:'① AcqVoxelSlice 1.0 → 0.6mm 감소 (효과 크게 검증됨)\n② SPF(Slice Partial Fourier) 6/8 → off (동등한 효과)\n③ SwiftMR super-resolution 처리로 크게 개선\n※ in-plane(freq/phase) 해상도 개선은 효과 미미',tip:'slice 방향이 핵심 — in-plane 개선으로는 해결 안 됨'},
+    {name:'Venetian blind artifact (TOF)',cause:'slab 경계에서 신호 불균일 발생 (inflow saturation)',solution:'slab 간 overlap 증가\nslab 수 조정'},
+    {name:'PAT residual artifact (SENSE/ARC)',cause:'acceleration factor 과도 → 재구성 잔류 artifact',solution:'PAT factor 감소\nSiemens GRAPPA는 self-calibrated 방식으로 본 artifact 발생 없음'},
+    {name:'EPI distortion artifact (DWI)',cause:'B0 불균일 / FOV 과다 → EPI 신호 왜곡',solution:'PAT factor 최대 3\nMUSE 사용\nFOV 350mm 이하 권장'},
+    {name:'FID artifact (GRE)',cause:'refocusing pulse → FID 신호 k-space 오염',solution:'Echo Spacing 증가\ncrusher gradient 사용'},
+    {name:'FID artifact (Spin Echo)',cause:'refocusing pulse (SE 계열 특성)',solution:'SE → TSE 또는 TSE-IR로 변환\nNEX 2 이상 시 감소 효과 (서울대·삼성서울 NEX 2 설정)'},
+    {name:'Aliasing artifact (CS-SENSE)',cause:'CS-SENSE 재구성 알고리즘 특성상 FOV 부족 시 발생',solution:'acquisition FOV 증가\nCS-SENSE → SENSE로 변경 검토'},
+    {name:'Gibbs (Truncation) artifact',cause:'k-space 데이터 절단 → 고주파 성분 손실',solution:'SwiftMR reconstruction으로 개선 가능\n공간 해상도 향상 시 가시성 감소'},
+    {name:'Flow artifact (Brain)',cause:'혈관 내 혈류 신호 → ghosting',solution:'Flow compensation ON\nPhase dir 변경\nsaturation band 추가'},
+    {name:'Slice aliasing artifact (3D)',cause:'3D sequence slice 방향 oversampling 부족',solution:'Slice oversampling 10% 이상 증가'},
+    {name:'Motion artifact (patient)',cause:'환자 움직임 → k-space 위상 오류',solution:'환자 고정 강화 후 재스캔\nNavigator / Trigger 기법 검토'},
   ],
   spine: [
     {name:'Fat Suppression inhomogeneity',cause:'B0 불균일로 FS 불균등',solution:'STIR 또는 DIXON FS로 변환\nshim 범위 조정'},
@@ -1284,6 +1285,19 @@ const ISSUES = {
     {name:'Siemens Vida XA50 PC Venography',cause:'시퀀스 설정 및 velocity encoding 문제',solution:'velocity encoding 값 확인\n시퀀스 재설정'},
     {name:'GE Signal Excite 1.5T 15.0버전',cause:'구버전 소프트웨어 제한사항',solution:'소프트웨어 제한사항 확인 필요'},
     {name:'Philips DWI EPI distortion (하얀거)',cause:'B0 불균일',solution:'PAT 증가\nMUSE 적용'},
+  ],
+  case: [
+    {name:'TOF ICA Pseudo-stenosis — 실험 검증',cause:'Intravoxel dephasing / Slice 방향 해상도 부족이 주원인\n(In-plane 해상도는 부차적 요인)',solution:'① Slice voxel 1.0 → 0.6mm: 효과 크게 검증 ✓\n② SPF(Slice Partial Fourier) 6/8 → off: 동등한 효과 ✓\n③ SwiftMR super-resolution 처리: 크게 개선 ✓\n✗ In-plane(freq/phase) 해상도만 개선: 효과 없음',tip:'slice 방향이 핵심 — in-plane 개선으로는 해결 안 됨. 두 방법 중 하나만으로도 충분'},
+    {name:'Boundary artifact — 제조사별 검증',cause:'TR과 TI 균형 깨짐 → ventricle/cortex 경계 검은 윤곽선\nTR 변경 시 TI를 같이 조정하지 않으면 발생',solution:'Siemens: freeze 기능 → TI 자동조정 (TR 9000/TI 2500 비율 기준)\nGE: TI Auto 설정\nPhilips: 수동 입력 (TI VALUE TABLE 참조)',tip:'Philips만 자동 조정 없이 수동 입력 필요'},
+    {name:'FID artifact (SE) — 임상 설정 비교',cause:'SE 계열 refocusing pulse → FID 신호 k-space 오염\nNEX 1 사용 시 artifact 뚜렷하게 나타남',solution:'SE → TSE 또는 TSE-IR로 변환\nNEX 2 설정으로 감소 (스캔 시간 증가 감수)',tip:'서울대·삼성서울: NEX 2(5분), 세브란스: NEX 1(3분30초) — 화질 vs 시간 트레이드오프'},
+    {name:'PAT residual artifact — 제조사 특성',cause:'Acceleration factor 과도 → SENSE/ARC 재구성 잔류',solution:'PAT factor 감소\nSiemens GRAPPA는 self-calibrated → 본 artifact 발생 안 함',tip:'Siemens GRAPPA와 Philips SENSE/GE ARC는 알고리즘 차이로 동작 다름'},
+    {name:'Aliasing artifact (CS-SENSE) — 원인 검증',cause:'CS-SENSE 재구성 알고리즘 특성상 발생\nFOV 부족 시 더 심화',solution:'Acquisition FOV 증가\nCS-SENSE → SENSE로 변경 검토',tip:'CS-SENSE 고유 특성 — phase FOV 증가 전에 알고리즘 변경 먼저 시도'},
+    {name:'Truncation (Gibbs) artifact — SwiftMR 효과',cause:'k-space 데이터 절단 → 고주파 성분 손실 → ringing',solution:'SwiftMR reconstruction으로 개선 가능\n공간 해상도 향상 시 가시성 감소',tip:'SwiftMR super-resolution이 Gibbs artifact 동시 감소 효과'},
+    {name:'Metal artifact — SEMAC 적용',cause:'금속 임플란트 주변 자기장 왜곡 → 극심한 신호 소실·왜곡',solution:'SEMAC(Slice-Encoding for Metal Artifact Correction) 적용\nVAT / MARS 사용\nTE 최솟값 사용',tip:'SEMAC: 추가 slice-encoding gradient로 금속 주변 왜곡 보정 — 스캔 시간 증가'},
+    {name:'Motion artifact (Cardiac) — 복부 적용',cause:'심장 박동으로 인한 복부 장기 움직임 → ghosting',solution:'Cardiac triggering / gating 적용\nbreath-hold 기법 병행',tip:'복부 T2WI에서 심장 박동 영향 주의 — ECG trigger 권장'},
+    {name:'EPI distortion — DWI B0 불균일',cause:'B0 불균일 → EPI sequence에서 기하학적 왜곡\nFOV 크거나 PAT 낮을수록 심화',solution:'PAT factor 최대 3 적용\nMUSE(Multi-Shot EPI) 사용\nFOV 350mm 이하 유지',tip:'SS-EPI: 1.5~1.8mm voxel 권장 — 너무 작으면 SNR 저하'},
+    {name:'Folding artifact (Small FOV) — Spine',cause:'Phase 방향 FOV 부족 → 반대편 구조물이 영상 내 접힘',solution:'Acquisition FOV 증가\nPhase oversampling 증가',tip:'Spine SAG에서 phase=FH 방향 OS 70% 이상 권장'},
+    {name:'Slice aliasing artifact — 3D sequence',cause:'3D sequence에서 slice 방향 oversampling 부족\nslab 경계 신호 역접힘',solution:'Slice oversampling 10% 이상 증가\n(Siemens: Slice OS / Philips: 3D slab OS / GE: ZIP2)',tip:'2D와 달리 3D는 slice 방향도 oversampling 필요'},
   ]
 };
 
@@ -1445,9 +1459,30 @@ Phase dir: SAG=FH(OS 70%이상), COR=FH(OS 70%이상)
 station 간 overlap 충분히 확보
 
 === Known Issue DB ===
-Brain: Boundary artifact (TR-TI), TOF ICA Pseudo-stenosis, Venetian blind, PAT residual, EPI distortion, FID, Aliasing, Gibbs, Flow artifact, Slice aliasing, Motion
-Spine: FS inhomogeneity, Folding, PAT residual, Cross talk, Metal artifact, Streaking, Slice aliasing, Whole Spine overlap
-MSK: FID, Aliasing, Folding, Flow, PAT residual, Metal, Herringbone, FS inhomogeneity
+Brain: Boundary artifact (TR-TI), TOF ICA Pseudo-stenosis, Venetian blind, PAT residual, EPI distortion, FID(GRE/SE), Aliasing(CS-SENSE), Gibbs, Flow artifact, Slice aliasing(3D), Motion
+Spine: FS inhomogeneity, Folding, PAT residual, Cross talk, Metal artifact(SEMAC), Streaking(PROPELLER), Slice aliasing, Whole Spine overlap
+MSK: FID, Aliasing, Folding, Flow, PAT residual, Metal(SEMAC/MARS), Herringbone, FS inhomogeneity
+
+=== CASE STUDY 검증 데이터 (노션 실험) ===
+[TOF ICA Pseudo-stenosis — 실험 검증]
+- Slice voxel 1.0 → 0.6mm: 효과 크게 검증됨 ✓
+- SPF(Slice Partial Fourier) 6/8 → off (voxel 1.0mm 유지): 동등한 효과 ✓
+- In-plane(freq/phase) 해상도만 개선: 효과 거의 없음 ✗ ← 중요
+- SwiftMR super-resolution 처리 후: 크게 개선 ✓
+→ 결론: slice 방향이 핵심, in-plane은 해결책이 아님
+
+[Boundary artifact (TR-TI) — 제조사별]
+- Siemens: freeze 기능 → TR 변경 시 TI 자동조정 (TR 9000/TI 2500 비율 기준)
+- GE: TI Auto 설정
+- Philips: 수동 입력 필요 (TI VALUE TABLE 참조)
+
+[FID artifact (SE) — 임상 설정]
+- 서울대병원·삼성서울병원: Philips 3D TSE FLAIR NEX 2 → 스캔 5분, FID 감소
+- 세브란스: NEX 1 → 3분30초, FID artifact 일부 존재
+
+[PAT residual artifact]
+- Siemens GRAPPA: self-calibrated 방식 → 본 artifact 발생 없음
+- Philips SENSE / GE ARC: acceleration factor 과도 시 발생
 
 현장 이슈 해결 사례:
 - Philips eTHRIVE Dynamic CS: Head Base Coil 없으면 SENSE로 변경
@@ -1463,14 +1498,14 @@ MSK: FID, Aliasing, Folding, Flow, PAT residual, Metal, Herringbone, FS inhomoge
 - Philips 3D T1 TFE: CS SENSE + Head Base Coil 확인
 - Philips DWI EPI distortion: PAT 증가 / MUSE 적용
 
-한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. artifact 질문 시 원인과 해결방법 함께 제시.
+한국어로 간결·실용적 답변. 제조사별 차이 구분. 수치범위 명확히. artifact 질문 시 원인과 해결방법 함께 제시. 케이스 스터디 실험 검증 데이터가 있으면 반드시 언급.
 
 답변이 길어지거나 더 자세한 내용이 필요할 경우 마지막에 반드시 아래 링크를 안내하세요:
 📎 더 자세한 내용은 노션 가이드라인을 참고하세요 → https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link`;
 
 // ============ STATE ============
-const CAT_LABEL = {brain:'Brain / Neuro', spine:'Spine', msk:'MSK', field:'현장 이슈 사례'};
-const CAT_TAG_CLASS = {brain:'tag-brain', spine:'tag-spine', msk:'tag-msk', field:'tag-field'};
+const CAT_LABEL = {brain:'Brain / Neuro', spine:'Spine', msk:'MSK', field:'현장 이슈 사례', case:'Case Study'};
+const CAT_TAG_CLASS = {brain:'tag-brain', spine:'tag-spine', msk:'tag-msk', field:'tag-field', case:'tag-case'};
 let part = 'all', busy = false, uploadedImgs = [], dbCat = 'all';
 
 // ============ TAB SWITCH ============
@@ -1667,7 +1702,7 @@ function renderDB() {
       html += `
         <div class="db-card${autoOpen?' expanded':''}" id="${cardId}" onclick="toggleCard('${bodyId}','${cardId}')">
           <div class="db-card-head">
-            <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${cat === 'field' ? '현장' : cat.toUpperCase()}</span>
+            <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${cat === 'field' ? '현장' : cat === 'case' ? 'CASE' : cat.toUpperCase()}</span>
             <span class="db-card-name">${hl(issue.name, q)}</span>
             <span class="db-chevron">▼</span>
           </div>
