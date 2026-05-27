@@ -77,19 +77,39 @@
   .df { padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: none; color: var(--text2); cursor: pointer; font-size: 12px; }
   .df.on { border-color: var(--blue); color: var(--blue); background: rgba(88,166,255,0.08); }
   .db-content { flex: 1; overflow-y: auto; padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; align-content: start; }
-  .db-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color .15s; }
+
+  /* CARD — collapsed */
+  .db-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
   .db-card:hover { border-color: var(--blue); }
+  .db-card.expanded { border-color: rgba(88,166,255,.4); box-shadow: 0 0 0 1px rgba(88,166,255,.15); }
   .db-card-head { padding: 12px 14px; display: flex; align-items: center; gap: 8px; }
-  .db-cat-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+  .db-cat-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; flex-shrink: 0; }
   .tag-brain { background: rgba(188,140,255,.15); color: var(--purple); }
   .tag-spine { background: rgba(63,185,80,.15); color: var(--green); }
   .tag-msk { background: rgba(255,166,87,.15); color: var(--orange); }
   .tag-field { background: rgba(248,81,73,.15); color: var(--red); }
   .db-card-name { font-size: 13px; font-weight: 600; flex: 1; }
-  .db-card-body { padding: 0 14px 12px; display: none; }
-  .db-card-body.open { display: block; }
-  .db-detail { font-size: 12px; color: var(--text2); line-height: 1.6; }
-  .db-detail b { color: var(--text); }
+  .db-chevron { font-size: 10px; color: var(--text2); transition: transform .2s; flex-shrink: 0; }
+  .db-card.expanded .db-chevron { transform: rotate(180deg); }
+
+  /* CARD — expanded body */
+  .db-card-body { padding: 0 14px 14px; display: none; }
+  .db-card-body.open { display: block; animation: fadeIn .15s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  /* Summary row: cause + solution side by side */
+  .db-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  @media (max-width: 500px) { .db-summary { grid-template-columns: 1fr; } }
+  .db-summary-box { background: var(--surface2); border-radius: 7px; padding: 8px 10px; }
+  .db-summary-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .db-summary-label.cause-lbl { color: var(--yellow); }
+  .db-summary-label.sol-lbl { color: var(--green); }
+  .db-summary-text { font-size: 12px; color: var(--text); line-height: 1.55; }
+  .db-tip { font-size: 11px; color: var(--text2); background: rgba(88,166,255,.06); border-left: 2px solid var(--blue); padding: 5px 8px; border-radius: 0 5px 5px 0; margin-bottom: 6px; }
+
+  /* Search highlight */
+  mark { background: rgba(210,153,34,.35); color: var(--text); border-radius: 2px; padding: 0 1px; }
+
   .db-count { font-size: 12px; color: var(--text2); margin-left: auto; }
   .db-empty { grid-column: 1/-1; text-align: center; color: var(--text2); padding: 40px; }
 
@@ -112,6 +132,40 @@
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* OPERATION PANEL */
+  #opPanel { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+  #opPanel.on { display: flex; }
+  .op-layout { display: flex; flex: 1; overflow: hidden; }
+  .op-nav { width: 200px; background: var(--surface); border-right: 1px solid var(--border); padding: 12px 8px; overflow-y: auto; flex-shrink: 0; }
+  .op-nav-section { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 8px 4px; }
+  .op-nav-btn { width: 100%; text-align: left; padding: 6px 10px; border-radius: 6px; border: none; background: none; color: var(--text2); cursor: pointer; font-size: 12px; transition: all .15s; }
+  .op-nav-btn.on { background: var(--surface2); color: var(--blue); font-weight: 600; }
+  .op-nav-btn:hover:not(.on) { background: var(--surface2); color: var(--text); }
+  .op-nav-indent { padding-left: 20px !important; }
+  .op-content { flex: 1; overflow-y: auto; padding: 20px; }
+  .op-page { display: none; }
+  .op-page.on { display: block; }
+  .op-title { font-size: 18px; font-weight: 700; color: var(--blue); margin-bottom: 16px; }
+  .op-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .op-card-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .op-card-badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 600; }
+  .badge-purpose { background: rgba(63,185,80,.15); color: var(--green); }
+  .badge-coverage { background: rgba(88,166,255,.15); color: var(--blue); }
+  .badge-plan { background: rgba(255,166,87,.15); color: var(--orange); }
+  .badge-manual { background: rgba(188,140,255,.15); color: var(--purple); }
+  .op-list { list-style: none; padding: 0; }
+  .op-list li { padding: 4px 0; font-size: 13px; color: var(--text2); line-height: 1.5; border-bottom: 1px solid rgba(48,54,61,.5); }
+  .op-list li:last-child { border-bottom: none; }
+  .op-list li b { color: var(--text); }
+  .op-step { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .op-step:last-child { border-bottom: none; }
+  .op-step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .op-step-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .op-notion-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--blue); text-decoration: none; padding: 3px 8px; border: 1px solid var(--blue); border-radius: 4px; margin-top: 8px; opacity: .7; }
+  .op-notion-link:hover { opacity: 1; background: rgba(88,166,255,.1); }
+  .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 700px) { .op-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -121,6 +175,7 @@
   <div class="tabs">
     <button class="tab on" id="tabChat" onclick="switchTab('chat')">💬 AI 질문</button>
     <button class="tab" id="tabDB" onclick="switchTab('db')">📋 이슈 DB</button>
+    <button class="tab" id="tabOp" onclick="switchTab('op')">🎛️ MR Operation</button>
   </div>
 </div>
 
@@ -174,9 +229,460 @@
     </div>
     <div class="db-content" id="dbContent"></div>
   </div>
-</div>
+  <!-- OPERATION PANEL -->
+  <div id="opPanel">
+    <div class="op-layout">
+      <!-- NAV -->
+      <div class="op-nav">
+        <div class="op-nav-section">🪄 Operation Manual</div>
+        <button class="op-nav-btn on" data-page="op-siemens-v" onclick="setOpPage(this)">Siemens V-version</button>
+        <button class="op-nav-btn" data-page="op-siemens-x" onclick="setOpPage(this)">Siemens X-version</button>
+        <button class="op-nav-btn" data-page="op-philips-r3" onclick="setOpPage(this)">Philips R3</button>
+        <button class="op-nav-btn" data-page="op-philips-r5" onclick="setOpPage(this)">Philips R5</button>
+        <button class="op-nav-btn" data-page="op-ge" onclick="setOpPage(this)">GE</button>
+        <button class="op-nav-btn" data-page="op-canon" onclick="setOpPage(this)">Toshiba / Canon</button>
+        <button class="op-nav-btn" data-page="op-hitachi" onclick="setOpPage(this)">Hitachi / Fujifilm</button>
 
-<script>
+        <div class="op-nav-section" style="margin-top:12px">👌 Planning</div>
+        <button class="op-nav-btn" data-page="op-plan-brain" onclick="setOpPage(this)">Brain</button>
+        <button class="op-nav-btn" data-page="op-plan-cspine" onclick="setOpPage(this)">C-spine</button>
+        <button class="op-nav-btn" data-page="op-plan-lspine" onclick="setOpPage(this)">L-spine</button>
+        <button class="op-nav-btn" data-page="op-plan-wholespine" onclick="setOpPage(this)">Whole-spine</button>
+        <button class="op-nav-btn" data-page="op-plan-shoulder" onclick="setOpPage(this)">Shoulder</button>
+        <button class="op-nav-btn" data-page="op-plan-elbow" onclick="setOpPage(this)">Elbow</button>
+        <button class="op-nav-btn" data-page="op-plan-wrist" onclick="setOpPage(this)">Wrist</button>
+        <button class="op-nav-btn" data-page="op-plan-hip" onclick="setOpPage(this)">Hip</button>
+        <button class="op-nav-btn" data-page="op-plan-knee" onclick="setOpPage(this)">Knee</button>
+        <button class="op-nav-btn" data-page="op-plan-ankle" onclick="setOpPage(this)">Ankle</button>
+        <button class="op-nav-btn" data-page="op-plan-liver" onclick="setOpPage(this)">Liver / Pancreas / MRCP</button>
+        <button class="op-nav-btn" data-page="op-plan-prostate" onclick="setOpPage(this)">Prostate</button>
+        <button class="op-nav-btn" data-page="op-plan-pelvis" onclick="setOpPage(this)">Pelvis (Female)</button>
+        <button class="op-nav-btn" data-page="op-plan-breast" onclick="setOpPage(this)">Breast</button>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="op-content">
+
+        <!-- SIEMENS V -->
+        <div class="op-page on" id="op-siemens-v">
+          <div class="op-title">🔺 Siemens — V-version</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — Patient → Register → 필수 항목(굵은 글씨) 모두 입력 → Confirm → 원하는 프로토콜 선택 후 &lt;&lt; 클릭하여 이동</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>Dicom Export</b> — 완료된 시리즈 선택 → Transfer 메뉴에서 DICOM 전송 설정 확인 후 전송</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>MPR</b> — 3D 데이터셋 우클릭 → MPR/MIP 선택 → 축 방향 조정</div></div>
+            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-text"><b>MIP</b> — TOF/CE-MRA 시리즈에서 MIP 생성 → 슬래브 두께·방향 설정</div></div>
+            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-text"><b>Composing</b> — 다중 슬랩 시리즈를 하나로 합성 (Whole Spine 등에 사용)</div></div>
+            <div class="op-step"><div class="op-step-num">6</div><div class="op-step-text"><b>ADC</b> — DWI 완료 후 ADC map 자동 생성 확인; 없으면 후처리 메뉴에서 수동 생성</div></div>
+            <div class="op-step"><div class="op-step-num">7</div><div class="op-step-text"><b>Subtraction</b> — Pre/Post contrast 시리즈 선택 → Image Math → Subtraction</div></div>
+            <div class="op-step"><div class="op-step-num">8</div><div class="op-step-text"><b>minIP</b> — MRCP 등에서 최소값 투사 영상 생성</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae817ca6e3ccf119ab2bcf" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- SIEMENS X -->
+        <div class="op-page" id="op-siemens-x">
+          <div class="op-title">🔺 Siemens — X-version</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — Patient → Register → 필수 항목 입력 → Confirm → 프로토콜 선택 &lt;&lt;</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>Dicom Export</b> — 시리즈 선택 → Transfer → DICOM 전송 (X-version 인터페이스 기준)</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>MPR / MIP</b> — 3D 데이터셋에서 후처리 탭 진입 → 방향 및 슬래브 설정</div></div>
+            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-text"><b>Composing / ADC / Subtraction / minIP</b> — V-version과 동일 방식; UI 위치만 상이</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81859395d3515a6c3361" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- PHILIPS R3 -->
+        <div class="op-page" id="op-philips-r3">
+          <div class="op-title">🔺 Philips — R3</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — Patient registration → 필수 필드 입력 → Exam card 선택 → Start</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>Dicom Export</b> — Examination 우클릭 → Send → DICOM node 선택</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>MPR</b> — View → MPR; 3평면 동시 확인 가능</div></div>
+            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-text"><b>MIP</b> — MRA/TOF 시리즈 → 후처리 탭 → MIP 생성</div></div>
+            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-text"><b>Composing</b> — Multi-station Whole Spine 합성</div></div>
+            <div class="op-step"><div class="op-step-num">6</div><div class="op-step-text"><b>ADC</b> — DWI 후 자동 생성; EPI distortion 확인 필요</div></div>
+            <div class="op-step"><div class="op-step-num">7</div><div class="op-step-text"><b>Subtraction / minIP</b> — 후처리 탭에서 각각 선택</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81059f09d3a62495b686" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- PHILIPS R5 -->
+        <div class="op-page" id="op-philips-r5">
+          <div class="op-title">🔺 Philips — R5</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text">R3과 동일한 기본 워크플로우 — 인터페이스 디자인 및 메뉴 위치 일부 변경</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>CS SENSE (R5 추가기능)</b> — Compressed Sensing 파라미터 설정 주의; Head Base Coil 유무 먼저 확인</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>SmartBracket / SmartExam</b> — 자동 patient positioning 기능 활용</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81d7b81ae090f67bccee" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- GE -->
+        <div class="op-page" id="op-ge">
+          <div class="op-title">🔺 GE</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — New Patient → 정보 입력 → Protocol 선택 → Scan</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>DICOM Export</b> — Send To → DICOM destination 선택</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>MPR / MIP</b> — AW (Advanced Workstation) 또는 Console 내 후처리</div></div>
+            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-text"><b>ADC</b> — DWI 이후 자동 생성; NPW+ASSET 동시사용 불가 주의 (GE 기기 제한)</div></div>
+            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-text"><b>ZIP2 (Recon)</b> — ACQ 약 50% 크기로 설정 (Fine Recon 옵션)</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81b29617c7bc8129ea28" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- CANON -->
+        <div class="op-page" id="op-canon">
+          <div class="op-title">🔺 Toshiba / Canon</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — Patient 등록 → Exam 선택 → Scan Protocol 설정</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>DICOM Export</b> — Archive → Send → 목적지 설정</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text"><b>PAT 명칭</b> — SPEEDER (구 Toshiba) / RAPID (Canon 신형)</div></div>
+            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-text"><b>Fine Recon</b> — Recon voxel = ACQ 약 50%로 설정 (T2 Plus 기능 사용 시 TR 증가 가능)</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae814ab6e1e8be0d7a4aeb" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- HITACHI -->
+        <div class="op-page" id="op-hitachi">
+          <div class="op-title">🔺 Hitachi / Fujifilm</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-manual">Operation Steps</span></div>
+            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-text"><b>Exam Registration</b> — Patient 등록 → Exam Protocol 선택</div></div>
+            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-text"><b>DICOM Export</b> — Fujifilm 인터페이스 기준으로 전송 설정</div></div>
+            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-text">노션 원본 페이지에서 최신 업데이트 내용 확인 권장</div></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8190bf30f830d5e6299b" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <!-- PLANNING PAGES -->
+        <div class="op-page" id="op-plan-brain">
+          <div class="op-title">🧠 Planning — Brain</div>
+          <div class="op-grid">
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+              <ul class="op-list">
+                <li>뇌 구조이상, 뇌혈관 질환, 염증 질환</li>
+                <li>외상 후 손상 평가, 신경계 증상 원인 확인</li>
+                <li>수술 전/후 평가, 전이, 선천성·퇴행성 질환</li>
+              </ul>
+            </div>
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-coverage">Coverage</span></div>
+              <ul class="op-list">
+                <li>두개저(foramen magnum) ~ 두정부(vertex)</li>
+                <li>대뇌·소뇌·뇌간(midbrain, pons, medulla) 포함</li>
+              </ul>
+            </div>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — Anterior commissure - Posterior commissure Line (AC-PC line) 기준</li>
+              <li><b>SAG</b> — 정중시상면(midline sagittal) 정렬</li>
+              <li><b>COR</b> — AC-PC line에 수직</li>
+              <li><b>OBL COR</b> — Hippocampus 장축 평행 (해마 평가 시)</li>
+              <li><b>Brain MRA(TOF)</b> — Circle of Willis 중심; slab 경계 조정으로 venetian blind 방지</li>
+              <li><b>Veno(MRV)</b> — Superior sagittal sinus ~ Jugular vein 커버</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae818bb0e0ca3703dc5575" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-cspine">
+          <div class="op-title">🦴 Planning — C-Spine</div>
+          <div class="op-grid">
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+              <ul class="op-list">
+                <li>신경 구조 평가, 퇴행성 변화</li>
+                <li>외상·종양·염증·감염, 신경학적 증상 원인 확인</li>
+                <li>추간판탈출증 등 병변 진단 및 추적관찰</li>
+              </ul>
+            </div>
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-coverage">Coverage</span></div>
+              <ul class="op-list">
+                <li>두개저(foramen magnum)부터 T1–T2 상부까지</li>
+                <li>경추 7개(C1–C7) 전부 포함</li>
+              </ul>
+            </div>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>SAG</b> — C3~4 기준 / Vertebral Body와 CSF 사이 중간선</li>
+              <li><b>AX</b> — 각 Disc에 평행하게 기울임</li>
+              <li><b>OBL</b> — Foramen 평가 시 사선 방향 적용</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae818db815f83c0d7d5efd" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-lspine">
+          <div class="op-title">🦴 Planning — L-Spine</div>
+          <div class="op-grid">
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+              <ul class="op-list">
+                <li>신경 구조 평가, 퇴행성 변화</li>
+                <li>외상·종양·염증·감염, 추간판탈출증</li>
+                <li>신경학적 증상 원인 확인 및 추적관찰</li>
+              </ul>
+            </div>
+            <div class="op-card">
+              <div class="op-card-title"><span class="op-card-badge badge-coverage">Coverage</span></div>
+              <ul class="op-list">
+                <li>T12부터 S1–S2까지</li>
+                <li>요추 5개 분절(L1–L5)과 요천추 이행 부위 포함</li>
+              </ul>
+            </div>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>SAG</b> — L3~4 기준 / Vertebral Body와 CSF 사이 중간선</li>
+              <li><b>AX</b> — 각 Disc에 평행하게 기울임</li>
+              <li><b>COR</b> — 척추 커버리지 전체 확인용</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8116a4bef421d8d97d5a" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-wholespine">
+          <div class="op-title">🦴 Planning — Whole Spine</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-coverage">Coverage</span></div>
+            <ul class="op-list">
+              <li>C1 ~ S2 전체 (2~3 station)</li>
+              <li>각 station 간 충분한 overlap 확보 필수</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>SAG</b> — 각 station 별 척추 중심선 정렬; OS 70%이상</li>
+              <li><b>COR</b> — 척추 전체 정렬 확인; OS 70%이상</li>
+              <li><b>Station overlap</b> — 인접 station 간 overlap 충분히 확보 (Insufficient overlap artifact 방지)</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8119a334d9122d99bdee" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-shoulder">
+          <div class="op-title">💪 Planning — Shoulder</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>회전근개 파열, 연부조직 손상, 관절염, 활막염, 종양 등 병변 진단 및 추적관찰</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-coverage">Coverage</span></div>
+            <ul class="op-list">
+              <li>견관절(Glenohumeral joint) — 관절와(Glenoid fossa)·상완골두(Humeral head) 중심</li>
+              <li>견봉(Acromion), 쇄골(Clavicle) 원위부</li>
+              <li>회전근개 근·건 전체 (Supra/Infra/Subscapularis/Teres minor)</li>
+              <li>관절와순(Glenoid labrum), 상완이두건 장건(Biceps long head)</li>
+              <li>견봉하·견봉쇄골관절, 삼각근(Deltoid muscle) 포함</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — AC joint ~ Proximal humeral 전체 포함</li>
+              <li><b>COR</b> — Supraspinatus muscle 또는 Joint에 평행</li>
+              <li><b>SAG</b> — Supraspinatus muscle 또는 Joint에 수직 (교차)</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81dca3b2c9775f1da4f0" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-elbow">
+          <div class="op-title">💪 Planning — Elbow</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>인대 손상, 건병증, 관절염, 신경 포착 증후군, 종양 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — Epicondyle 기준 수평 정렬</li>
+              <li><b>COR</b> — Humeroradial joint에 평행</li>
+              <li><b>SAG</b> — Humeroradial joint에 수직</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae818d89b6ffb54f3292cc" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-wrist">
+          <div class="op-title">🤝 Planning — Wrist</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>TFCC 손상, 인대 손상, 수근관절염, 신경 포착, 종양 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 수근골(carpal bone) 기준 수평</li>
+              <li><b>COR</b> — 요골(radius)·척골(ulna) 장축에 평행</li>
+              <li><b>SAG</b> — 요골·척골 장축에 수직</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae819bbc10c7364e7a6042" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-hip">
+          <div class="op-title">🦵 Planning — Hip</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>비구순 손상, 관절염, 대퇴골두 괴사, 활막염, 종양 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 대퇴골두(femoral head) 기준 수평; 양측 비교 가능하도록 FOV 설정</li>
+              <li><b>COR</b> — 고관절 장축에 평행 (비구순 평가 핵심)</li>
+              <li><b>SAG</b> — 고관절 장축에 수직</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81f4acdaf1cff1500098" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-knee">
+          <div class="op-title">🦵 Planning — Knee</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>반월판 손상, 인대 손상(ACL/PCL/MCL/LCL), 관절연골 손상, 관절염, 종양 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>SAG</b> — 대퇴골 후방 과두선(posterior condylar line) 기준; 내측·외측 반월판 모두 포함</li>
+              <li><b>COR</b> — SAG에 수직; 십자인대 및 반월판 후각 평가</li>
+              <li><b>AX</b> — 슬개골(patella) ~ 경골 근위부까지</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8192a903de58f75e85d2" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-ankle">
+          <div class="op-title">🦶 Planning — Ankle</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>인대 손상, 건염/건파열, 연골 손상, 골절, 종양 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 경골(tibia) 장축에 수직; 족관절 전체 포함</li>
+              <li><b>COR</b> — 경골 장축에 평행; 인대 및 건 전체 포함</li>
+              <li><b>SAG</b> — 경골 장축 방향; Achilles건 전체 커버</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81beb87ed065c80f06e4" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-liver">
+          <div class="op-title">🫁 Planning — Liver / Pancreas / MRCP</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li><b>Liver</b> — 간암, 전이, 간경변, 혈관종, 낭종 등 평가; 동적조영(Dynamic) 스캔 포함</li>
+              <li><b>Pancreas</b> — 췌관암, 낭성 종양, 염증성 병변 등 평가</li>
+              <li><b>MRCP</b> — 담관·췌관 비침습 영상; 담석, 담관협착, PSC 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 횡격막 ~ 간 하극까지; Breath-hold EPI 또는 VIBE</li>
+              <li><b>COR</b> — 전체 복부 커버; 동적 조영 시 동일 위치 반복</li>
+              <li><b>MRCP COR OBL</b> — 담관 장축 방향으로 Thick slab (40~80mm) minIP</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8115b8daff99416f1fa7" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-prostate">
+          <div class="op-title">🫁 Planning — Prostate</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>전립선암 검출·병기 결정, 치료 반응 평가 (PI-RADS 기준)</li>
+              <li>T2WI + DWI + DCE 3가지 시퀀스 조합</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 전립선 장축에 수직 (직장-방광 기준 정렬)</li>
+              <li><b>COR</b> — 전립선 장축에 평행</li>
+              <li><b>SAG</b> — 정중시상 방향; 전립선 전체 포함</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81999905de4749731314" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-pelvis">
+          <div class="op-title">🫁 Planning — Pelvis (Female)</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>자궁근종, 자궁선근증, 난소 종양, 자궁경부암 병기 등 평가</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 자궁체부 장축에 수직 (Uterine axis 기준)</li>
+              <li><b>SAG</b> — 자궁·질 장축 방향; 정중시상면</li>
+              <li><b>COR</b> — 자궁체부 장축에 평행; 난소 포함</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81c597cbf7baec159227" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+        <div class="op-page" id="op-plan-breast">
+          <div class="op-title">🫁 Planning — Breast</div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-purpose">Purpose</span></div>
+            <ul class="op-list">
+              <li>유방암 검출·병기, 고위험군 선별, 치료 반응 평가</li>
+              <li>Dynamic contrast-enhanced MRI (DCE) 필수 포함</li>
+            </ul>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title"><span class="op-card-badge badge-plan">Plan 기준선</span></div>
+            <ul class="op-list">
+              <li><b>AX</b> — 양측 유방 전체 포함; 흉벽(chest wall)까지 커버</li>
+              <li><b>SAG</b> — 단측 유방 상세 평가 시 사용</li>
+              <li><b>Prone position</b> — Dedicated breast coil 사용; 체위 고정 중요</li>
+            </ul>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8169ba6dd475e60599fa" target="_blank">📎 노션 원본 보기</a>
+        </div>
+
+      </div><!-- op-content -->
+    </div><!-- op-layout -->
+  </div><!-- opPanel -->
+
+</div><!-- main -->
 // ============ ISSUE DB DATA ============
 const ISSUES = {
   brain: [
@@ -424,9 +930,19 @@ let part = 'all', busy = false, uploadedImgs = [], dbCat = 'all';
 function switchTab(tab) {
   document.getElementById('chatPanel').style.display = tab === 'chat' ? 'flex' : 'none';
   document.getElementById('dbPanel').classList.toggle('on', tab === 'db');
+  document.getElementById('opPanel').classList.toggle('on', tab === 'op');
   document.getElementById('tabChat').classList.toggle('on', tab === 'chat');
   document.getElementById('tabDB').classList.toggle('on', tab === 'db');
+  document.getElementById('tabOp').classList.toggle('on', tab === 'op');
   if (tab === 'db') renderDB();
+}
+
+function setOpPage(el) {
+  document.querySelectorAll('.op-nav-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.op-page').forEach(p => p.classList.remove('on'));
+  const target = document.getElementById(el.dataset.page);
+  if (target) target.classList.add('on');
 }
 
 // ============ PART SELECT ============
@@ -567,11 +1083,18 @@ function setDBCat(el) {
   renderDB();
 }
 
+function hl(text, q) {
+  if (!q || !text) return text || '';
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+}
+
 function renderDB() {
-  const q = document.getElementById('dbSearch').value.toLowerCase();
+  const q = document.getElementById('dbSearch').value.trim().toLowerCase();
   const content = document.getElementById('dbContent');
   let html = '';
   let total = 0;
+  const isSearch = q.length > 0;
 
   const cats = dbCat === 'all' ? Object.keys(ISSUES) : [dbCat];
 
@@ -580,22 +1103,43 @@ function renderDB() {
       const nameMatch = issue.name.toLowerCase().includes(q);
       const causeMatch = (issue.cause||'').toLowerCase().includes(q);
       const solMatch = (issue.solution||'').toLowerCase().includes(q);
-      if (q && !nameMatch && !causeMatch && !solMatch) return;
+      const tipMatch = (issue.tip||'').toLowerCase().includes(q);
+      if (isSearch && !nameMatch && !causeMatch && !solMatch && !tipMatch) return;
       total++;
+
       const cardId = `card_${cat}_${idx}`;
       const bodyId = `body_${cat}_${idx}`;
+      const autoOpen = isSearch;
+
+      const solLines = (issue.solution||'').split('\n').map(l => l.trim()).filter(Boolean);
+      const causeLines = (issue.cause||'').split('\n').map(l => l.trim()).filter(Boolean);
+
+      const solHtml = solLines.map(l =>
+        `<div style="display:flex;gap:5px;align-items:baseline;margin-bottom:2px"><span style="color:var(--green);flex-shrink:0;font-size:11px">›</span><span>${hl(l, q)}</span></div>`
+      ).join('');
+      const causeHtml = causeLines.map(l =>
+        `<div style="display:flex;gap:5px;align-items:baseline;margin-bottom:2px"><span style="color:var(--yellow);flex-shrink:0;font-size:11px">›</span><span>${hl(l, q)}</span></div>`
+      ).join('');
+
       html += `
-        <div class="db-card" id="${cardId}" onclick="toggleCard('${bodyId}')">
+        <div class="db-card${autoOpen?' expanded':''}" id="${cardId}" onclick="toggleCard('${bodyId}','${cardId}')">
           <div class="db-card-head">
             <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${cat === 'field' ? '현장' : cat.toUpperCase()}</span>
-            <span class="db-card-name">${issue.name}</span>
+            <span class="db-card-name">${hl(issue.name, q)}</span>
+            <span class="db-chevron">▼</span>
           </div>
-          <div class="db-card-body" id="${bodyId}">
-            <div class="db-detail">
-              ${issue.cause ? `<b>원인:</b> ${issue.cause.replace(/\n/g,'<br>')}` : ''}
-              ${issue.solution ? `<br><b>해결:</b> ${issue.solution.replace(/\n/g,'<br>')}` : ''}
-              ${issue.tip ? `<br><b>팁:</b> ${issue.tip}` : ''}
+          <div class="db-card-body${autoOpen?' open':''}" id="${bodyId}">
+            <div class="db-summary">
+              <div class="db-summary-box">
+                <div class="db-summary-label cause-lbl">⚡ 원인</div>
+                <div class="db-summary-text">${causeHtml}</div>
+              </div>
+              <div class="db-summary-box">
+                <div class="db-summary-label sol-lbl">✅ 해결</div>
+                <div class="db-summary-text">${solHtml}</div>
+              </div>
             </div>
+            ${issue.tip ? `<div class="db-tip">💡 ${hl(issue.tip, q)}</div>` : ''}
             ${issue.images ? renderSlider(issue.images, cardId) : ''}
             <button class="ai-btn" onclick="event.stopPropagation();askFromDB('${issue.name.replace(/'/g,"\\'")}')">💬 AI에게 더 물어보기</button>
           </div>
@@ -613,23 +1157,25 @@ function renderSlider(images, prefix) {
   if (images.length === 1) {
     return `<div class="img-slider"><img class="img-slider-main" src="${images[0]}" alt="예시 이미지"></div>`;
   }
-  const dots = images.map((_, i) => `<span class="img-dot${i===0?' on':''}" onclick="event.stopPropagation();slideImg('${prefix}',${i},${images.length})"></span>`).join('');
+  const dots = images.map((_, i) => `<span class="img-dot${i===0?' on':''}" onclick="event.stopPropagation();slideImg('${prefix}',${i})"></span>`).join('');
   return `<div class="img-slider">
     <img class="img-slider-main" id="${prefix}_slider" src="${images[0]}" alt="예시 이미지">
     <div class="img-dots">${dots}</div>
   </div>`;
 }
 
-function slideImg(prefix, idx, total) {
-  const img = document.getElementById(prefix + '_slider');
+function slideImg(prefix, idx) {
   const dots = document.querySelectorAll(`#${prefix} .img-dot`);
-  // Note: actual images would be in the data; this is placeholder
   dots.forEach((d, i) => d.classList.toggle('on', i === idx));
 }
 
-function toggleCard(bodyId) {
+function toggleCard(bodyId, cardId) {
   const body = document.getElementById(bodyId);
-  if (body) body.classList.toggle('open');
+  const card = document.getElementById(cardId);
+  if (body) {
+    body.classList.toggle('open');
+    if (card) card.classList.toggle('expanded', body.classList.contains('open'));
+  }
 }
 
 function askFromDB(name) {
