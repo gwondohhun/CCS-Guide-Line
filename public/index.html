@@ -2040,57 +2040,148 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 ## MSK - SHOULDER
 
 ### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.55mm | Phase: 0.50–0.7mm (scan% 70%↑)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.4–0.55mm | Phase: 0.50–0.7mm (scan% 70%↑)
 - PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
 - NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
 - Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+- Flow comp: AX=Slice or off / COR=Freq or off / SAG=Freq or off
+
+### T1WI (3T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.4–0.6mm (scan% 70%↑)
+- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
+- ETD: ≤40ms | ETL: 3–5
+- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+
+### T2 STIR (3T) — T2 IR TSE
+- TE: 50–70ms | TR: 2500–4000ms | TI: 180–230ms (180=FAT bright / 230=FAT dark)
+- Freq: 0.4–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
+- ETD: 120–160ms | ETL: 12–20
+- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+
+### T2WI FS (3T)
+- TE: 60–80ms | TR: 2500–6000ms (Drive ON)
+- Freq: 0.45–0.6mm | Phase: 0.55–0.75mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1–2(2 권장)
+- ETD: 120–160ms | ETL: 12–20
+- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+
+### T2* GRE / mFFE (3T)
+- TE: 14–20ms | TR: 450–800ms | FA: 20–30°
+- Freq: 0.4–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
+- PAT: Philips SENSE 1.7–2.2 / Siemens GRAPPA 2 / GE 1.75–2.0 / Canon SPEEDER 1.5–1.7
+- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
 
 ### PDWI FS (1.5T)
-- Freq: 0.45–0.55mm (3T 대비 약간 큼) — 나머지는 3T와 동일
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.45–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
+- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+※ 3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm) — 거의 동일, TI는 1.5T에서 140–170ms
+
+---
+## MSK - ELBOW
+
+### PDWI FS (3T)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
+- NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
+- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+
+### T1WI (3T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.4–0.55mm (scan% 70%↑)
+- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
+- ETD: ≤40ms | ETL: 3–5 | Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+
+### T2 STIR (3T)
+- TE: 50–70ms | TR: 2500–4000ms | TI: 180–230ms
+- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm | ETD: 120–160ms | ETL: 12–20
+- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+
+### PDWI FS (1.5T) — 3T와 동일
+- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm | ETD: 120–160ms
+- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+
+---
+## MSK - WRIST
+
+### PDWI FS (3T) — MSK 최소 voxel
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.35–0.45mm | Phase: 0.40–0.55mm (scan% 70%↑) ← MSK 최소 voxel
+- PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
+- NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
+- Phase dir: AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)
+
+### T1WI (3T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.35–0.5mm (scan% 70%↑)
+- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
+- ETD: ≤40ms | ETL: 3–5
+
+### PDWI FS (1.5T) — 3T와 동일
+- Freq: 0.35–0.45mm | Phase: 0.40–0.6mm
+- Phase dir: AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)
+
+---
+## MSK - HIP JOINT
+
+### PDWI FS (3T)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.7–0.9mm | Phase: 0.9–1.1mm (scan% 70%↑)
+- PAT: Philips SENSE 2–2.5 / Siemens GRAPPA off–2(COR PAT3 가능) / GE 2.0–2.5 / Canon SPEEDER 2
+- NEX: AX 1–2 / COR 1–2(2 권장) / SAG 1
+- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–10 | Refocusing FA: 110–130°
+- Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=FH(50%↑)
+
+### PDWI FS (1.5T)
+- Freq: 0.75–0.95mm | Phase: 0.95–1.2mm (scan% 70%↑)
+- PAT: 3T와 동일 | ETD: ≤90ms | ETL: 6–10
+- Phase dir: AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)
+※ 대형 부위 — PAT 2–2.5 필수 / Siemens COR만 PAT3 가능
 
 ---
 ## MSK - KNEE
 
 ### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–5000ms | Freq: 0.4–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.4–0.55mm | Phase: 0.50–0.7mm (scan% 70%↑)
 - PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
-- ETD: ≤90ms | ETL: 6–10
-- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)
+- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–10 | Refocusing FA: 110–130°
+- Phase dir: AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)
 
 ### PDWI FS (1.5T)
-- Freq: 0.45–0.55mm | Phase dir SAG=FH(60%↑) — 나머지는 3T와 동일
+- Freq: 0.45–0.55mm | Phase: 0.50–0.7mm | ETD: ≤90ms
+- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(60%↑)
+※ 3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm), 나머지 동일
 
 ---
-## MSK - HIP JOINT (1.5T 기준)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.75–0.95mm | Phase: 0.95–1.2mm (scan% 70%↑)
-- PAT: Philips SENSE 2–2.5 / Siemens GRAPPA off–2(COR만 PAT3 가능) / GE 2.0–2.5 / Canon SPEEDER 2
-- ETD: ≤90ms | ETL: 6–10
-- Phase dir: AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)
-※ 대형 부위 — Philips PAT 2–2.5 필수
+## MSK - ANKLE
 
----
-## MSK - ANKLE (1.5T/3T 동일)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: ≤90ms | ETL: 6–20
+### PDWI FS (3T)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
+- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–20 | Refocusing FA: 110–130°
+- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)
+
+### PDWI FS (1.5T) — 3T와 동일
+- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm
 - Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)
 
 ---
-## MSK - WRIST (1.5T 기준, MSK 최소 voxel)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.35–0.45mm | Phase: 0.40–0.6mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)
+## MSK - FOOT
 
----
-## MSK - ELBOW (1.5T 기준)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.55mm | Phase: 0.50–0.65mm (scan% 70%↑)
-- ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+### PDWI FS (3T)
+- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
+- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: Philips SENSE 2.0–2.5 / Siemens GRAPPA off–2 / GE off–2 / Canon SPEEDER off–1.5–2
+- NEX: 1 | Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–20 | Refocusing FA: 110–130°
+- Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
+※ 3T Foot는 Philips PAT 2.0–2.5 필수 (Ankle과 다름 — 3T Ankle은 off–1.7)
 
----
-## MSK - FOOT (1.5T 기준)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.45–0.55mm | Phase: 0.6–0.75mm (scan% 70%↑)
+### PDWI FS (1.5T)
+- Freq: 0.45–0.55mm | Phase: 0.6–0.75mm
 - PAT: Philips SENSE 1.5–2.0 / Siemens off–2 / GE off–2 / Canon off–1.5–2
-- ETD: ≤90ms | ETL: 6–20
 - Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
 
 ---
@@ -2750,18 +2841,37 @@ const PARAM_DATA = {
       ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
       ['PAT', pat('s2','p17','g2','c17')],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
       ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
+      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
     ]),
     seq('T1WI','TSE',[
-      ['TE','최솟값'],['TR','400–700ms'],
-      ['PAT', pat('s2','p17','g2','c17')],
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.6mm (scan% 70%↑)'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
+      ['ETD',hi('≤40ms')],['ETL','3–5'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
     ]),
     seq('T2 STIR','IR TSE',[
-      ['TE','90–120ms'],['TI',hi('~150ms')],
+      ['TE','50–70ms'],['TR','2500–4000ms'],
+      ['TI',hi('180–230ms')+'<span style="color:var(--text3);font-size:10px"> 180=FAT bright / 230=FAT dark</span>'],
+      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
+    ],'TI 180ms=FAT bright / 230ms=FAT dark — 목적에 맞게 선택'),
+    seq('T2WI FS','TSE',[
+      ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+      ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.55–0.75mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
     ]),
     seq('T2* GRE (mFFE)','GRE',[
-      ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.7–2.2</span><span class="mfr mfr-s">Siemens GRAPPA 2</span><span class="mfr mfr-g">GE 1.75–2.0</span><span class="mfr mfr-c">Canon 1.5–1.7</span></div>'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
     ]),
   ],
   'shoulder-1p5t': [
@@ -2772,61 +2882,113 @@ const PARAM_DATA = {
       ['NEX','1'],['Echo spacing','8.5–11ms'],
       ['ETD',hi('120–160ms')],['ETL','12–20'],
       ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ],'3T 대비 Freq voxel 0.45–0.55mm (3T: 0.4–0.55mm) — 거의 동일'),
+    ],'3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm)'),
     seq('T1WI','TSE',[
-      ['TE','최솟값'],['TR','400–700ms'],
-      ['PAT', pat('s2','p17','g2','c17')],
+      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.3–0.45mm'],
+      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
     ]),
     seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TI',hi('140–170ms')],
+      ['TE','50–70ms'],['TR','2300–4000ms'],
+      ['TI',hi('140–170ms')+'<span style="color:var(--text3);font-size:10px"> (3T: 180–230ms와 다름)</span>'],
+      ['ETD','≤140ms'],['ETL','11–15'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
     ]),
   ],
   'elbow-grid': [
-    seq('PDWI FS','TSE',[
+    seq('PDWI FS (3T/1.5T)','TSE',[
       ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
       ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
       ['PAT', pat('s2','p17','g2','c17')],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
+      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
+      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
+    ],'3T와 1.5T 동일 파라미터'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm (scan% 70%↑)'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
+      ['ETD','≤40ms'],['ETL','3–5'],
       ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
     ]),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
-    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],
+      ['TI',hi('180–230ms')+'<span style="color:var(--text3);font-size:10px"> (1.5T: 140–170ms)</span>'],
+      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
+      ['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
+    ]),
   ],
   'wrist-grid': [
-    seq('PDWI FS','TSE',[
+    seq('PDWI FS (3T/1.5T)','TSE',[
       ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.35–0.45mm ← MSK 최소')],['Phase voxel','0.40–0.6mm (scan% 70%↑)'],
+      ['Freq voxel',hi('0.35–0.45mm')+'<span style="color:var(--text3);font-size:10px"> ← MSK 최소</span>'],
+      ['Phase voxel','0.40–0.55mm (scan% 70%↑)'],
       ['PAT', pat('s2','p17','g2','c17')],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
       ['Phase dir','AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)'],
-    ],'MSK 부위 중 가장 작은 voxel 사용'),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
+    ],'3T와 1.5T 동일. MSK 중 가장 작은 voxel'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.35–0.5mm (scan% 70%↑)'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
+      ['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
+      ['Freq voxel','0.35–0.45mm'],['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)'],
+    ]),
   ],
   'hip-grid': [
-    seq('PDWI FS','TSE',[
+    seq('PDWI FS (3T)','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.7–0.9mm')],['Phase voxel','0.9–1.1mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p2','g2','c2')],
+      ['NEX','AX 1–2 / COR '+hig('1–2(2 권장)')+' / SAG 1'],
+      ['Echo spacing','8.5–11ms'],['ETD',hi('≤90ms')],['ETL','6–10'],
+      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=FH(50%↑)'],
+    ],'3T Hip: PAT 2–2.5 필수 / Siemens COR만 PAT3 가능'),
+    seq('PDWI FS (1.5T)','TSE',[
       ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
       ['Freq voxel',hi('0.75–0.95mm')],['Phase voxel','0.95–1.2mm (scan% 70%↑)'],
       ['PAT', pat('s2','p2','g2','c2')],
-      ['NEX','AX 1–2 / COR 1–2 ('+hig('2 권장')+'). SAG 1'],
-      ['Echo spacing','9–12ms'],['ETD',hi('90ms 이하')],['ETL','6–10'],
+      ['NEX','AX 1–2 / COR '+hig('1–2(2 권장)')+' / SAG 1'],
+      ['ETD',hi('≤90ms')],['ETL','6–10'],
       ['Phase dir','AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)'],
-    ],'대형 부위 — Philips PAT 2–2.5 필수 / Siemens COR만 PAT3 가능'),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p2','g2','c2')]]),
-    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+    ],'1.5T: AX OS 10%→20%, COR OS 20%→30% (3T보다 큼)'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.7–0.9mm'],
+      ['PAT', pat('s2','p2','g2','c2')],['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
+      ['Freq voxel','0.7–0.9mm'],['ETD','120–160ms'],['ETL','12–20'],
+    ]),
   ],
   'knee-3t': [
     seq('PDWI FS','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–5000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
       ['PAT', pat('s2','p17','g2','c17')],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–10'],
-      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
+      ['ETD',hi('≤90ms')],['ETL','6–10'],['Refocusing FA','110–130°'],
+      ['Phase dir','AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
+      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
     ]),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
-    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('~150ms')]]),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
+      ['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
+      ['Freq voxel','0.4–0.55mm'],['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
+    ]),
   ],
   'knee-1p5t': [
     seq('PDWI FS','TSE',[
@@ -2836,32 +2998,63 @@ const PARAM_DATA = {
       ['NEX','1'],['Echo spacing','8.5–11ms'],
       ['ETD',hi('≤90ms')],['ETL','6–10'],
       ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH('+hig('60%↑')+')'],
-    ],'3T 대비 SAG OS 60%↑ (3T는 70%↑)'),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
-    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+    ],'3T 대비: Freq 0.45–0.55mm(3T 0.4–0.55mm) / AX OS 10%→20%'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.45–0.55mm'],
+      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
+      ['ETD','≤140ms'],['ETL','11–15'],
+      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
+    ]),
   ],
   'ankle-grid': [
-    seq('PDWI FS','TSE',[
+    seq('PDWI FS (3T/1.5T 동일)','TSE',[
       ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
       ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
       ['PAT', pat('s2','p17','g2','c17')],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–20'],
+      ['ETD',hi('≤90ms')],['ETL','6–20'],['Refocusing FA','110–130°'],
       ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
-    ],'3T와 동일 파라미터 적용 가능'),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
-    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
+    ],'3T와 1.5T 동일 파라미터'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel',hi('0.3–0.45mm')],
+      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
+      ['Freq voxel','0.4–0.5mm'],['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
+    ]),
   ],
   'foot-grid': [
-    seq('PDWI FS','TSE',[
+    seq('PDWI FS (3T)','TSE',[
       ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.6–0.75mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p2','g2','c2')],
+      ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 2.0–2.5</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–2</span><span class="mfr mfr-c">Canon off–1.5–2</span></div>'],
       ['NEX','1'],['Echo spacing','8.5–11ms'],
       ['ETD',hi('≤90ms')],['ETL','6–20'],
       ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
-    ],'Philips만 SENSE 1.5–2.0 필수 (타사는 off–2)'),
-    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p2','g2','c2')]]),
+    ],'Foot 3T: Philips PAT 2.0–2.5 필수 (Ankle 3T off–1.7과 다름)'),
+    seq('PDWI FS (1.5T)','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.6–0.75mm (scan% 70%↑)'],
+      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–2</span><span class="mfr mfr-c">Canon off–1.5–2</span></div>'],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('≤90ms')],['ETL','6–20'],
+      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
+    ],'1.5T Foot: Freq 0.45–0.55mm (3T 0.4–0.5mm 대비 약간 큼)'),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel',hi('0.3–0.45mm')],
+      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
+      ['Freq voxel','0.4–0.5mm'],['ETD','120–160ms'],['ETL','12–20'],
+      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
+    ]),
   ],
 };
 
