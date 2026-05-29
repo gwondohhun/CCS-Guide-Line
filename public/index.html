@@ -1367,7 +1367,82 @@ PAT: Philips SENSE 2 / Siemens GRAPPA 2
 [T2* GRE]
 TE: 14-20ms / TR: 450-800ms / FA: 20-30° (원본유지)
 
-=== CERVICAL SPINE 파라미터 ===
+=== BRAIN 파라미터 (1.5T) ===
+※ 3T 대비 주요 차이: PAT 1.5-2 (3T는 off-2), TR 범위 일부 다름, TOF TE ~4.6ms (out-of-phase)
+
+[T1WI / 2D SE,TSE / 1.5T]
+TE: 9-15ms / TR: 450-700ms / Freq voxel: 0.6-0.8mm / Phase voxel: 0.7-1.1mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE ASSET/ARC 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 10-12ms / ETD: 40ms 이하 / ETL: 3-5 / Refocusing FA: 110-150°
+Phase dir: AX=RL, COR=RL, SAG=AP
+Flow comp: AX=Slice or off, COR=Freq or off, SAG=Freq or off
+
+[T1 FLAIR / T1 IR TSE / 1.5T]
+TE: 15-25ms / TR: 1600-2200ms / TI: 734-980ms (table value 확인)
+Freq voxel: 0.6-0.8mm / Phase voxel: 0.7-1.0mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 9-12ms / ETD: 50ms 이하 / ETL: 3-5 / Refocusing FA: 110-150°
+Phase dir: AX=RL, COR=RL, SAG=AP
+
+[T2WI / 2D TSE / 1.5T]
+TE: 80-100ms / TR: 2500-6000ms (Drive 사용)
+Freq voxel: 0.5-0.7mm / Phase voxel: 0.6-0.8mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2 / GE ASSET/ARC 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 10-12ms / ETD: 160-200ms / ETL: 16-24 / Refocusing FA: 110-150°
+Phase dir: AX=RL, COR=RL, SAG=AP
+Flow comp: AX=Slice or off, COR=Freq or off, SAG=Freq or off
+
+[T2 FLAIR / T2 IR TSE / 1.5T]
+TE: 90-125ms / TR: 8500-11000ms / TI: 2439-2800ms (table value 확인)
+Freq voxel: 0.7-0.9mm / Phase voxel: 0.8-1.1mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 9-12ms / ETD: 180-250ms / ETL: 16-28 / Refocusing FA: 110-150°
+Phase dir: AX=RL, COR=RL, SAG=AP
+Flow comp: AX=Slice or off, COR=Freq, SAG=Freq
+
+[DWI / EPI / 1.5T]
+TE: 최솟값 / TR: 최솟값
+Freq/Phase voxel: 1.4-1.8mm (SS-EPI: 1.5-1.8mm / resolve: 1.4-1.6mm)
+PAT: Philips SENSE 2.5 / Siemens GRAPPA 2 / GE ASSET/ARC 2 / Canon SPEEDER 2
+NEX: SS-EPI=3, resolve=1
+Echo spacing: SS-EPI 0.9-1.0ms / resolve 0.4-0.5ms
+Refocusing FA: 180° / Phase dir: AX=AP
+
+[TOF / 3D GRE / 1.5T]
+TE: ~4.6ms (out-of-phase at 1.5T) / TR: 23-30ms / FA: 18-25°
+Freq voxel: 0.5-0.8mm / Phase voxel: 1.0-1.3mm (scan% 60%이상)
+PAT: Philips SENSE 2-2.5 (CS SENSE 옵션 있으면 4) / Siemens GRAPPA 2-3(factor3 + OS 30%) / GE 2 / Canon SPEEDER 1.7-2.0
+Slice thickness: 1.0-1.4mm / Phase dir: RL / Slice OS: 10% 이상
+
+[SWI / 3D GRE / 1.5T]
+TE: 원본 유지 (SWI TE table 확인) / TR: 최솟값 / FA: 18-20°
+Freq voxel: 0.8-1.0mm / Phase voxel: 0.9-1.1mm (scan% 60%이상)
+PAT: Philips SENSE P 2-2.5, S 1-1.5 (CS SENSE 있으면 4-6) / Siemens GRAPPA 2-3(OS 30%) / GE 2
+ACQ Slice: 2-4mm / Recon Slice: 1-2mm
+Siemens: Slice resolution 50% / Philips: Recon Voxel 1-1.5mm / GE: ZIP2 / Canon: Fine recon ON
+Phase dir: RL / Slice OS: 10% 이상
+
+[T2* GRE / 2D / 1.5T]
+TE: 14-20ms / TR: 450-800ms / FA: 18-25° (원본유지)
+Freq voxel: 0.8-1.0mm / Phase voxel: 0.9-1.2mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 8-10ms / Phase dir: AX=RL, COR=RL, SAG=AP
+
+[T1 GRE / 2D / 1.5T]
+TE: 최솟값(1.8-2.8ms) / TR: 190-250ms / FA: 60-80° (원본유지)
+Freq voxel: 0.7-0.8mm / Phase voxel: 0.9-1.1mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE 1.75-2.0 / Canon SPEEDER 1.5-1.7
+Echo spacing: 8-10ms / Phase dir: AX=RL, COR=RL, SAG=AP
+
+[T1WI IR 3D (MP-RAGE/TFE/BRAVO) / 1.5T]
+TE: 최솟값-4.6ms (in-phase) / TR: 7-12ms / TI: 734-980ms (table value 확인) / FA: 8-15°
+Freq voxel: 0.85-1.0mm / Phase voxel: 1.0-1.2mm (scan% 80%이상)
+PAT: Philips SENSE slice 2 (CS SENSE 있으면 4-5) / Siemens GRAPPA 2-3(OS 30%) / GE 2-2.5 / Canon SPEEDER 1.7-2.0
+ACQ Slice: 1.0-1.4mm / Recon Slice: 0.5-0.7mm
+Siemens: Slice resolution 50% / Philips: Recon Voxel 0.45-0.6mm / GE: ZIP2 / Canon: Fine recon ON
+Phase dir: COR=RL, AX=RL, SAG=AP / Slice OS: 10% 이상
+
+=== CERVICAL SPINE 파라미터 (3T) ===
 [T2WI SAG / 2D TSE]
 TE: 90-120ms / TR: 2500-5000ms / Freq voxel: 0.6-0.8mm / Phase voxel: 0.9-1.2mm (scan% 60%이상)
 PAT: off-1.7(Philips/Canon) / off-2(Siemens/GE)
@@ -1388,11 +1463,42 @@ PAT: 동일 적용 / STIR TI: 150-180ms
 [DIXON FS]
 B0 불균일 심할 경우 STIR 대신 DIXON FS 사용
 
+=== CERVICAL SPINE 파라미터 (1.5T) ===
+[T2WI / 2D TSE / 1.5T]
+TE: 90-120ms / TR: 2500-6000ms (Drive 사용)
+Freq voxel: SAG/COR 0.6-0.8mm, AXL 0.5-0.65mm
+Phase voxel: SAG/COR 0.9-1.2mm, AXL 0.6-0.8mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: SAG 1-2(2 권장), COR 1, AXL 2 / ETD: 180-240ms / ETL: 15-26 / Refocusing FA: 110-150°
+Phase dir: SAG=FH(OS 70%이상), COR=FH(OS 70%이상), AXL=AP(OS 30%이상)
+Flow comp: SAG=Freq, COR=Freq(Philips Sensitized), AXL=Slice
+
+[T1WI / 2D SE,TSE / 1.5T]
+TE: 8-15ms / TR: 450-700ms / Freq voxel: 0.6-0.8mm / Phase voxel: 0.85-1.2mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.5-1.7
+NEX: SAG 1-2(2 권장), AXL 2 / ETD: 40ms 이하 / ETL: 3-5 / Refocusing FA: 110-150°
+Phase dir: SAG=FH(OS 70%이상), AXL=AP(OS 30%이상)
+Flow comp: SAG=Freq(Philips Sensitized), AXL=Slice or off
+
+[T2 STIR / 2D IR TSE / 1.5T]
+TE: 50-70ms / TR: 2300-4000ms / TI: 140-170ms
+Freq voxel: 0.7-0.9mm / Phase voxel: 0.9-1.2mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2(OS 10%) / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: SAG 1-2(2 권장), AXL 2 / ETD: 140ms 이하 / ETL: 11-15 / Refocusing FA: 110-150°
+Phase dir: SAG=FH(OS 70%이상), AXL=AP(OS 30%이상)
+Flow comp: SAG=Freq, AXL=Slice
+
+[T2* GRE(mFFE/Medic/Merge) / 2D / 1.5T]
+TE: 18-25ms / TR: 450-800ms / FA: 20-30° (원본유지)
+Freq voxel: 0.6-0.8mm / Phase voxel: 0.7-0.9mm (scan% 70%이상)
+PAT: Philips SENSE 1.7-2.0 / Siemens GRAPPA 2(OS 10%) / GE 1.75-2.0 / Canon SPEEDER 1.5-1.7
+NEX: 1 / Echo spacing: 8-10ms / Phase dir: AXL=RL(OS 20-40%이상)
+
 === THORACIC SPINE 파라미터 ===
 T2WI: C-Spine과 동일 파라미터
 Phase dir: SAG=FH, AXI=RL
 
-=== LUMBAR SPINE 파라미터 ===
+=== LUMBAR SPINE 파라미터 (3T) ===
 [T2WI SAG]
 TE: 90-120ms / TR: 2500-5000ms / Freq voxel: 0.6-0.8mm / Phase voxel: 0.9-1.2mm (scan% 60%이상)
 PAT: off-1.7(Philips/Canon) / off-2(Siemens/GE)
@@ -1404,6 +1510,16 @@ TE: 90-120ms / TR: 2000-4000ms / Phase dir: AXI=RL(OS 20%이상)
 [T1WI]
 TE: 최솟값 / TR: 400-700ms
 
+=== LUMBAR SPINE 파라미터 (1.5T) ===
+[T2WI / 2D TSE / 1.5T]
+TE: 90-120ms / TR: 2500-6000ms (Drive 사용)
+Freq voxel: SAG/COR 0.55-0.75mm, AXL 0.5-0.7mm
+Phase voxel: SAG/COR 0.8-1.0mm, AXL 0.6-0.8mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: SAG 1-2(2 권장), AXL 1-2(2 권장) / ETD: 180-240ms / ETL: 15-26 / Refocusing FA: 110-150°
+Phase dir: SAG=FH(OS 70%이상), COR=FH(OS 70%이상), AXL=AP(OS 40%이상)
+Flow comp: SAG=Freq, COR=Freq, AXL=Slice
+
 === MSK - SHOULDER (3T) ===
 [PDWI FS / 2D TSE]
 TE: 25-35ms / TR: 2300-6000ms
@@ -1413,14 +1529,19 @@ NEX: 1 / Echo spacing: 8.5-11ms / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 1
 Phase dir: AX=AP(OS 40%이상), COR=FH(OS 70%이상), SAG=FH(OS 70%이상)
 Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
 
-[T1WI]
-TE: 최솟값 / TR: 400-700ms / PAT: 동일 적용
+[T1WI / T2 STIR / T2* GRE]
+T1WI: TE 최솟값 / TR 400-700ms / T2 STIR TI: 150ms 내외
+T2* GRE: TE 14-20ms / TR 450-800ms / FA 20-30°
 
-[T2 STIR / T2WI FS]
-TE: 90-120ms / TR: 2000-5000ms / STIR TI: 150ms 내외
-
-[T2* GRE or Multi Echo GRE]
-TE: 14-20ms / TR: 450-800ms / FA: 20-30° / Canon SPEEDER: 1.5-1.7
+=== MSK - SHOULDER (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
+Freq voxel: 0.45-0.55mm / Phase voxel: 0.55-0.7mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: 1 / Echo spacing: 8.5-11ms / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 40%이상), COR=FH(OS 70%이상), SAG=FH(OS 70%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ 3T 대비: Freq voxel 0.45-0.55mm (3T: 0.4-0.55mm) — 거의 동일
 
 === MSK - KNEE (3T 기준) ===
 [PDWI FS / 2D TSE]
@@ -1430,45 +1551,64 @@ PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2 / Canon off-1.7
 NEX: 1 / Echo spacing: 8.5-11ms / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
 Phase dir: AX=RL(OS 20%이상), COR=RL(OS 20%이상), SAG=FH(OS 70%이상)
 
-=== MSK - HIP JOINT (1.5T 기준) ===
-[PDWI FS / 2D TSE]
-TE: 25-35ms / TR: 2300-5000ms
-Freq voxel: 0.75-0.95mm / Phase voxel: 0.85-1.1mm (scan% 70%이상)
-PAT: Philips SENSE 2-2.5 / Siemens GRAPPA 2-2.5 / GE 2-2.5 / Canon 2-2.5
-NEX: 1 / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
+=== MSK - KNEE (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
+Freq voxel: 0.45-0.55mm / Phase voxel: 0.50-0.7mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: 1 / Echo spacing: 8.5-11ms / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
+Phase dir: AX=RL(OS 20%이상), COR=RL(OS 20%이상), SAG=FH(OS 60%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ 3T 대비: Freq voxel 0.45-0.55mm (3T: 0.4-0.55mm) — 거의 동일
+
+=== MSK - HIP JOINT (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
+Freq voxel: 0.75-0.95mm / Phase voxel: 0.95-1.2mm (scan% 70%이상)
+PAT: Philips SENSE 2-2.5 / Siemens GRAPPA off-2(COR만 PAT3 가능) / GE 2.0-2.5 / Canon SPEEDER 2
+NEX: AX 1-2, COR 1-2(2 권장), SAG 1 / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
+Phase dir: AX=AP(OS 20%이상), COR=RL(OS 30%이상), SAG=FH(OS 50%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ 대형 부위 — Philips PAT 2-2.5 필수, Freq voxel이 다른 MSK보다 크게 설정
+
+=== MSK - ANKLE (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
+Freq voxel: 0.4-0.5mm / Phase voxel: 0.50-0.65mm (scan% 70%이상)
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
+NEX: 1 / Echo spacing: 8.5-11ms / ETD: 90ms 이하 / ETL: 6-20 / Refocusing FA: 110-130°
 Phase dir: AX=RL(OS 20%이상), COR=RL(OS 20%이상), SAG=FH(OS 70%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ 3T와 동일 파라미터 적용 가능
 
-=== MSK - ANKLE (3T 기준) ===
-[PDWI FS / 2D TSE]
-TE: 25-35ms / TR: 2300-5000ms
-Freq voxel: 0.4-0.5mm / Phase voxel: 0.5-0.65mm (scan% 70%이상)
-PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2 / Canon off-1.7
-NEX: 1 / ETD: 90ms 이하 / ETL: 6-10 / Refocusing FA: 110-130°
-Phase dir: AX=AP(OS 10%이상), COR=RL(OS 20%이상), SAG=AP(OS 20%이상)
-
-=== MSK - WRIST (3T 기준) ===
-[PDWI FS / 2D TSE]
-TE: 25-35ms / TR: 2300-6000ms
-Freq voxel: 0.35-0.45mm / Phase voxel: 0.40-0.55mm (scan% 70%이상) ← 가장 작은 voxel
-PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon off-1.7
+=== MSK - WRIST (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
+Freq voxel: 0.35-0.45mm / Phase voxel: 0.40-0.6mm (scan% 70%이상) ← MSK 최소 voxel
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
 NEX: 1 / Echo spacing: 8.5-11ms / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
 Phase dir: AX=RL(OS 10%이상), COR=FH(OS 50%이상), SAG=AP(OS 20%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ 3T와 동일 파라미터 적용 가능
 
-=== MSK - ELBOW (1.5T 기준) ===
-[PDWI FS / 2D TSE]
-TE: 25-35ms / TR: 2300-6000ms
+=== MSK - ELBOW (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
 Freq voxel: 0.4-0.55mm / Phase voxel: 0.50-0.65mm (scan% 70%이상)
-PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2.0 / Canon SPEEDER off-1.7
+PAT: Philips SENSE off-1.7 / Siemens GRAPPA off-2 / GE off-2.0 / Canon SPEEDER off-1.7
 NEX: 1 / Echo spacing: 8.5-11ms / ETD: 120-160ms / ETL: 12-20 / Refocusing FA: 110-130°
 Phase dir: AX=AP(OS 20%이상), COR=FH(OS 50%이상), SAG=FH(OS 50%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
 
-=== MSK - FOOT (1.5T 기준) ===
-[PDWI FS / 2D TSE]
-TE: 25-35ms / TR: 2300-6000ms
+=== MSK - FOOT (1.5T) ===
+[PDWI FS / 2D TSE / 1.5T]
+TE: 25-35ms / TR: 2300-6000ms (Drive 사용)
 Freq voxel: 0.45-0.55mm / Phase voxel: 0.6-0.75mm (scan% 70%이상)
-PAT: Philips SENSE 1.5-2.0 / Siemens GRAPPA off-2 / GE ASSET/ARC off-2 / Canon SPEEDER off-2
+PAT: Philips SENSE 1.5-2.0 / Siemens GRAPPA off-2 / GE off-2 / Canon SPEEDER off-1.5-2
 NEX: 1 / Echo spacing: 8.5-11ms / ETD: 90ms 이하 / ETL: 6-20 / Refocusing FA: 110-130°
 Phase dir: AX=AP(OS 10%이상), COR=RL(OS 20%이상), SAG=AP(OS 10%이상)
+Flow comp: AX=off or Slice, COR=off or Freq, SAG=off or Freq
+※ Philips만 SENSE 1.5-2.0 (타사는 off-2) — 풋처럼 작은 부위도 Philips는 PAT 적용
 
 === WHOLE SPINE (3T) ===
 [T2WI / 2D TSE - 2~3 station]
