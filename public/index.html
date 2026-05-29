@@ -510,6 +510,128 @@ mark {
   padding: 0 1px;
 }
 
+/* ── MOBILE OVERLAY SIDEBAR ─────────────────── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 90;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.open { display: block; }
+
+.btn-ham {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-right: 8px;
+  line-height: 1;
+}
+
+/* ── MEDIA QUERIES ───────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Hamburger visible */
+  .btn-ham { display: flex; align-items: center; }
+
+  /* Logo compact */
+  .logo { margin-right: 0; }
+  .logo-sub { display: none; }
+
+  /* Nav tabs: icon only on smallest screens */
+  .nav-tab { padding: 0 10px; font-size: 11px; gap: 4px; }
+  .nav-tab-text { display: none; }
+  .topbar { padding: 0 10px; }
+
+  /* Badge hidden on mobile */
+  .badge-ccs { display: none; }
+
+  /* Sidebar becomes overlay drawer */
+  .sidebar {
+    position: fixed;
+    left: -210px;
+    top: 0;
+    bottom: 0;
+    width: 210px;
+    z-index: 100;
+    transition: left .25s cubic-bezier(.4,0,.2,1);
+    padding-top: 60px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  .sidebar.open { left: 0; }
+
+  /* Chat messages full width */
+  .msg { max-width: 95%; }
+  .msg.ai  { max-width: 98%; }
+  .chat-msgs { padding: 12px; gap: 10px; }
+
+  /* Input area compact */
+  .chat-input-area { padding: 8px 10px; }
+  .chat-textarea { font-size: 14px; max-height: 70px; padding: 8px 10px; }
+  .btn-send { padding: 0 13px; font-size: 12px; }
+  .btn-attach { width: 36px; height: 36px; }
+
+  /* DB toolbar: stack vertically */
+  .db-toolbar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; }
+  .search-wrap { max-width: 100%; }
+  .filter-group { flex-wrap: wrap; gap: 5px; }
+  .df { padding: 5px 10px; font-size: 11px; }
+  .db-count-pill { margin-left: 0; align-self: flex-start; }
+
+  /* DB grid: single column */
+  .db-grid {
+    grid-template-columns: 1fr;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  /* DB summary: stack vertically */
+  .db-summary { grid-template-columns: 1fr; }
+
+  /* Operation panel: overlay nav */
+  .op-nav {
+    position: fixed;
+    left: -210px;
+    top: 0; bottom: 0;
+    width: 210px;
+    z-index: 100;
+    transition: left .25s cubic-bezier(.4,0,.2,1);
+    padding-top: 60px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  .op-nav.open { left: 0; }
+  .op-content { padding: 14px 14px 20px; }
+  .op-title { font-size: 16px; }
+
+  /* Op steps compact */
+  .op-step { flex-direction: column; gap: 6px; }
+  .op-step-num { width: 24px; height: 24px; font-size: 11px; }
+
+  /* Chat context bar compact */
+  .chat-context-bar { padding: 5px 12px; }
+
+  /* Mobile nav bar at bottom (optional feel) */
+  .nav-tab-icon { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .nav-tab { padding: 0 8px; }
+  .chat-msgs { padding: 8px; }
+  .chat-input-area { padding: 6px 8px; }
+  .db-grid { padding: 8px; gap: 6px; }
+  .op-content { padding: 10px; }
+  .op-title { font-size: 15px; margin-bottom: 4px; }
+  .op-title-sub { font-size: 11px; margin-bottom: 14px; }
+  .op-card { padding: 12px; }
+  .op-step-title { font-size: 12px; }
+  .op-step-desc { font-size: 11.5px; }
+}
+
 .ai-ask-btn {
   margin-top: 8px;
   font-size: 11.5px;
@@ -711,19 +833,20 @@ mark {
 
 <!-- TOPBAR -->
 <div class="topbar">
+  <button class="btn-ham" id="hamBtn" onclick="toggleSidebar()" aria-label="메뉴">☰</button>
   <div class="logo">
     <span class="logo-name">MRI Guide</span>
     <span class="logo-sub">by AiRSMed</span>
   </div>
   <nav class="nav-tabs">
     <button class="nav-tab on" id="tabChat" onclick="switchTab('chat')">
-      <span class="nav-tab-icon">💬</span> AI 질문
+      <span class="nav-tab-icon">💬</span><span class="nav-tab-text"> AI 질문</span>
     </button>
     <button class="nav-tab" id="tabDB" onclick="switchTab('db')">
-      <span class="nav-tab-icon">📋</span> 이슈 DB
+      <span class="nav-tab-icon">📋</span><span class="nav-tab-text"> 이슈 DB</span>
     </button>
     <button class="nav-tab" id="tabOp" onclick="switchTab('op')">
-      <span class="nav-tab-icon">🎛️</span> MR Operation
+      <span class="nav-tab-icon">🎛️</span><span class="nav-tab-text"> MR Operation</span>
     </button>
   </nav>
   <div class="topbar-right">
@@ -731,10 +854,14 @@ mark {
   </div>
 </div>
 
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
 <div class="main">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="mainSidebar">
+    <button class="pb" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeSidebar()">✕ 닫기</button>
     <div class="sidebar-section">부위 선택</div>
     <button class="pb on" data-part="all"        onclick="setPart(this)"><span class="pb-icon">◎</span> 전체</button>
     <button class="pb" data-part="Brain"         onclick="setPart(this)"><span class="pb-icon">🧠</span> Brain</button>
@@ -798,7 +925,8 @@ mark {
   <!-- OPERATION PANEL -->
   <div id="opPanel">
     <div class="op-layout">
-      <nav class="op-nav">
+      <nav class="op-nav" id="opNav">
+        <button class="op-nav-btn" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeOpNav()">✕ 닫기</button>
         <div class="op-nav-section">🪄 Operation Manual</div>
         <button class="op-nav-btn on" data-page="op-siemens-v"  onclick="setOpPage(this)">Siemens V-version</button>
         <button class="op-nav-btn"   data-page="op-siemens-x"  onclick="setOpPage(this)">Siemens X-version</button>
@@ -825,6 +953,9 @@ mark {
       </nav>
 
       <div class="op-content">
+        <div id="opMenuBtn" style="display:none;margin-bottom:12px;">
+          <button onclick="openOpNav()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:var(--r);padding:6px 14px;font-size:12px;font-family:inherit;cursor:pointer;">☰ 메뉴</button>
+        </div>
 
         <!-- SIEMENS V -->
         <div class="op-page on" id="op-siemens-v">
@@ -1669,6 +1800,53 @@ const CAT_LABEL = {brain:'Brain / Neuro', spine:'Spine', msk:'MSK', field:'현�
 const CAT_TAG_CLASS = {brain:'tag-brain', spine:'tag-spine', msk:'tag-msk', field:'tag-field', case:'tag-case'};
 let part = 'all', busy = false, uploadedImgs = [], dbCat = 'all';
 
+// ============ MOBILE SIDEBAR ============
+function isMobile() { return window.innerWidth <= 768; }
+
+function toggleSidebar() {
+  const tab = document.getElementById('tabChat').classList.contains('on') ? 'chat' : 'op';
+  if (tab === 'op') { openOpNav(); return; }
+  const s = document.getElementById('mainSidebar');
+  const o = document.getElementById('sidebarOverlay');
+  const open = s.classList.contains('open');
+  if (open) { s.classList.remove('open'); o.classList.remove('open'); }
+  else       { s.classList.add('open');   o.classList.add('open'); }
+}
+
+function closeSidebar() {
+  document.getElementById('mainSidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+function openOpNav() {
+  const nav = document.getElementById('opNav');
+  const o   = document.getElementById('sidebarOverlay');
+  nav.classList.add('open');
+  o.classList.add('open');
+  o.onclick = closeOpNav;
+}
+
+function closeOpNav() {
+  document.getElementById('opNav').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+  document.getElementById('sidebarOverlay').onclick = closeSidebar;
+}
+
+// show/hide op menu button based on tab
+function updateMobileUI(tab) {
+  const menuBtn = document.getElementById('opMenuBtn');
+  const hamBtn  = document.getElementById('hamBtn');
+  if (menuBtn) menuBtn.style.display = (isMobile() && tab === 'op') ? 'block' : 'none';
+  if (hamBtn)  hamBtn.style.display  = (isMobile() && tab !== 'op') ? 'flex' : 'none';
+}
+
+window.addEventListener('resize', () => {
+  const tab = document.getElementById('tabChat').classList.contains('on') ? 'chat'
+            : document.getElementById('tabDB').classList.contains('on') ? 'db' : 'op';
+  updateMobileUI(tab);
+  if (!isMobile()) { closeSidebar(); closeOpNav(); }
+});
+
 // ============ TAB SWITCH ============
 function switchTab(tab) {
   document.getElementById('chatPanel').style.display = tab === 'chat' ? 'flex' : 'none';
@@ -1678,6 +1856,8 @@ function switchTab(tab) {
   document.getElementById('tabDB').classList.toggle('on', tab === 'db');
   document.getElementById('tabOp').classList.toggle('on', tab === 'op');
   if (tab === 'db') renderDB();
+  closeSidebar(); closeOpNav();
+  updateMobileUI(tab);
 }
 
 function setOpPage(el) {
@@ -1686,6 +1866,7 @@ function setOpPage(el) {
   document.querySelectorAll('.op-page').forEach(p => p.classList.remove('on'));
   const target = document.getElementById(el.dataset.page);
   if (target) target.classList.add('on');
+  if (isMobile()) closeOpNav();
 }
 
 // ============ PART SELECT ============
@@ -1694,6 +1875,7 @@ function setPart(el) {
   el.classList.add('on');
   part = el.dataset.part;
   document.getElementById('plabel').textContent = (part === 'all' ? '전체' : part);
+  if (isMobile()) closeSidebar();
 }
 
 // ============ IMAGE UPLOAD ============
@@ -1925,9 +2107,8 @@ function askFromDB(name) {
 
 // Initial render
 renderDB();
-</script>
-</body>
-</html>
+// Init mobile UI
+updateMobileUI('chat');
 </script>
 </body>
 </html>
