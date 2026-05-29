@@ -2367,17 +2367,30 @@ function clearImgs() {
 }
 
 // ============ CHAT ============
-async function ask() {
+// 마지막 질문 저장 (재시도용)
+let lastQuestion = { text: '', imgSrc: null, imgMime: null, part: 'all' };
+
+async function ask(retryOverride) {
   if (busy) return;
-  const q = document.getElementById('qinput').value.trim();
-  const selImg = document.querySelector('.img-thumb.sel');
-  if (!q && !selImg) return;
+  const q = retryOverride?.text ?? document.getElementById('qinput').value.trim();
+  const selImg = retryOverride
+    ? null
+    : document.querySelector('.img-thumb.sel');
+  const imgSrc  = retryOverride?.imgSrc  ?? selImg?.src ?? null;
+  const imgMime = retryOverride?.imgMime ?? (imgSrc ? imgSrc.split(';')[0].split(':')[1] : null);
+
+  if (!q && !imgSrc) return;
+
+  // 재시도가 아닐 때만 질문 저장
+  if (!retryOverride) {
+    lastQuestion = { text: q, imgSrc, imgMime, part };
+  }
 
   busy = true;
   document.getElementById('sbtn').disabled = true;
   const ch = document.getElementById('chatMsgs');
 
-  if (q) {
+  if (q && !retryOverride) {
     const um = document.createElement('div');
     um.className = 'msg user';
     um.textContent = (part !== 'all' ? `[${part}] ` : '') + q;
@@ -2393,7 +2406,8 @@ async function ask() {
   ch.appendChild(am);
   ch.scrollTop = ch.scrollHeight;
 
-  const partCtx = part !== 'all' ? `[${part} 부위 관련 질문]\n` : '';
+  const usedPart = retryOverride?.part ?? part;
+  const partCtx = usedPart !== 'all' ? `[${usedPart} 부위 관련 질문]\n` : '';
   const userText = partCtx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
 
   try {
@@ -2402,10 +2416,10 @@ async function ask() {
       messages: [{ role: 'user', content: userText }]
     };
 
-    if (selImg) {
+    if (imgSrc) {
       body.image = {
-        base64: selImg.src.split(',')[1],
-        mimeType: selImg.src.split(';')[0].split(':')[1]
+        base64: imgSrc.split(',')[1],
+        mimeType: imgMime
       };
     }
 
@@ -2416,18 +2430,47 @@ async function ask() {
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+    if (!res.ok) throw { message: data.error || 'HTTP ' + res.status, retryable: data.retryable ?? (res.status === 503) };
+
     const txt = data.content?.[0]?.text || '답변 없음';
     const ac = document.getElementById(msgId);
     if (ac) { ac.classList.remove('loading'); ac.innerHTML = fmt(txt); }
+
   } catch(e) {
     const ac = document.getElementById(msgId);
-    if (ac) { ac.classList.remove('loading'); ac.innerHTML = `<span style="color:var(--red)">오류: ${e.message}</span>`; }
+    if (!ac) { busy = false; document.getElementById('sbtn').disabled = false; return; }
+    ac.classList.remove('loading');
+
+    const isRetryable = e.retryable
+      ?? (e.message?.includes('503') || e.message?.includes('과부하') || e.message?.includes('잠시') || e.message?.includes('overload'));
+
+    if (isRetryable) {
+      // 자동 재시도 1회 (5초 후)
+      ac.innerHTML = `<span style="color:var(--yellow)">⏳ AI 서버 응답이 느립니다. 5초 후 자동 재시도...</span>`;
+      ch.scrollTop = ch.scrollHeight;
+      busy = false;
+      document.getElementById('sbtn').disabled = false;
+
+      setTimeout(async () => {
+        ac.remove(); // 임시 메시지 제거
+        await ask({ ...lastQuestion });
+      }, 5000);
+      return;
+    } else {
+      // 재시도 불가 에러
+      ac.innerHTML = `<span style="color:var(--red)">오류: ${e.message || '알 수 없는 오류'}</span>
+        <button onclick="retryLast()" style="margin-top:8px;display:block;padding:5px 14px;border:1px solid rgba(77,159,255,.3);border-radius:var(--r);background:rgba(77,159,255,.07);color:var(--blue);cursor:pointer;font-family:inherit;font-size:11.5px;">↩ 다시 시도</button>`;
+    }
   }
 
   busy = false;
   document.getElementById('sbtn').disabled = false;
   ch.scrollTop = ch.scrollHeight;
+}
+
+function retryLast() {
+  if (!lastQuestion.text && !lastQuestion.imgSrc) return;
+  ask({ ...lastQuestion });
 }
 
 function fmt(t) {
