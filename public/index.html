@@ -510,7 +510,171 @@ mark {
   padding: 0 1px;
 }
 
-/* ── MOBILE OVERLAY SIDEBAR ─────────────────── */
+/* ── PARAMETER PANEL ─────────────────────────── */
+#paramPanel { flex-direction: column; }
+.param-layout { display: flex; flex: 1; overflow: hidden; height: 100%; }
+
+.param-nav {
+  width: 192px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 12px 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.param-page { display: none; }
+.param-page.on { display: block; }
+
+.param-field-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.pft {
+  padding: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: none;
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .3px;
+}
+.pft.on {
+  background: rgba(77,159,255,.12);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.pft:hover:not(.on) { border-color: var(--border); color: var(--text); }
+
+.param-field { display: none; }
+.param-field.on { display: block; }
+
+.param-badge-row { margin-bottom: 14px; }
+.field-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: .4px;
+}
+.fb-3t  { background: rgba(77,159,255,.12); color: var(--blue); border: 1px solid rgba(77,159,255,.3); }
+.fb-1p5t { background: rgba(34,211,238,.1); color: var(--cyan); border: 1px solid rgba(34,211,238,.25); }
+
+.param-seq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.seq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+}
+.seq-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+
+.seq-card-head {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+.seq-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  letter-spacing: -.1px;
+}
+.seq-type-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  white-space: nowrap;
+}
+.stb-se   { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+.stb-gre  { background: rgba(251,146,60,.1);  color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
+.stb-epi  { background: rgba(248,113,113,.1); color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
+.stb-ir   { background: rgba(52,211,153,.1);  color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
+.stb-mra  { background: rgba(34,211,238,.1);  color: var(--cyan);   border: 1px solid rgba(34,211,238,.2); }
+
+.seq-card-body { padding: 10px 14px; }
+
+.seq-param-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(30,42,61,.6);
+  font-size: 12px;
+}
+.seq-param-row:last-child { border-bottom: none; }
+.seq-param-key {
+  color: var(--text3);
+  font-size: 10.5px;
+  font-weight: 600;
+  min-width: 68px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.seq-param-val { color: var(--text); line-height: 1.5; }
+.seq-param-val .hi { color: var(--yellow); font-weight: 600; }
+.seq-param-val .hi-b { color: var(--blue); font-weight: 600; }
+.seq-param-val .hi-g { color: var(--green); font-weight: 600; }
+
+.seq-note {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text2);
+  background: rgba(77,159,255,.05);
+  border-left: 2px solid var(--blue);
+  padding: 5px 8px;
+  border-radius: 0 var(--r) var(--r) 0;
+  line-height: 1.5;
+}
+
+/* manufacturer pills inside seq cards */
+.mfr-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.mfr { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 600; }
+.mfr-s { background:rgba(0,180,180,.1); color:var(--siemens); border:1px solid rgba(0,180,180,.2); }
+.mfr-p { background:rgba(59,130,246,.1); color:var(--philips); border:1px solid rgba(59,130,246,.2); }
+.mfr-g { background:rgba(139,92,246,.1); color:var(--ge);     border:1px solid rgba(139,92,246,.2); }
+.mfr-c { background:rgba(239,68,68,.1);  color:var(--canon);  border:1px solid rgba(239,68,68,.2); }
+
+@media (max-width: 768px) {
+  .param-nav {
+    position: fixed;
+    left: -210px;
+    top: 0; bottom: 0;
+    width: 210px;
+    z-index: 100;
+    transition: left .25s cubic-bezier(.4,0,.2,1);
+    padding-top: 60px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  .param-nav.open { left: 0; }
+  .param-seq-grid { grid-template-columns: 1fr; }
+}
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -844,6 +1008,9 @@ mark {
     </button>
     <button class="nav-tab" id="tabDB" onclick="switchTab('db')">
       <span class="nav-tab-icon">📋</span><span class="nav-tab-text"> 이슈 DB</span>
+    </button>
+    <button class="nav-tab" id="tabParam" onclick="switchTab('param')">
+      <span class="nav-tab-icon">📐</span><span class="nav-tab-text"> 파라미터</span>
     </button>
     <button class="nav-tab" id="tabOp" onclick="switchTab('op')">
       <span class="nav-tab-icon">🎛️</span><span class="nav-tab-text"> MR Operation</span>
@@ -1358,6 +1525,213 @@ mark {
     </div><!-- op-layout -->
   </div><!-- opPanel -->
 
+  <!-- PARAMETER GUIDE PANEL -->
+  <div id="paramPanel" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
+    <div class="param-layout">
+
+      <!-- Left nav -->
+      <nav class="param-nav" id="paramNav">
+        <button class="op-nav-btn" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeParamNav()">✕ 닫기</button>
+        <div class="op-nav-section">🧠 뇌/신경</div>
+        <button class="op-nav-btn on" data-ppage="pp-brain" onclick="setParamPage(this)">Brain</button>
+        <div class="op-nav-section">🦴 척추</div>
+        <button class="op-nav-btn" data-ppage="pp-cspine" onclick="setParamPage(this)">C-Spine</button>
+        <button class="op-nav-btn" data-ppage="pp-tspine" onclick="setParamPage(this)">T-Spine</button>
+        <button class="op-nav-btn" data-ppage="pp-lspine" onclick="setParamPage(this)">L-Spine</button>
+        <button class="op-nav-btn" data-ppage="pp-wholespine" onclick="setParamPage(this)">Whole Spine</button>
+        <div class="op-nav-section">💪 상지 MSK</div>
+        <button class="op-nav-btn" data-ppage="pp-shoulder" onclick="setParamPage(this)">Shoulder</button>
+        <button class="op-nav-btn" data-ppage="pp-elbow" onclick="setParamPage(this)">Elbow</button>
+        <button class="op-nav-btn" data-ppage="pp-wrist" onclick="setParamPage(this)">Wrist</button>
+        <div class="op-nav-section">🦵 하지 MSK</div>
+        <button class="op-nav-btn" data-ppage="pp-hip" onclick="setParamPage(this)">Hip Joint</button>
+        <button class="op-nav-btn" data-ppage="pp-knee" onclick="setParamPage(this)">Knee</button>
+        <button class="op-nav-btn" data-ppage="pp-ankle" onclick="setParamPage(this)">Ankle</button>
+        <button class="op-nav-btn" data-ppage="pp-foot" onclick="setParamPage(this)">Foot</button>
+      </nav>
+
+      <!-- Content -->
+      <div class="op-content" id="paramContent">
+        <div id="paramMenuBtn" style="display:none;margin-bottom:12px;">
+          <button onclick="openParamNav()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:var(--r);padding:6px 14px;font-size:12px;font-family:inherit;cursor:pointer;">☰ 메뉴</button>
+        </div>
+
+        <!-- ─── BRAIN ─── -->
+        <div class="param-page on" id="pp-brain">
+          <div class="op-title">Brain 파라미터</div>
+          <div class="op-title-sub">뇌·신경 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'brain','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'brain','1p5t')">1.5T</button>
+          </div>
+          <!-- 3T -->
+          <div class="param-field on" data-group="brain" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="brain-3t-grid"></div>
+          </div>
+          <!-- 1.5T -->
+          <div class="param-field" data-group="brain" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="brain-1p5t-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae81bd9c0ce75230497d0b" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── C-SPINE ─── -->
+        <div class="param-page" id="pp-cspine">
+          <div class="op-title">C-Spine 파라미터</div>
+          <div class="op-title-sub">경추 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'cspine','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'cspine','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="cspine" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="cspine-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="cspine" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="cspine-1p5t-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae802abf47e22582c6f22d" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── T-SPINE ─── -->
+        <div class="param-page" id="pp-tspine">
+          <div class="op-title">T-Spine 파라미터</div>
+          <div class="op-title-sub">흉추 MRI — C-Spine과 동일 파라미터 적용</div>
+          <div class="param-field on" data-group="tspine" data-ft="both">
+            <div class="param-seq-grid" id="tspine-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80c397abe132063b1818" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── L-SPINE ─── -->
+        <div class="param-page" id="pp-lspine">
+          <div class="op-title">L-Spine 파라미터</div>
+          <div class="op-title-sub">요추 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'lspine','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'lspine','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="lspine" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="lspine-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="lspine" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="lspine-1p5t-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae806bafe0cd8f05f88f43" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── WHOLE SPINE ─── -->
+        <div class="param-page" id="pp-wholespine">
+          <div class="op-title">Whole Spine 파라미터</div>
+          <div class="op-title-sub">전척추 MRI — 멀티 스테이션</div>
+          <div class="param-field on" data-group="wholespine" data-ft="both">
+            <div class="param-seq-grid" id="wholespine-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80f09981cea90738dff4" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── SHOULDER ─── -->
+        <div class="param-page" id="pp-shoulder">
+          <div class="op-title">Shoulder 파라미터</div>
+          <div class="op-title-sub">어깨 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'shoulder','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'shoulder','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="shoulder" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="shoulder-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="shoulder" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="shoulder-1p5t-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8070b56bf07f7bc8a746" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── ELBOW ─── -->
+        <div class="param-page" id="pp-elbow">
+          <div class="op-title">Elbow 파라미터</div>
+          <div class="op-title-sub">팔꿈치 MRI — 1.5T 기준</div>
+          <div class="param-field on" data-group="elbow" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="elbow-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8020a3f5dcad287b3aeb" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── WRIST ─── -->
+        <div class="param-page" id="pp-wrist">
+          <div class="op-title">Wrist 파라미터</div>
+          <div class="op-title-sub">손목 MRI — 1.5T 기준</div>
+          <div class="param-field on" data-group="wrist" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="wrist-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8034b25ee7b8859be547" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── HIP ─── -->
+        <div class="param-page" id="pp-hip">
+          <div class="op-title">Hip Joint 파라미터</div>
+          <div class="op-title-sub">고관절 MRI — 1.5T 기준</div>
+          <div class="param-field on" data-group="hip" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="hip-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8062b8b0fc771de2a7f4" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── KNEE ─── -->
+        <div class="param-page" id="pp-knee">
+          <div class="op-title">Knee 파라미터</div>
+          <div class="op-title-sub">무릎 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'knee','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'knee','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="knee" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="knee-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="knee" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="knee-1p5t-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80b6b3b9fb8076123c76" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── ANKLE ─── -->
+        <div class="param-page" id="pp-ankle">
+          <div class="op-title">Ankle 파라미터</div>
+          <div class="op-title-sub">발목 MRI — 1.5T 기준</div>
+          <div class="param-field on" data-group="ankle" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="ankle-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80bbb8e3f355c1b6a15b" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── FOOT ─── -->
+        <div class="param-page" id="pp-foot">
+          <div class="op-title">Foot 파라미터</div>
+          <div class="op-title-sub">발 MRI — 1.5T 기준</div>
+          <div class="param-field on" data-group="foot" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="foot-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae808d8b4ff480bf2a6409" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+      </div><!-- paramContent -->
+    </div><!-- param-layout -->
+  </div><!-- paramPanel -->
+
 </div><!-- main -->
 
 <script>
@@ -1804,8 +2178,8 @@ let part = 'all', busy = false, uploadedImgs = [], dbCat = 'all';
 function isMobile() { return window.innerWidth <= 768; }
 
 function toggleSidebar() {
-  const tab = document.getElementById('tabChat').classList.contains('on') ? 'chat' : 'op';
-  if (tab === 'op') { openOpNav(); return; }
+  if (document.getElementById('tabOp').classList.contains('on'))    { openOpNav();    return; }
+  if (document.getElementById('tabParam').classList.contains('on')) { openParamNav(); return; }
   const s = document.getElementById('mainSidebar');
   const o = document.getElementById('sidebarOverlay');
   const open = s.classList.contains('open');
@@ -1834,10 +2208,12 @@ function closeOpNav() {
 
 // show/hide op menu button based on tab
 function updateMobileUI(tab) {
-  const menuBtn = document.getElementById('opMenuBtn');
-  const hamBtn  = document.getElementById('hamBtn');
-  if (menuBtn) menuBtn.style.display = (isMobile() && tab === 'op') ? 'block' : 'none';
-  if (hamBtn)  hamBtn.style.display  = (isMobile() && tab !== 'op') ? 'flex' : 'none';
+  const menuBtn  = document.getElementById('opMenuBtn');
+  const pmenuBtn = document.getElementById('paramMenuBtn');
+  const hamBtn   = document.getElementById('hamBtn');
+  if (menuBtn)  menuBtn.style.display  = (isMobile() && tab === 'op')    ? 'block' : 'none';
+  if (pmenuBtn) pmenuBtn.style.display = (isMobile() && tab === 'param') ? 'block' : 'none';
+  if (hamBtn)   hamBtn.style.display   = (isMobile() && tab === 'chat')  ? 'flex'  : 'none';
 }
 
 window.addEventListener('resize', () => {
@@ -1851,11 +2227,14 @@ window.addEventListener('resize', () => {
 function switchTab(tab) {
   document.getElementById('chatPanel').style.display = tab === 'chat' ? 'flex' : 'none';
   document.getElementById('dbPanel').classList.toggle('on', tab === 'db');
+  document.getElementById('paramPanel').style.display = tab === 'param' ? 'flex' : 'none';
   document.getElementById('opPanel').classList.toggle('on', tab === 'op');
   document.getElementById('tabChat').classList.toggle('on', tab === 'chat');
   document.getElementById('tabDB').classList.toggle('on', tab === 'db');
+  document.getElementById('tabParam').classList.toggle('on', tab === 'param');
   document.getElementById('tabOp').classList.toggle('on', tab === 'op');
   if (tab === 'db') renderDB();
+  if (tab === 'param') renderCurrentParamPage('pp-brain');
   closeSidebar(); closeOpNav();
   updateMobileUI(tab);
 }
@@ -2109,6 +2488,473 @@ function askFromDB(name) {
 renderDB();
 // Init mobile UI
 updateMobileUI('chat');
+
+// ============ PARAMETER GUIDE DATA ============
+const PAT = {
+  s2:'<span class="mfr mfr-s">Siemens GRAPPA 2</span>',
+  s23:'<span class="mfr mfr-s">Siemens GRAPPA 2–3</span>',
+  p17:'<span class="mfr mfr-p">Philips SENSE 1.7–2</span>',
+  p2:'<span class="mfr mfr-p">Philips SENSE 2–2.5</span>',
+  p25:'<span class="mfr mfr-p">Philips SENSE 2.5</span>',
+  g2:'<span class="mfr mfr-g">GE ASSET/ARC 2</span>',
+  g175:'<span class="mfr mfr-g">GE ASSET/ARC 1.75–2</span>',
+  c17:'<span class="mfr mfr-c">Canon SPEEDER 1.5–1.7</span>',
+  c2:'<span class="mfr mfr-c">Canon SPEEDER 2</span>',
+};
+function pat(...keys){ return '<div class="mfr-row">'+keys.map(k=>PAT[k]).join('')+'</div>'; }
+
+// seq(name, typeBadge, params[], note?)
+// params: [key, value_html]
+function seq(name, type, params, note='') {
+  const typeMap = {
+    'TSE':'stb-se','SE':'stb-se','IR TSE':'stb-ir','GRE':'stb-gre',
+    'EPI':'stb-epi','MRA':'stb-mra','SWI':'stb-gre','MP-RAGE':'stb-ir'
+  };
+  const cls = typeMap[type] || 'stb-se';
+  const rows = params.map(([k,v])=>`<div class="seq-param-row"><span class="seq-param-key">${k}</span><span class="seq-param-val">${v}</span></div>`).join('');
+  const noteHtml = note ? `<div class="seq-note">${note}</div>` : '';
+  return `<div class="seq-card">
+    <div class="seq-card-head">
+      <span class="seq-name">${name}</span>
+      <span class="seq-type-badge ${cls}">${type}</span>
+    </div>
+    <div class="seq-card-body">${rows}${noteHtml}</div>
+  </div>`;
+}
+
+const hi  = v => `<span class="hi">${v}</span>`;
+const hib = v => `<span class="hi-b">${v}</span>`;
+const hig = v => `<span class="hi-g">${v}</span>`;
+
+const PARAM_DATA = {
+  'brain-3t': [
+    seq('T1WI','TSE',[
+      ['TE', hi('9–15ms')],['TR','400–700ms'],
+      ['Freq voxel', hi('0.6–0.8mm')],['Phase voxel','0.7–1.1mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['Echo spacing','10–12ms'],['ETD',hi('≤40ms')],['ETL','3–5'],
+      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
+    ],'ETD 40ms 이하 엄수'),
+    seq('T1 FLAIR','IR TSE',[
+      ['TE','9–15ms'],['TR',hi('2000–9000ms')],['TI','TR에 따라 조정 (table value)'],
+      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.1mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD',hi('≤40ms')],['ETL','3–5'],
+      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
+    ]),
+    seq('T2WI','TSE',[
+      ['TE',hi('90–120ms')],['TR','3000–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.7–1.0mm')],['Phase voxel','0.8–1.2mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD',hi('180–240ms')],['ETL','15–26'],
+      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
+    ]),
+    seq('T2 FLAIR','IR TSE',[
+      ['TE','90–120ms'],['TR',hi('7000–9000ms')],['TI',hi('~2500ms')],
+      ['Freq voxel','0.7–1.0mm'],['Phase voxel','0.8–1.2mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD','180–240ms'],['ETL','15–26'],
+    ],'Siemens: freeze 기능으로 TI 자동조정 / GE: TI Auto / Philips: table value 수동입력'),
+    seq('DWI','EPI',[
+      ['TE','최솟값'],['TR','최솟값'],
+      ['Freq/Phase voxel',hi('1.4–1.8mm')],
+      ['PAT', pat('s2','p25','g2','c2')],
+      ['NEX','SS-EPI 3 / resolve 1'],
+      ['Echo spacing','SS-EPI 0.9–1.0ms / resolve 0.4–0.5ms'],
+      ['Phase dir','AX=AP'],
+    ],'PAT 최대 3 / FOV 350mm 이하 / MUSE 사용 시 EPI distortion 감소'),
+    seq('TOF','MRA',[
+      ['TE',hi('~2.3ms (3T out-of-phase)')],['TR','23–30ms'],['FA','18–25°'],
+      ['Freq voxel','0.5–0.8mm'],['Slice voxel',hi('≤0.6mm 권장')],
+      ['PAT', pat('s23','p2','g2','c17')],
+      ['Phase dir','RL'],['Slice OS','10%↑'],
+      ['SPF',hi('off 권장')],
+    ],'SPF(Slice Partial Fourier) ON 시 ICA 신호소실 위험'),
+    seq('SWI','SWI',[
+      ['TE','19–23ms'],['TR','27–35ms'],['FA','15°'],
+      ['Freq voxel','0.8–1.0mm'],
+      ['PAT', pat('s2','p17','g2')],
+      ['ACQ Slice','2–4mm'],['Recon Slice','1–2mm'],
+      ['Phase dir','RL'],['Slice OS','10%↑'],
+    ]),
+    seq('T2* GRE','GRE',[
+      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+      ['Freq voxel','0.8–1.0mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['Phase dir','AX=RL'],
+    ]),
+    seq('T1WI IR 3D','MP-RAGE',[
+      ['TE','최솟값–2.3ms'],['TR','7–12ms'],['TI','table value'],['FA','8–15°'],
+      ['ACQ Slice',hi('1.0–1.4mm')],['Recon Slice',hi('0.5–0.7mm')],
+      ['PAT', pat('s23','p17','g2','c17')],
+      ['Phase dir','COR=RL / AX=RL / SAG=AP'],
+    ],'Siemens: Slice res 50% / Philips: Recon voxel 0.45–0.6mm / GE: ZIP2'),
+  ],
+  'brain-1p5t': [
+    seq('T1WI','TSE',[
+      ['TE',hi('9–15ms')],['TR','450–700ms'],
+      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.1mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD',hi('≤40ms')],['ETL','3–5'],
+      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
+    ],'3T 대비 TR 범위 동일, PAT도 동일'),
+    seq('T1 FLAIR','IR TSE',[
+      ['TE','15–25ms'],['TR',hi('1600–2200ms')],['TI',hi('734–980ms (table value)')],
+      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.0mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD','≤50ms'],['ETL','3–5'],
+    ]),
+    seq('T2WI','TSE',[
+      ['TE',hi('80–100ms')],['TR','2500–6000ms (Drive ON)'],
+      ['Freq voxel','0.5–0.7mm'],['Phase voxel','0.6–0.8mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD',hi('160–200ms')],['ETL','16–24'],
+    ],'3T 대비 ETD 범위 약간 좁음'),
+    seq('T2 FLAIR','IR TSE',[
+      ['TE','90–125ms'],['TR',hi('8500–11000ms')],['TI',hi('2439–2800ms (table value)')],
+      ['Freq voxel','0.7–0.9mm'],['Phase voxel','0.8–1.1mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['ETD','180–250ms'],['ETL','16–28'],
+    ]),
+    seq('DWI','EPI',[
+      ['TE','최솟값'],['TR','최솟값'],
+      ['Freq/Phase voxel','1.4–1.8mm'],
+      ['PAT', pat('s2','p25','g2','c2')],
+      ['NEX','SS-EPI 3 / resolve 1'],
+      ['Echo spacing',hi('SS-EPI 0.9–1.0ms / resolve 0.4–0.5ms')],
+    ]),
+    seq('TOF','MRA',[
+      ['TE',hi('~4.6ms (1.5T out-of-phase)')],['TR','23–30ms'],['FA','18–25°'],
+      ['Freq voxel','0.5–0.8mm'],['Slice voxel','1.0–1.4mm'],
+      ['PAT', pat('s23','p2','g2','c17')],
+      ['SPF',hi('off 권장')],
+    ],'1.5T TE가 3T(2.3ms)와 다름 — out-of-phase TE 확인 필수'),
+    seq('SWI','SWI',[
+      ['TE','원본 유지 (table 확인)'],['FA','18–20°'],
+      ['Freq voxel','0.8–1.0mm'],
+      ['PAT', pat('s23','p2','g2')+'<span style="font-size:10px;color:var(--text3)"> SENSE P2–2.5, S1–1.5</span>'],
+      ['ACQ Slice','2–4mm'],['Recon Slice','1–2mm'],
+    ]),
+    seq('T2* GRE','GRE',[
+      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','18–25°'],
+      ['Freq voxel','0.8–1.0mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+    ]),
+    seq('T1 GRE','GRE',[
+      ['TE',hi('1.8–2.8ms')],['TR','190–250ms'],['FA',hi('60–80°')],
+      ['Freq voxel','0.7–0.8mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+    ]),
+    seq('T1WI IR 3D','MP-RAGE',[
+      ['TE','최솟값–4.6ms (in-phase)'],['TR','7–12ms'],['TI','734–980ms'],['FA','8–15°'],
+      ['ACQ Slice',hi('1.0–1.4mm')],['Recon Slice',hi('0.5–0.7mm')],
+      ['PAT', pat('s23','p17','g2','c2')],
+    ]),
+  ],
+  'cspine-3t': [
+    seq('T2WI SAG','TSE',[
+      ['TE','90–120ms'],['TR','2500–5000ms (Drive ON)'],
+      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','2–4'],['ETD',hi('180–240ms')],['ETL','15–26'],
+      ['Phase dir',hi('SAG=FH (OS 70%↑)')],['Flow comp','SAG=Freq'],
+    ]),
+    seq('T2WI AXL','TSE',[
+      ['TE','90–120ms'],['TR','2000–4000ms'],
+      ['Freq voxel','0.5–0.7mm'],
+      ['ETD',hi('120–160ms')],['ETL','10–16'],
+      ['Phase dir',hi('AXL=RL (OS 20%↑)')],['Flow comp','AXL=Slice or off'],
+    ]),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','400–700ms'],
+      ['Freq voxel','0.6–0.8mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TI',hi('150–180ms')],
+      ['ETD','140ms 이하'],['ETL','11–15'],
+    ],'B0 불균일 심할 경우 DIXON FS 사용'),
+    seq('T2* GRE','GRE',[
+      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+      ['Phase dir','AXL=RL (OS 20–40%↑)'],
+    ]),
+  ],
+  'cspine-1p5t': [
+    seq('T2WI SAG','TSE',[
+      ['TE','90–120ms'],['TR','2500–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 2'],
+      ['ETD',hi('180–240ms')],['ETL','15–26'],
+      ['Phase dir',hi('SAG=FH (OS 70%↑), AXL=AP (OS 30%↑)')],
+    ]),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['Freq voxel','0.6–0.8mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['ETD','≤40ms'],['ETL','3–5'],
+      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 2'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
+      ['Freq voxel','0.7–0.9mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['ETD','≤140ms'],['ETL','11–15'],
+    ]),
+    seq('T2* GRE (mFFE)','GRE',[
+      ['TE',hi('18–25ms')],['TR','450–800ms'],['FA','20–30°'],
+      ['Freq voxel','0.6–0.8mm'],
+      ['PAT', pat('s2','p17','g175','c17')],
+      ['Phase dir','AXL=RL (OS 20–40%↑)'],
+    ]),
+  ],
+  'tspine-grid': [
+    seq('T2WI SAG/AXL','TSE',[
+      ['기준','C-Spine과 동일 파라미터 적용'],
+      ['Phase dir','SAG=FH / AXL=RL'],
+    ],'C-Spine 가이드라인 참고'),
+  ],
+  'lspine-3t': [
+    seq('T2WI SAG','TSE',[
+      ['TE','90–120ms'],['TR','2500–5000ms (Drive ON)'],
+      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','SAG 1–2'],['ETD',hi('180–240ms')],
+      ['Phase dir',hi('SAG=FH (OS 70%↑)')],
+    ]),
+    seq('T2WI AXL','TSE',[
+      ['TE','90–120ms'],['TR','2000–4000ms'],
+      ['ETD','180–240ms'],
+      ['Phase dir',hi('AXL=RL (OS 20%↑)')],
+    ]),
+    seq('T1WI','TSE',[
+      ['TE','최솟값'],['TR','400–700ms'],
+      ['PAT', pat('s2','p17','g2','c17')],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TI',hi('150–180ms')],
+    ]),
+  ],
+  'lspine-1p5t': [
+    seq('T2WI SAG','TSE',[
+      ['TE','90–120ms'],['TR','2500–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.55–0.75mm')],['Phase voxel','0.8–1.0mm'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 1–2 (2 권장)'],
+      ['ETD',hi('180–240ms')],['ETL','15–26'],
+      ['Phase dir','SAG=FH (OS 70%↑) / AXL=AP (OS 40%↑)'],
+    ]),
+    seq('T1WI','TSE',[
+      ['TE','8–15ms'],['TR','450–700ms'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['ETD','≤40ms'],['ETL','3–5'],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
+      ['ETD','≤140ms'],['ETL','11–15'],
+    ]),
+  ],
+  'wholespine-grid': [
+    seq('T2WI SAG (3T/1.5T)','TSE',[
+      ['Coverage','2–3 station (멀티 스테이션)'],
+      ['TE','90–120ms'],['TR','2500–6000ms'],
+      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','SAG=1, COR=1'],['ETD','180–240ms'],['ETL','15–26'],
+      ['Phase dir','SAG=FH (OS 70%↑) / COR=FH (OS 70%↑)'],
+      ['Station overlap',hi('충분히 확보')],
+    ],'Station 간 경계부 이음매 확인 필수'),
+  ],
+  'shoulder-3t': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
+    ]),
+    seq('T1WI','TSE',[
+      ['TE','최솟값'],['TR','400–700ms'],
+      ['PAT', pat('s2','p17','g2','c17')],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','90–120ms'],['TI',hi('~150ms')],
+    ]),
+    seq('T2* GRE (mFFE)','GRE',[
+      ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+    ]),
+  ],
+  'shoulder-1p5t': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
+    ],'3T 대비 Freq voxel 0.45–0.55mm (3T: 0.4–0.55mm) — 거의 동일'),
+    seq('T1WI','TSE',[
+      ['TE','최솟값'],['TR','400–700ms'],
+      ['PAT', pat('s2','p17','g2','c17')],
+    ]),
+    seq('T2 STIR','IR TSE',[
+      ['TE','50–70ms'],['TI',hi('140–170ms')],
+    ]),
+  ],
+  'elbow-grid': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
+    ]),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+  ],
+  'wrist-grid': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.35–0.45mm ← MSK 최소')],['Phase voxel','0.40–0.6mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('120–160ms')],['ETL','12–20'],
+      ['Phase dir','AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)'],
+    ],'MSK 부위 중 가장 작은 voxel 사용'),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+  ],
+  'hip-grid': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.75–0.95mm')],['Phase voxel','0.95–1.2mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p2','g2','c2')],
+      ['NEX','AX 1–2 / COR 1–2 ('+hig('2 권장')+'). SAG 1'],
+      ['Echo spacing','9–12ms'],['ETD',hi('90ms 이하')],['ETL','6–10'],
+      ['Phase dir','AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)'],
+    ],'대형 부위 — Philips PAT 2–2.5 필수 / Siemens COR만 PAT3 가능'),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p2','g2','c2')]]),
+    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+  ],
+  'knee-3t': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–5000ms (Drive ON)'],
+      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('≤90ms')],['ETL','6–10'],
+      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
+    ]),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('~150ms')]]),
+  ],
+  'knee-1p5t': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('≤90ms')],['ETL','6–10'],
+      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH('+hig('60%↑')+')'],
+    ],'3T 대비 SAG OS 60%↑ (3T는 70%↑)'),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+  ],
+  'ankle-grid': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p17','g2','c17')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('≤90ms')],['ETL','6–20'],
+      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
+    ],'3T와 동일 파라미터 적용 가능'),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p17','g2','c17')]]),
+    seq('T2 STIR','IR TSE',[['TE','50–70ms'],['TI',hi('140–170ms')]]),
+  ],
+  'foot-grid': [
+    seq('PDWI FS','TSE',[
+      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.6–0.75mm (scan% 70%↑)'],
+      ['PAT', pat('s2','p2','g2','c2')],
+      ['NEX','1'],['Echo spacing','8.5–11ms'],
+      ['ETD',hi('≤90ms')],['ETL','6–20'],
+      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
+    ],'Philips만 SENSE 1.5–2.0 필수 (타사는 off–2)'),
+    seq('T1WI','TSE',[['TE','최솟값'],['TR','400–700ms'],['PAT', pat('s2','p2','g2','c2')]]),
+  ],
+};
+
+// ============ PARAMETER PANEL FUNCTIONS ============
+function renderParamGrid(gridId, dataKey) {
+  const el = document.getElementById(gridId);
+  if (!el || el.dataset.rendered) return;
+  const data = PARAM_DATA[dataKey];
+  if (data) { el.innerHTML = data.join(''); el.dataset.rendered = '1'; }
+}
+
+function setParamPage(el) {
+  document.querySelectorAll('.param-nav .op-nav-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.param-page').forEach(p => p.classList.remove('on'));
+  const page = document.getElementById(el.dataset.ppage);
+  if (page) { page.classList.add('on'); renderCurrentParamPage(el.dataset.ppage); }
+  if (isMobile()) closeParamNav();
+}
+
+function setFieldTab(btn, group, ft) {
+  btn.closest('.param-page').querySelectorAll('.pft').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  btn.closest('.param-page').querySelectorAll('.param-field').forEach(f => {
+    f.classList.toggle('on', f.dataset.ft === ft || f.dataset.ft === 'both');
+  });
+  // Lazy render
+  const gridMap = {
+    'brain-3t':'brain-3t-grid','brain-1p5t':'brain-1p5t-grid',
+    'cspine-3t':'cspine-3t-grid','cspine-1p5t':'cspine-1p5t-grid',
+    'lspine-3t':'lspine-3t-grid','lspine-1p5t':'lspine-1p5t-grid',
+    'shoulder-3t':'shoulder-3t-grid','shoulder-1p5t':'shoulder-1p5t-grid',
+    'knee-3t':'knee-3t-grid','knee-1p5t':'knee-1p5t-grid',
+  };
+  const key = group+'-'+ft;
+  if (gridMap[key]) renderParamGrid(gridMap[key], key);
+}
+
+function renderCurrentParamPage(pageId) {
+  const map = {
+    'pp-brain':    [['brain-3t-grid','brain-3t'],['brain-1p5t-grid','brain-1p5t']],
+    'pp-cspine':   [['cspine-3t-grid','cspine-3t'],['cspine-1p5t-grid','cspine-1p5t']],
+    'pp-tspine':   [['tspine-grid','tspine-grid']],
+    'pp-lspine':   [['lspine-3t-grid','lspine-3t'],['lspine-1p5t-grid','lspine-1p5t']],
+    'pp-wholespine':[['wholespine-grid','wholespine-grid']],
+    'pp-shoulder': [['shoulder-3t-grid','shoulder-3t'],['shoulder-1p5t-grid','shoulder-1p5t']],
+    'pp-elbow':    [['elbow-grid','elbow-grid']],
+    'pp-wrist':    [['wrist-grid','wrist-grid']],
+    'pp-hip':      [['hip-grid','hip-grid']],
+    'pp-knee':     [['knee-3t-grid','knee-3t'],['knee-1p5t-grid','knee-1p5t']],
+    'pp-ankle':    [['ankle-grid','ankle-grid']],
+    'pp-foot':     [['foot-grid','foot-grid']],
+  };
+  (map[pageId]||[]).forEach(([gid,dk]) => renderParamGrid(gid, dk));
+}
+
+function openParamNav() {
+  const nav = document.getElementById('paramNav');
+  const o   = document.getElementById('sidebarOverlay');
+  nav.classList.add('open');
+  o.classList.add('open');
+  o.onclick = closeParamNav;
+}
+function closeParamNav() {
+  document.getElementById('paramNav').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+  document.getElementById('sidebarOverlay').onclick = closeSidebar;
+}
+
+// Render Brain 3T on first load
+renderParamGrid('brain-3t-grid','brain-3t');
 </script>
 </body>
 </html>
