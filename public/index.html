@@ -332,7 +332,7 @@ body {
 #dbPanel.on { display: flex; }
 
 .db-toolbar {
-  padding: 10px 16px;
+  padding: 10px 14px;
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -344,8 +344,7 @@ body {
 .search-wrap {
   position: relative;
   flex: 1;
-  max-width: 340px;
-  min-width: 180px;
+  min-width: 140px;
 }
 .search-wrap::before {
   content: '⌕';
@@ -363,8 +362,8 @@ body {
   border: 1px solid var(--border2);
   border-radius: var(--r2);
   color: var(--text);
-  padding: 7px 10px 7px 30px;
-  font-size: 12.5px;
+  padding: 8px 10px 8px 30px;
+  font-size: 13px;
   font-family: inherit;
   outline: none;
   transition: border-color .15s;
@@ -372,40 +371,41 @@ body {
 #dbSearch:focus { border-color: var(--blue); }
 #dbSearch::placeholder { color: var(--text3); }
 
-.filter-group { display: flex; gap: 4px; }
+.filter-group { display: flex; gap: 4px; flex-wrap: wrap; }
 .df {
-  padding: 5px 13px;
+  padding: 6px 13px;
   border-radius: 20px;
   border: 1px solid var(--border2);
   background: none;
   color: var(--text2);
   cursor: pointer;
-  font-size: 11.5px;
+  font-size: 12px;
   font-family: inherit;
   font-weight: 500;
   transition: all .12s;
+  -webkit-tap-highlight-color: transparent;
 }
 .df.on { border-color: var(--blue); color: var(--blue); background: rgba(77,159,255,.1); }
 .df:hover:not(.on) { border-color: var(--border); color: var(--text); }
 
 .db-count-pill {
-  margin-left: auto;
   font-size: 11px;
   color: var(--text3);
   background: var(--surface2);
   border: 1px solid var(--border);
   padding: 3px 10px;
   border-radius: 20px;
+  white-space: nowrap;
 }
 
+/* ── DB 카드 리스트 (단일 컬럼, 모바일 우선) ── */
 .db-grid {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 10px;
-  align-content: start;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* DB CARD */
@@ -415,27 +415,32 @@ body {
   border-radius: var(--r3);
   overflow: hidden;
   cursor: pointer;
-  transition: border-color .15s, transform .12s, box-shadow .15s;
+  transition: border-color .15s, box-shadow .15s;
+  -webkit-tap-highlight-color: transparent;
 }
-.db-card:hover {
-  border-color: var(--border2);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(0,0,0,.4);
-}
+.db-card:active { transform: scale(.995); }
 .db-card.expanded {
-  border-color: rgba(77,159,255,.35);
-  box-shadow: 0 0 0 1px rgba(77,159,255,.12), 0 6px 24px rgba(0,0,0,.4);
+  border-color: rgba(77,159,255,.4);
+  box-shadow: 0 0 0 1px rgba(77,159,255,.1), 0 4px 20px rgba(0,0,0,.35);
 }
 
+/* 카드 헤더 */
 .db-card-head {
-  padding: 11px 14px;
+  padding: 13px 15px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  background: var(--surface2);
+  border-bottom: 1px solid transparent;
+  transition: background .12s;
+}
+.db-card.expanded .db-card-head {
+  border-bottom-color: var(--border);
+  background: rgba(77,159,255,.04);
 }
 .db-cat-tag {
-  font-size: 9.5px;
-  padding: 2px 7px;
+  font-size: 9px;
+  padding: 3px 8px;
   border-radius: 20px;
   font-weight: 700;
   text-transform: uppercase;
@@ -448,59 +453,91 @@ body {
 .tag-field  { background: rgba(248,113,113,.1);  color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
 .tag-case   { background: rgba(34,211,238,.1);   color: var(--cyan);   border: 1px solid rgba(34,211,238,.2); }
 
-.db-card-name { font-size: 12.5px; font-weight: 600; flex: 1; line-height: 1.35; letter-spacing: -.1px; }
-.db-chevron { font-size: 9px; color: var(--text3); transition: transform .2s; flex-shrink: 0; }
-.db-card.expanded .db-chevron { transform: rotate(180deg); color: var(--blue); }
+.db-card-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  flex: 1;
+  line-height: 1.35;
+  color: var(--text);
+}
+.db-chevron {
+  font-size: 10px;
+  color: var(--text3);
+  transition: transform .2s;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+}
+.db-card.expanded .db-chevron {
+  transform: rotate(180deg);
+  color: var(--blue);
+  background: rgba(77,159,255,.1);
+}
 
-.db-card-body { padding: 0 14px 13px; display: none; }
+/* 카드 바디 */
+.db-card-body { display: none; padding: 13px 15px 15px; }
 .db-card-body.open { display: block; animation: slideDown .14s ease; }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes slideDown { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
 
+/* 원인/해결 섹션 — 세로 스택 */
 .db-summary {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .db-box {
-  background: var(--surface2);
-  border: 1px solid var(--border);
+  background: var(--bg2);
   border-radius: var(--r2);
-  padding: 8px 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--border2);
 }
+.db-box:first-child { border-left-color: var(--yellow); }
+.db-box:last-child  { border-left-color: var(--green);  }
+
 .db-box-label {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .6px;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 .lbl-cause { color: var(--yellow); }
 .lbl-sol   { color: var(--green); }
-.db-box-content { font-size: 12px; color: var(--text); line-height: 1.6; }
+
+.db-box-content {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.65;
+}
 .db-box-row {
   display: flex;
-  gap: 5px;
-  align-items: baseline;
-  margin-bottom: 2px;
+  gap: 7px;
+  align-items: flex-start;
+  margin-bottom: 4px;
 }
 .db-box-row:last-child { margin-bottom: 0; }
-.db-bullet-cause { color: var(--yellow); font-size: 10px; flex-shrink: 0; }
-.db-bullet-sol   { color: var(--green);  font-size: 10px; flex-shrink: 0; }
+.db-bullet-cause { color: var(--yellow); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+.db-bullet-sol   { color: var(--green);  font-size: 11px; flex-shrink: 0; margin-top: 2px; }
 
 .db-tip {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--text2);
   background: rgba(77,159,255,.06);
   border: 1px solid rgba(77,159,255,.15);
   border-left: 3px solid var(--blue);
-  padding: 6px 10px;
-  border-radius: 0 var(--r) var(--r) 0;
+  padding: 8px 11px;
+  border-radius: 0 var(--r2) var(--r2) 0;
   margin-bottom: 8px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 mark {
@@ -565,38 +602,40 @@ mark {
   border-radius: 20px;
   letter-spacing: .4px;
 }
-.fb-3t  { background: rgba(77,159,255,.12); color: var(--blue); border: 1px solid rgba(77,159,255,.3); }
-.fb-1p5t { background: rgba(34,211,238,.1); color: var(--cyan); border: 1px solid rgba(34,211,238,.25); }
+.fb-3t   { background: rgba(77,159,255,.12); color: var(--blue); border: 1px solid rgba(77,159,255,.3); }
+.fb-1p5t { background: rgba(34,211,238,.1);  color: var(--cyan); border: 1px solid rgba(34,211,238,.25); }
 
+/* ── 파라미터 카드 그리드 ─────────────────── */
 .param-seq-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 }
 
+/* ── 파라미터 카드 ──────────────────────── */
 .seq-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r3);
   overflow: hidden;
-  transition: border-color .15s, box-shadow .15s;
-}
-.seq-card:hover {
-  border-color: var(--border2);
-  box-shadow: 0 4px 16px rgba(0,0,0,.35);
 }
 
+/* 헤더: 시퀀스명 + 타입 뱃지 + 접기 버튼 */
 .seq-card-head {
-  padding: 10px 14px;
+  padding: 11px 14px;
   display: flex;
   align-items: center;
   gap: 8px;
   background: var(--surface2);
   border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
+.seq-card-head:hover { background: rgba(255,255,255,.03); }
 .seq-name {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--text);
   flex: 1;
@@ -610,56 +649,116 @@ mark {
   text-transform: uppercase;
   letter-spacing: .4px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .stb-se   { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
 .stb-gre  { background: rgba(251,146,60,.1);  color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
 .stb-epi  { background: rgba(248,113,113,.1); color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
 .stb-ir   { background: rgba(52,211,153,.1);  color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
 .stb-mra  { background: rgba(34,211,238,.1);  color: var(--cyan);   border: 1px solid rgba(34,211,238,.2); }
-
-.seq-card-body { padding: 10px 14px; }
-
-.seq-param-row {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(30,42,61,.6);
-  font-size: 12px;
-}
-.seq-param-row:last-child { border-bottom: none; }
-.seq-param-key {
+.seq-toggle {
   color: var(--text3);
-  font-size: 10.5px;
-  font-weight: 600;
-  min-width: 68px;
+  font-size: 11px;
   flex-shrink: 0;
+  transition: transform .2s;
+}
+.seq-card.open .seq-toggle { transform: rotate(180deg); }
+
+/* 바디: 기본 접힘 */
+.seq-card-body {
+  display: none;
+  padding: 0;
+}
+.seq-card.open .seq-card-body { display: block; }
+
+/* ── 파라미터 항목 테이블 ─────────────────── */
+.seq-params {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.seq-params tr {
+  border-bottom: 1px solid rgba(30,42,61,.7);
+}
+.seq-params tr:last-child { border-bottom: none; }
+.seq-params td {
+  padding: 7px 14px;
+  vertical-align: top;
+  line-height: 1.55;
+}
+.seq-params td:first-child {
+  width: 38%;
+  max-width: 130px;
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .3px;
+  padding-right: 6px;
+  white-space: nowrap;
 }
-.seq-param-val { color: var(--text); line-height: 1.5; }
-.seq-param-val .hi { color: var(--yellow); font-weight: 600; }
-.seq-param-val .hi-b { color: var(--blue); font-weight: 600; }
-.seq-param-val .hi-g { color: var(--green); font-weight: 600; }
+.seq-params td:last-child {
+  color: var(--text);
+  word-break: keep-all;
+}
 
-.seq-note {
-  margin-top: 8px;
-  font-size: 11px;
+/* 행 번호 (노션 목록 번호) */
+.seq-row-num {
+  color: var(--text3);
+  font-size: 10px;
+  font-weight: 600;
+  margin-right: 4px;
+  opacity: .6;
+}
+
+/* 강조 수치 */
+.pv-hi  { color: var(--yellow); font-weight: 700; }
+.pv-hib { color: var(--blue);   font-weight: 700; }
+.pv-hig { color: var(--green);  font-weight: 700; }
+
+/* 하위 항목 (AX/COR/SAG 등) */
+.seq-sub {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.seq-sub-row {
+  display: flex;
+  gap: 6px;
+  font-size: 11.5px;
   color: var(--text2);
-  background: rgba(77,159,255,.05);
-  border-left: 2px solid var(--blue);
-  padding: 5px 8px;
-  border-radius: 0 var(--r) var(--r) 0;
-  line-height: 1.5;
+  padding-left: 2px;
+  line-height: 1.4;
+}
+.seq-sub-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  min-width: 28px;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
-/* manufacturer pills inside seq cards */
-.mfr-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+/* 제조사 pill */
+.mfr-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
 .mfr { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 600; }
-.mfr-s { background:rgba(0,180,180,.1); color:var(--siemens); border:1px solid rgba(0,180,180,.2); }
+.mfr-s { background:rgba(0,180,180,.1);  color:var(--siemens); border:1px solid rgba(0,180,180,.2); }
 .mfr-p { background:rgba(59,130,246,.1); color:var(--philips); border:1px solid rgba(59,130,246,.2); }
 .mfr-g { background:rgba(139,92,246,.1); color:var(--ge);     border:1px solid rgba(139,92,246,.2); }
 .mfr-c { background:rgba(239,68,68,.1);  color:var(--canon);  border:1px solid rgba(239,68,68,.2); }
+
+/* Drive 안내 메모 */
+.seq-note {
+  margin: 0;
+  padding: 7px 14px;
+  font-size: 11px;
+  color: var(--text2);
+  background: rgba(77,159,255,.05);
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+.seq-note::before { content: '💡 '; }
 
 @media (max-width: 768px) {
   .param-nav {
@@ -673,8 +772,235 @@ mark {
     box-shadow: 4px 0 24px rgba(0,0,0,.5);
   }
   .param-nav.open { left: 0; }
-  .param-seq-grid { grid-template-columns: 1fr; }
+  .seq-params td:first-child { width: 34%; max-width: 110px; font-size: 10px; }
+  .seq-params td { padding: 6px 11px; font-size: 12px; }
+  .seq-name { font-size: 13px; }
 }
+
+/* ── DB MODE TABS ──────────────────────────── */
+.db-mode-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+.db-mode-tab {
+  flex: 1;
+  padding: 10px 8px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text3);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .2px;
+}
+.db-mode-tab.on {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+  background: rgba(77,159,255,.05);
+}
+.db-mode-tab:hover:not(.on) { color: var(--text2); background: var(--surface2); }
+
+/* ── DRIVE FILE LIST ────────────────────────── */
+.drive-file-list {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.drive-folder-section { margin-bottom: 4px; }
+.drive-folder-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  padding: 8px 4px 4px;
+}
+.drive-file-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 10px 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: all .15s;
+  text-decoration: none;
+}
+.drive-file-card:hover {
+  border-color: var(--border2);
+  background: var(--surface2);
+  box-shadow: 0 2px 10px rgba(0,0,0,.3);
+}
+.drive-file-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.drive-file-info { flex: 1; min-width: 0; }
+.drive-file-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.drive-file-desc {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 3px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.drive-file-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.drive-badge-ge   { background: rgba(139,92,246,.1); color: var(--ge);     border: 1px solid rgba(139,92,246,.2); }
+.drive-badge-sie  { background: rgba(0,180,180,.1);  color: var(--siemens);border: 1px solid rgba(0,180,180,.2); }
+.drive-badge-phi  { background: rgba(59,130,246,.1); color: var(--philips);border: 1px solid rgba(59,130,246,.2); }
+.drive-badge-gen  { background: rgba(52,211,153,.1); color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
+.drive-badge-root { background: rgba(251,191,36,.1); color: var(--yellow); border: 1px solid rgba(251,191,36,.2); }
+
+/* Drive 검색 결과 소스 */
+.db-ai-src { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.db-ai-src-label { color: var(--text3); }
+.db-ai-src-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(52,211,153,.07);
+  border: 1px solid rgba(52,211,153,.2);
+  border-radius: var(--r);
+  padding: 3px 9px;
+  font-size: 10.5px;
+  color: var(--green);
+  text-decoration: none;
+  transition: background .1s;
+}
+.db-ai-src-file:hover { background: rgba(52,211,153,.15); }
+
+@media (max-width: 768px) {
+  .db-mode-tab { font-size: 11px; padding: 9px 5px; }
+  .drive-file-list { padding: 10px; }
+  .drive-file-title { font-size: 12px; }
+}
+
+/* ── AI SEARCH BAR (NotebookLM style) ──────── */
+.db-ai-search-bar {
+  padding: 16px 16px 0;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(77,159,255,.04), transparent);
+  flex-shrink: 0;
+}
+.db-ai-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: border-color .15s;
+}
+.db-ai-input-wrap:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(77,159,255,.1);
+}
+.db-ai-icon { font-size: 15px; flex-shrink: 0; }
+#dbAiQuery {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  min-width: 0;
+}
+#dbAiQuery::placeholder { color: var(--text3); font-size: 12px; }
+.db-ai-btn {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+.db-ai-btn:hover { opacity: .85; }
+.db-ai-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.db-ai-result {
+  margin: 10px 0 14px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r3);
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  max-height: 320px;
+  overflow-y: auto;
+}
+.db-ai-result h4 { margin: 10px 0 4px; font-size: 13px; color: var(--blue); }
+.db-ai-result ul { padding-left: 18px; margin: 4px 0 8px; }
+.db-ai-result li { margin-bottom: 3px; }
+.db-ai-result strong { color: var(--yellow); font-weight: 700; }
+.db-ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text3);
+  font-size: 12px;
+  padding: 6px 0;
+}
+.db-ai-src {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.db-ai-src-tag {
+  background: rgba(77,159,255,.08);
+  border: 1px solid rgba(77,159,255,.2);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 10px;
+  color: var(--blue);
+  cursor: pointer;
+  transition: background .1s;
+}
+.db-ai-src-tag:hover { background: rgba(77,159,255,.18); }
+.db-ai-error { color: var(--red); font-size: 12px; }
+
+@media (max-width: 768px) {
+  .db-ai-search-bar { padding: 12px 10px 0; }
+  #dbAiQuery { font-size: 12px; }
+  .db-ai-btn { padding: 5px 12px; font-size: 11px; }
+  .db-ai-result { font-size: 12px; max-height: 240px; }
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -740,22 +1066,13 @@ mark {
   .btn-send { padding: 0 13px; font-size: 12px; }
   .btn-attach { width: 36px; height: 36px; }
 
-  /* DB toolbar: stack vertically */
+  /* DB toolbar: stack */
   .db-toolbar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; }
   .search-wrap { max-width: 100%; }
   .filter-group { flex-wrap: wrap; gap: 5px; }
-  .df { padding: 5px 10px; font-size: 11px; }
+  .df { padding: 6px 11px; font-size: 11.5px; }
   .db-count-pill { margin-left: 0; align-self: flex-start; }
-
-  /* DB grid: single column */
-  .db-grid {
-    grid-template-columns: 1fr;
-    padding: 10px;
-    gap: 8px;
-  }
-
-  /* DB summary: stack vertically */
-  .db-summary { grid-template-columns: 1fr; }
+  .db-grid { padding: 10px; gap: 8px; }
 
   /* Operation panel: overlay nav */
   .op-nav {
@@ -769,17 +1086,13 @@ mark {
     box-shadow: 4px 0 24px rgba(0,0,0,.5);
   }
   .op-nav.open { left: 0; }
-  .op-content { padding: 14px 14px 20px; }
-  .op-title { font-size: 16px; }
-
-  /* Op steps compact */
-  .op-step { flex-direction: column; gap: 6px; }
-  .op-step-num { width: 24px; height: 24px; font-size: 11px; }
+  .op-content { padding: 14px 14px 24px; }
+  .op-title { font-size: 18px; }
+  .op-step { padding: 12px 14px; }
+  .op-list { padding: 6px 14px 10px; }
 
   /* Chat context bar compact */
   .chat-context-bar { padding: 5px 12px; }
-
-  /* Mobile nav bar at bottom (optional feel) */
   .nav-tab-icon { font-size: 16px; }
 }
 
@@ -788,28 +1101,38 @@ mark {
   .chat-msgs { padding: 8px; }
   .chat-input-area { padding: 6px 8px; }
   .db-grid { padding: 8px; gap: 6px; }
-  .op-content { padding: 10px; }
-  .op-title { font-size: 15px; margin-bottom: 4px; }
+  .db-card-name { font-size: 13px; }
+  .db-box-content { font-size: 12.5px; }
+  .op-content { padding: 10px 10px 20px; }
+  .op-title { font-size: 16px; margin-bottom: 3px; }
   .op-title-sub { font-size: 11px; margin-bottom: 14px; }
-  .op-card { padding: 12px; }
-  .op-step-title { font-size: 12px; }
-  .op-step-desc { font-size: 11.5px; }
+  .op-step { padding: 11px 12px; gap: 11px; }
+  .op-step-num { width: 26px; height: 26px; font-size: 11px; }
+  .op-step-title { font-size: 13px; }
+  .op-step-desc { font-size: 12.5px; }
+  .op-list li { font-size: 12.5px; }
+  .op-card-header { padding: 10px 13px 8px; }
 }
 
 .ai-ask-btn {
-  margin-top: 8px;
-  font-size: 11.5px;
-  padding: 5px 12px;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 12.5px;
+  padding: 9px 14px;
   border: 1px solid rgba(77,159,255,.3);
-  border-radius: var(--r);
+  border-radius: var(--r2);
   background: rgba(77,159,255,.07);
   color: var(--blue);
   cursor: pointer;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 600;
   transition: all .12s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
 }
 .ai-ask-btn:hover { background: rgba(77,159,255,.15); border-color: var(--blue); }
+.ai-ask-btn:active { transform: scale(.98); }
 
 .db-empty {
   grid-column: 1/-1;
@@ -837,7 +1160,7 @@ mark {
 }
 .op-nav-section {
   font-size: 9.5px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text3);
   text-transform: uppercase;
   letter-spacing: .9px;
@@ -848,15 +1171,16 @@ mark {
 .op-nav-btn {
   width: 100%;
   text-align: left;
-  padding: 6px 10px;
+  padding: 8px 10px;
   border-radius: var(--r);
   border: none;
   background: none;
   color: var(--text2);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12.5px;
   font-family: inherit;
   transition: all .12s;
+  -webkit-tap-highlight-color: transparent;
 }
 .op-nav-btn.on {
   background: linear-gradient(90deg, rgba(77,159,255,.15), rgba(77,159,255,.05));
@@ -867,7 +1191,8 @@ mark {
 }
 .op-nav-btn:hover:not(.on) { background: var(--surface); color: var(--text); }
 
-.op-content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+/* ── Operation 콘텐츠 ── */
+.op-content { flex: 1; overflow-y: auto; padding: 20px 20px 28px; }
 .op-page { display: none; }
 .op-page.on { display: block; }
 
@@ -875,24 +1200,25 @@ mark {
   font-size: 20px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   letter-spacing: -.4px;
 }
 .op-title-sub {
   font-size: 12px;
   color: var(--text3);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
 @media (max-width: 680px) { .op-grid { grid-template-columns: 1fr; } }
 
+/* ── Operation 카드 ── */
 .op-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r3);
-  padding: 16px 18px;
-  margin-bottom: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
 }
 .op-card:last-of-type { margin-bottom: 0; }
 
@@ -900,14 +1226,16 @@ mark {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
+  padding: 12px 16px 10px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
 }
 .op-badge {
   font-size: 9.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .5px;
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: 20px;
 }
 .badge-purpose  { background: rgba(52,211,153,.1);  color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
@@ -915,58 +1243,72 @@ mark {
 .badge-plan     { background: rgba(251,146,60,.1);  color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
 .badge-manual   { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
 
-.op-list { list-style: none; }
+.op-list { list-style: none; padding: 8px 16px 10px; }
 .op-list li {
-  padding: 5px 0;
-  font-size: 12.5px;
+  padding: 6px 0;
+  font-size: 13px;
   color: var(--text2);
   line-height: 1.6;
-  border-bottom: 1px solid rgba(30,42,61,.6);
+  border-bottom: 1px solid rgba(30,42,61,.5);
   display: flex;
   gap: 8px;
-  align-items: baseline;
+  align-items: flex-start;
 }
 .op-list li:last-child { border-bottom: none; }
-.op-list li::before { content: '—'; color: var(--text3); font-size: 10px; flex-shrink: 0; }
+.op-list li::before { content: '—'; color: var(--text3); font-size: 10px; flex-shrink: 0; margin-top: 3px; }
 .op-list li b { color: var(--text); font-weight: 600; }
 
+/* ── 스텝 — 모바일 최적화 ── */
 .op-step {
   display: flex;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(30,42,61,.6);
+  gap: 13px;
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(30,42,61,.5);
   align-items: flex-start;
 }
 .op-step:last-child { border-bottom: none; }
 .op-step-num {
-  width: 24px; height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--blue2), #1d4ed8);
   color: #fff;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-top: 1px;
-  box-shadow: 0 0 8px rgba(77,159,255,.3);
+  box-shadow: 0 0 10px rgba(77,159,255,.35);
 }
-.op-step-content { flex: 1; }
-.op-step-title { font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.op-step-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+.op-step-content { flex: 1; min-width: 0; }
+.op-step-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.op-step-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  word-break: keep-all;
+}
 
+/* ── 노션 링크 ── */
 .op-notion-link {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--blue);
   text-decoration: none;
-  padding: 5px 12px;
+  padding: 7px 14px;
   border: 1px solid rgba(77,159,255,.25);
   border-radius: var(--r);
-  margin-top: 12px;
+  margin-top: 14px;
   background: rgba(77,159,255,.06);
   transition: all .12s;
   font-weight: 500;
@@ -1072,21 +1414,47 @@ mark {
 
   <!-- DB PANEL -->
   <div id="dbPanel">
-    <div class="db-toolbar">
-      <div class="search-wrap">
-        <input id="dbSearch" type="text" placeholder="아티팩트, 증상, 원인 검색…" oninput="renderDB()">
-      </div>
-      <div class="filter-group">
-        <button class="df on" data-cat="all"   onclick="setDBCat(this)">전체</button>
-        <button class="df" data-cat="brain"  onclick="setDBCat(this)">Brain</button>
-        <button class="df" data-cat="spine"  onclick="setDBCat(this)">Spine</button>
-        <button class="df" data-cat="msk"    onclick="setDBCat(this)">MSK</button>
-        <button class="df" data-cat="field"  onclick="setDBCat(this)">현장사례</button>
-        <button class="df" data-cat="case"   onclick="setDBCat(this)">📖 Case Study</button>
-      </div>
-      <span class="db-count-pill" id="dbCount">—</span>
+    <!-- 검색 모드 탭 -->
+    <div class="db-mode-tabs">
+      <button class="db-mode-tab on" id="modeIssue" onclick="setSearchMode('issue')">📋 이슈 DB</button>
+      <button class="db-mode-tab" id="modeDrive" onclick="setSearchMode('drive')">📂 Drive 문서</button>
     </div>
-    <div class="db-grid" id="dbContent"></div>
+
+    <!-- 공통 AI 검색바 -->
+    <div class="db-ai-search-bar">
+      <div class="db-ai-input-wrap">
+        <span class="db-ai-icon" id="searchModeIcon">🔍</span>
+        <input id="dbAiQuery" type="text"
+          placeholder="자연어로 검색 — &quot;ICA pseudo-stenosis 해결법&quot;, &quot;GE FSE ETL 설정&quot;…"
+          onkeydown="if(event.key==='Enter')dbAiSearch()">
+        <button class="db-ai-btn" id="dbAiSubmit" onclick="dbAiSearch()">검색</button>
+      </div>
+      <div id="dbAiResult" class="db-ai-result" style="display:none"></div>
+    </div>
+
+    <!-- 이슈 DB 브라우저 -->
+    <div id="issueSection">
+      <div class="db-toolbar">
+        <div class="search-wrap">
+          <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="renderDB()">
+        </div>
+        <div class="filter-group">
+          <button class="df on" data-cat="all"   onclick="setDBCat(this)">전체</button>
+          <button class="df" data-cat="brain"  onclick="setDBCat(this)">Brain</button>
+          <button class="df" data-cat="spine"  onclick="setDBCat(this)">Spine</button>
+          <button class="df" data-cat="msk"    onclick="setDBCat(this)">MSK</button>
+          <button class="df" data-cat="field"  onclick="setDBCat(this)">현장사례</button>
+          <button class="df" data-cat="case"   onclick="setDBCat(this)">📖 Case Study</button>
+        </div>
+        <span class="db-count-pill" id="dbCount">—</span>
+      </div>
+      <div class="db-grid" id="dbContent"></div>
+    </div>
+
+    <!-- Drive 문서 브라우저 -->
+    <div id="driveSection" style="display:none;flex:1;overflow-y:auto;">
+      <div class="drive-file-list" id="driveFileList"></div>
+    </div>
   </div>
 
   <!-- OPERATION PANEL -->
@@ -1543,6 +1911,7 @@ mark {
         <button class="op-nav-btn" data-ppage="pp-shoulder" onclick="setParamPage(this)">Shoulder</button>
         <button class="op-nav-btn" data-ppage="pp-elbow" onclick="setParamPage(this)">Elbow</button>
         <button class="op-nav-btn" data-ppage="pp-wrist" onclick="setParamPage(this)">Wrist</button>
+        <button class="op-nav-btn" data-ppage="pp-hand" onclick="setParamPage(this)">Hand</button>
         <div class="op-nav-section">🦵 하지 MSK</div>
         <button class="op-nav-btn" data-ppage="pp-hip" onclick="setParamPage(this)">Hip Joint</button>
         <button class="op-nav-btn" data-ppage="pp-knee" onclick="setParamPage(this)">Knee</button>
@@ -1720,12 +2089,21 @@ mark {
         <!-- ─── FOOT ─── -->
         <div class="param-page" id="pp-foot">
           <div class="op-title">Foot 파라미터</div>
-          <div class="op-title-sub">발 MRI — 1.5T 기준</div>
-          <div class="param-field on" data-group="foot" data-ft="1p5t">
-            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+          <div class="op-title-sub">발 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field on" data-group="foot" data-ft="both">
             <div class="param-seq-grid" id="foot-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae808d8b4ff480bf2a6409" target="_blank">↗ 노션 원본 보기</a>
+        </div>
+
+        <!-- ─── HAND ─── -->
+        <div class="param-page" id="pp-hand">
+          <div class="op-title">Hand 파라미터</div>
+          <div class="op-title-sub">손 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field on" data-group="hand" data-ft="both">
+            <div class="param-seq-grid" id="hand-grid"></div>
+          </div>
+          <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80268e8dda75250b5166" target="_blank">↗ 노션 원본 보기</a>
         </div>
 
       </div><!-- paramContent -->
@@ -1977,6 +2355,26 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 ### T2 STIR
 - TE: 50–70ms | TI: 150–180ms | ETD: ≤140ms | ETL: 11–15
 
+### T2WI DIXON FS
+- TE: 80–110ms | TR: 2500–6000ms | Freq: 0.55–0.7mm | Phase: 0.8–1.0mm
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE)
+- ETD: 160–220ms | ETL: 15–20 | Echo spacing: 11–14ms
+- Phase dir: SAG=FH(OS 70%↑) / AXL=AP(OS 50%↑)
+- B0 불균일 지역(경추-흉추 이행부)에서 STIR 대신 사용
+
+### T1WI DIXON FS
+- TE: 12–20ms | TR: 500–800ms | Freq: 0.65–0.85mm | Phase: 0.9–1.2mm
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE)
+- ETD: 36–50ms | ETL: 3–5 | Echo spacing: 11–14ms
+- Contrast 후 Fat sat T1WI — mDIXON / DIXON / FLEX / IDEAL
+
+### T1WI FS
+- TE: 12–15ms | TR: 450–700ms | Freq: 0.65–0.85mm | Phase: 0.9–1.2mm
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE)
+- NEX: SAG 1–2(2 권장), AXL 2 | ETD: ≤40ms | ETL: 3–5
+- Phase dir: SAG=FH(OS 70%↑) / COR=FH(OS 70%↑) / AXL=AP(OS 30%↑)
+- SPIR/SPAIR/Chem SAT — Contrast 후
+
 ### T2* GRE (AXL)
 - TE: 14–20ms | TR: 450–800ms | FA: 20–30° | Phase dir: AXL=RL
 
@@ -2000,6 +2398,19 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 - TE: 18–25ms | TR: 450–800ms | FA: 20–30°
 - PAT: Philips SENSE 1.7–2.0 / Siemens GRAPPA 2 / GE 1.75–2.0 / Canon 1.5–1.7
 
+### T2WI DIXON FS (1.5T)
+- TE: 80–110ms | TR: 2500–6000ms | Freq: 0.55–0.7mm | Phase: 0.8–1.0mm
+- ETD: 160–220ms | ETL: 15–20
+
+### T1WI DIXON FS (1.5T)
+- TE: 12–20ms | TR: 500–800ms | Freq: 0.7–0.9mm | Phase: 0.9–1.2mm
+- ETD: 36–50ms | ETL: 3–5
+
+### T1WI FS (1.5T)
+- TE: 12–15ms | TR: 450–700ms | Freq: 0.65–0.85mm
+- NEX: SAG 1–2(2 권장), AXL 2 | ETD: ≤40ms | ETL: 3–5
+- Phase dir: SAG=FH(OS 70%↑) / AXL=AP(OS 30%↑)
+
 ---
 ## T-SPINE 파라미터
 - C-Spine과 동일 파라미터 적용
@@ -2009,14 +2420,38 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 ## L-SPINE 파라미터 (3T)
 
 ### T2WI SAG
-- TE: 90–120ms | TR: 2500–5000ms | Freq: 0.6–0.8mm | Phase: 0.9–1.2mm (scan% 60%↑)
-- ETD: 180–240ms | Phase dir: SAG=FH (OS 70%↑)
+- TE: 90–120ms | TR: 2500–6000ms | Freq: 0.5–0.7mm | Phase: 0.8–1.0mm (scan% 70%↑)
+- NEX: SAG 1–2(2 권장), AXL 1–2(2 권장) | ETD: 180–240ms | ETL: 15–26
+- Phase dir: SAG=FH (OS 70%↑) / AXL=AP (OS 40%↑)
 
 ### T2WI AXL
 - TE: 90–120ms | TR: 2000–4000ms | Phase dir: AXL=RL (OS 20%↑)
 
 ### T1WI
-- TE: 최솟값 | TR: 400–700ms
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.5–0.7mm | ETD: ≤40ms | ETL: 3–5
+
+### T1 FLAIR
+- TE: 15–25ms | TR: 1600–2200ms | TI: 734–980ms (table value)
+- Freq: 0.7–0.9mm | ETD: ≤50ms | ETL: 4–6
+
+### T2 STIR
+- TE: 50–70ms | TI: 150–180ms | ETD: ≤140ms | ETL: 11–15
+
+### T2WI FS
+- TE: 70–100ms | TR: 2500–6000ms | Freq: 0.55–0.75mm
+- NEX: SAG 1–2(2 권장), AXL 1–2(2 권장) | ETD: 140–200ms | ETL: 14–22
+
+### T2WI DIXON FS
+- TE: 80–110ms | TR: 2500–6000ms | Freq: 0.55–0.75mm
+- ETD: 160–220ms | ETL: 15–20 | B0 불균일 시 STIR 대신
+
+### T1WI DIXON FS
+- TE: 12–20ms | TR: 500–800ms | Freq: 0.65–0.85mm
+- ETD: 36–50ms | ETL: 3–5 | Contrast 후 Fat sat T1
+
+### T1WI FS
+- TE: 12–15ms | TR: 450–700ms | Freq: 0.65–0.85mm
+- NEX: SAG 1–2(2 권장), AXL 1–2(2 권장) | ETD: ≤40ms | ETL: 3–5
 
 ---
 ## L-SPINE 파라미터 (1.5T)
@@ -2028,6 +2463,19 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 
 ### T1WI (1.5T)
 - TE: 8–15ms | TR: 450–700ms | ETD: ≤40ms | ETL: 3–5
+
+### T1 FLAIR (1.5T)
+- TE: 15–25ms | TR: 1600–2200ms | TI: 734–980ms
+- ETD: ≤50ms | ETL: 4–6
+
+### T2 STIR (1.5T)
+- TE: 50–70ms | TI: 140–170ms | ETD: ≤140ms | ETL: 11–15
+
+### T2WI FS / T2WI DIXON FS / T1WI DIXON FS / T1WI FS (1.5T)
+- T2WI FS: TE 70–100ms | ETD 140–200ms
+- T2WI DIXON FS: TE 80–110ms | ETD 160–220ms
+- T1WI DIXON FS: TE 12–20ms | ETD 36–50ms
+- T1WI FS: NEX SAG 1–2(2 권장), AXL 1–2(2 권장) | ETD ≤40ms
 
 ---
 ## WHOLE SPINE
@@ -2045,192 +2493,223 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 - PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
 - NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
 - Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
-- Flow comp: AX=Slice or off / COR=Freq or off / SAG=Freq or off
 
-### T1WI (3T)
-- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.4–0.6mm (scan% 70%↑)
-- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
-- ETD: ≤40ms | ETL: 3–5
+### PDWI (3T/1.5T)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.55mm | ETD: 120–160ms
 - Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
 
-### T2 STIR (3T) — T2 IR TSE
-- TE: 50–70ms | TR: 2500–4000ms | TI: 180–230ms (180=FAT bright / 230=FAT dark)
-- Freq: 0.4–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
-- ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+### T2WI (3T/1.5T)
+- TE: 80–100ms | TR: 2500–6000ms (Drive ON)
+- Freq: 0.45–0.6mm | Phase: 0.55–0.75mm | ETD: 160–200ms | ETL: 16–22
 
-### T2WI FS (3T)
-- TE: 60–80ms | TR: 2500–6000ms (Drive ON)
-- Freq: 0.45–0.6mm | Phase: 0.55–0.75mm (scan% 70%↑)
+### T2WI FS (3T/1.5T)
+- TE: 60–80ms | TR: 2500–6000ms | Freq: 0.45–0.6mm
 - PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1–2(2 권장)
 - ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+
+### T1WI (3T/1.5T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.4–0.6mm
+- PAT: Philips SENSE 1.5–2.0 / Siemens off–2 / GE off–1.75 / Canon off–1.5–1.7
+- ETD: ≤40ms | ETL: 3–5
+
+### T1WI FS (3T/1.5T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.4–0.5mm | Phase: 0.5–0.7mm
+- PAT: Philips SENSE 1.5–2.0 / Siemens off–2 / GE off–1.75 / Canon off–1.5–1.7
+- NEX: 1–2(2 권장) | ETD: ≤40ms | ETL: 3–5
+- SPIR/SPAIR/Chem SAT — Contrast 후 또는 지방억제 T1
+
+### T2 STIR (3T)
+- TE: 50–70ms | TR: 2500–4000ms | TI: 180–230ms (180=FAT bright / 230=FAT dark)
+- ETD: 120–160ms | ETL: 12–20
+
+### T2 STIR (1.5T)
+- TE: 50–70ms | TR: 2300–4000ms | TI: 140–170ms (3T 180–230ms와 다름)
+- ETD: ≤140ms | ETL: 11–15
 
 ### T2* GRE / mFFE (3T)
-- TE: 14–20ms | TR: 450–800ms | FA: 20–30°
-- Freq: 0.4–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
-- PAT: Philips SENSE 1.7–2.2 / Siemens GRAPPA 2 / GE 1.75–2.0 / Canon SPEEDER 1.5–1.7
-- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+- TE: 14–20ms | TR: 450–800ms | FA: 20–30° | Freq: 0.4–0.55mm
+- PAT: Philips SENSE 1.7–2.2 / Siemens GRAPPA 2 / GE 1.75–2.0 / Canon 1.5–1.7
 
 ### PDWI FS (1.5T)
-- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.45–0.55mm | Phase: 0.55–0.7mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
-※ 3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm) — 거의 동일, TI는 1.5T에서 140–170ms
+- Freq: 0.45–0.55mm (3T 0.4–0.55mm 대비 약간 큼) — 나머지 동일
 
 ---
 ## MSK - ELBOW
 
-### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm (scan% 70%↑)
-- PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
-- NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
+### PDWI FS (3T/1.5T)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.55mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
 - Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
 
-### T1WI (3T)
-- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.4–0.55mm (scan% 70%↑)
-- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
-- ETD: ≤40ms | ETL: 3–5 | Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+### T2WI / T2WI FS (3T/1.5T)
+- T2WI: TE 60–80ms | Freq 0.45–0.6mm | ETD 120–160ms
+- T2WI FS: NEX 1–2(2 권장) — 나머지 동일
+
+### T1WI (3T/1.5T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm
+- PAT: Philips SENSE 1.5–2.0 / Siemens off–2 / GE off–1.75 / Canon off–1.5–1.7
+
+### T1WI FS (3T/1.5T)
+- TE: 8–15ms | TR: 450–700ms | Freq: 0.4–0.55mm
+- NEX: 1–2(2 권장) | ETD: ≤40ms — Contrast 후
 
 ### T2 STIR (3T)
-- TE: 50–70ms | TR: 2500–4000ms | TI: 180–230ms
-- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm | ETD: 120–160ms | ETL: 12–20
-- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+- TI: 180–230ms | (1.5T: 140–170ms)
 
-### PDWI FS (1.5T) — 3T와 동일
-- Freq: 0.4–0.55mm | Phase: 0.50–0.65mm | ETD: 120–160ms
-- Phase dir: AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)
+### T2* GRE (3T/1.5T)
+- TE: 14–20ms | TR: 450–800ms | FA: 20–30°
 
 ---
-## MSK - WRIST
+## MSK - WRIST (MSK 최소 voxel)
 
-### PDWI FS (3T) — MSK 최소 voxel
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.35–0.45mm | Phase: 0.40–0.55mm (scan% 70%↑) ← MSK 최소 voxel
-- PAT: Philips SENSE off–1.7 / Siemens GRAPPA off–2 / GE off–2.0 / Canon SPEEDER off–1.7
-- NEX: 1 | Echo spacing: 8.5–11ms | ETD: 120–160ms | ETL: 12–20 | Refocusing FA: 110–130°
+### PDWI FS (3T/1.5T)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.35–0.45mm | Phase: 0.40–0.55mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
 - Phase dir: AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)
 
-### T1WI (3T)
-- TE: 8–15ms | TR: 450–700ms | Freq: 0.3–0.45mm | Phase: 0.35–0.5mm (scan% 70%↑)
-- PAT: Philips SENSE 1.5–2.0 / Siemens GRAPPA off–2 / GE off–1.75 / Canon SPEEDER off–1.5–1.7
-- ETD: ≤40ms | ETL: 3–5
+### T2WI / T2WI FS (3T/1.5T)
+- T2WI: TE 60–80ms | Freq 0.35–0.5mm | ETD 120–160ms
+- T1WI: TE 8–15ms | Freq 0.3–0.45mm | ETD ≤40ms
+- T1WI FS: NEX 1–2(2 권장) | Freq 0.35–0.45mm
 
-### PDWI FS (1.5T) — 3T와 동일
-- Freq: 0.35–0.45mm | Phase: 0.40–0.6mm
+### T2 STIR (3T/1.5T)
+- TI: 180–230ms (3T) / 140–170ms (1.5T)
+
+### T2* GRE (3T/1.5T)
+- TE: 14–20ms | TR: 450–800ms | FA: 20–30° | Freq: 0.35–0.45mm
+
+---
+## MSK - HAND (상지 최소 voxel)
+
+### PDWI FS (3T/1.5T)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.3–0.45mm | Phase: 0.35–0.55mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: 120–160ms | ETL: 12–20
 - Phase dir: AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)
+
+### T2WI / T2WI FS / T2WI DIXON (3T/1.5T)
+- T2WI: TE 60–80ms | Freq 0.3–0.45mm | ETD 120–160ms
+- T2WI FS: NEX 1–2(2 권장)
+- T2WI DIXON: water/fat 동시 획득
+
+### T1WI / T1WI FS / T1WI DIXON (3T/1.5T)
+- T1WI: TE 8–15ms | TR 450–700ms | Freq 0.3–0.4mm | ETD ≤40ms
+- T1WI FS: NEX 1–2(2 권장) — SPIR/SPAIR/Chem SAT
+- T1WI DIXON: TE 12–20ms | TR 500–800ms | ETD 36–50ms
+
+### T2 STIR / PDWI DIXON / T2* GRE
+- T2 STIR: TI 180–230ms | ETD 120–160ms
+- PDWI DIXON: water/fat 분리 — mDIXON·DIXON·FLEX·IDEAL
+- T2* GRE: TE 14–20ms | FA 20–30° | Freq 0.3–0.45mm
 
 ---
 ## MSK - HIP JOINT
 
 ### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.7–0.9mm | Phase: 0.9–1.1mm (scan% 70%↑)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.7–0.9mm | Phase: 0.9–1.1mm (scan% 70%↑)
 - PAT: Philips SENSE 2–2.5 / Siemens GRAPPA off–2(COR PAT3 가능) / GE 2.0–2.5 / Canon SPEEDER 2
-- NEX: AX 1–2 / COR 1–2(2 권장) / SAG 1
-- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–10 | Refocusing FA: 110–130°
+- NEX: AX 1–2 / COR 1–2(2 권장) / SAG 1 | ETD: ≤90ms | ETL: 6–10
 - Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=FH(50%↑)
 
 ### PDWI FS (1.5T)
-- Freq: 0.75–0.95mm | Phase: 0.95–1.2mm (scan% 70%↑)
-- PAT: 3T와 동일 | ETD: ≤90ms | ETL: 6–10
+- Freq: 0.75–0.95mm | Phase: 0.95–1.2mm
 - Phase dir: AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)
-※ 대형 부위 — PAT 2–2.5 필수 / Siemens COR만 PAT3 가능
+※ 1.5T는 3T보다 Phase OS 더 큼 (AX 10%→20%, COR 20%→30%)
+
+### T2WI (3T)
+- TE: 80–100ms | TR: 2300–6000ms | Freq: 0.6–0.8mm | Phase: 0.9–1.2mm
+- PAT: 2–2.5 필수 | ETD: 160–200ms | ETL: 14–22
+
+### T2WI FS / T2WI DIXON (3T/1.5T)
+- T2WI FS: TE 70–100ms | NEX COR 2 권장 | ETD 140–200ms
+- T2WI DIXON: TE 80–110ms | ETD 160–220ms — mDIXON·DIXON·FLEX·IDEAL
+
+### T1WI / T1WI FS / T1WI DIXON (3T/1.5T)
+- T1WI: TE 8–15ms | TR 450–700ms | Freq 0.6–0.8mm
+- T1WI FS: NEX COR 2 권장 — Contrast 후
+- T1WI DIXON: TE 12–20ms | TR 500–800ms — Contrast 후
+
+### PDWI DIXON / T2 STIR / T2* GRE
+- PDWI DIXON: water/fat 분리
+- T2 STIR: TI 180–230ms
+- T2* GRE: TE 14–20ms | FA 20–30°
 
 ---
 ## MSK - KNEE
 
 ### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.4–0.55mm | Phase: 0.50–0.7mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
-- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–10 | Refocusing FA: 110–130°
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.55mm | Phase: 0.50–0.7mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: ≤90ms | ETL: 6–10
 - Phase dir: AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)
 
 ### PDWI FS (1.5T)
-- Freq: 0.45–0.55mm | Phase: 0.50–0.7mm | ETD: ≤90ms
-- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(60%↑)
-※ 3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm), 나머지 동일
+- Freq: 0.45–0.55mm | Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(60%↑)
+※ 3T 대비 AX OS 10%→20%
+
+### T2WI / T2WI FS (3T/1.5T)
+- T2WI: TE 80–100ms | ETD 160–200ms | ETL 16–22
+- T2WI FS: NEX 1–2(2 권장) | ETD 120–160ms
+
+### T1WI / T1WI FS (3T/1.5T)
+- T1WI: TE 8–15ms | Freq 0.3–0.45mm (3T) / 0.45–0.55mm (1.5T)
+- T1WI FS: NEX 1–2(2 권장) | ETD ≤40ms
+
+### T2 STIR / T2* GRE
+- T2 STIR: TI 180–230ms (3T) / 140–170ms (1.5T)
+- T2* GRE: TE 14–20ms | FA 20–30°
 
 ---
 ## MSK - ANKLE
 
-### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
-- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | NEX: 1
-- Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–20 | Refocusing FA: 110–130°
+### PDWI FS (3T/1.5T 동일)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: off–1.7(Philips/Canon) / off–2(Siemens/GE) | ETD: ≤90ms | ETL: 6–20
 - Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)
 
-### PDWI FS (1.5T) — 3T와 동일
-- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm
-- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)
+### T2WI (3T) — 주의: voxel 매우 작음
+- TE: 60–80ms | Freq: 0.35–0.45mm | Phase: 0.45–0.6mm
+- Phase dir: AX=RL(20%↑) / COR=RL(20%↑) / SAG=AP(80%↑)
+
+### T2WI FS / T2WI DIXON (3T/1.5T)
+- T2WI FS: TE 60–80ms | Freq 0.35–0.5mm | NEX 1–2(2 권장)
+- T2WI DIXON: TE 80–110ms | ETD 160–220ms
+
+### T1WI / T1WI FS / T1WI DIXON (3T/1.5T)
+- T1WI: TE 8–15ms | Freq 0.3–0.45mm
+- T1WI FS: NEX 1–2(2 권장)
+- T1WI DIXON: TE 12–20ms | ETD 36–50ms
+
+### PDWI DIXON / T2 STIR / T2* GRE
+- PDWI DIXON: water/fat 분리
+- T2 STIR: TI 180–230ms | Phase dir SAG=FH(70%↑)
+- T2* GRE: TE 14–20ms | FA 20–30°
 
 ---
 ## MSK - FOOT
 
 ### PDWI FS (3T)
-- TE: 25–35ms | TR: 2300–6000ms (Drive ON)
-- Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
-- PAT: Philips SENSE 2.0–2.5 / Siemens GRAPPA off–2 / GE off–2 / Canon SPEEDER off–1.5–2
-- NEX: 1 | Echo spacing: 8.5–11ms | ETD: ≤90ms | ETL: 6–20 | Refocusing FA: 110–130°
-- Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
-※ 3T Foot는 Philips PAT 2.0–2.5 필수 (Ankle과 다름 — 3T Ankle은 off–1.7)
+- TE: 25–35ms | TR: 2300–6000ms | Freq: 0.4–0.5mm | Phase: 0.50–0.65mm (scan% 70%↑)
+- PAT: Philips SENSE 2.0–2.5 필수 (Ankle 3T off–1.7과 다름)
+- Siemens off–2 / GE off–2 / Canon off–1.5–2
+- ETD: ≤90ms | ETL: 6–20 | Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
 
 ### PDWI FS (1.5T)
 - Freq: 0.45–0.55mm | Phase: 0.6–0.75mm
-- PAT: Philips SENSE 1.5–2.0 / Siemens off–2 / GE off–2 / Canon off–1.5–2
-- Phase dir: AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
+- PAT: Philips SENSE 1.5–2.0 (3T 2.0–2.5 대비 낮음)
 
----
-## 주요 Artifact 가이드라인
+### T2WI / T2WI FS / T2WI DIXON (3T/1.5T)
+- T2WI: TE 60–80ms | Freq 0.4–0.5mm | PAT Philips 2.0–2.5
+- T2WI FS: NEX 1–2(2 권장)
+- T2WI DIXON: TE 80–110ms | ETD 160–220ms
 
-### TOF ICA Pseudo-stenosis (검증됨)
-- 원인: Intravoxel dephasing, slice 방향 해상도 부족 (in-plane은 무관)
-- 해결: ① Slice voxel 1.0 → 0.6mm ② SPF off ③ SwiftMR super-resolution
-- in-plane 해상도만 개선: 효과 없음
+### T1WI / T1WI FS / T1WI DIXON (3T/1.5T)
+- T1WI: TE 8–15ms | Freq 0.4–0.5mm
+- T1WI FS: NEX 1–2(2 권장) | ETD ≤40ms
+- T1WI DIXON: TE 12–20ms | ETD 36–50ms
 
-### Boundary artifact (T2 FLAIR)
-- Siemens: freeze 기능 → TI 자동 / GE: TI Auto / Philips: TI VALUE TABLE 수동
-
-### EPI distortion (DWI)
-- PAT 증가 / MUSE / FOV 350mm 이하 / BW 증가
-
-### FID artifact (SE/TSE)
-- SE → TSE 변환 / NEX 2 이상 / Echo spacing 증가
-
-### PAT residual (SENSE/ARC)
-- PAT factor 감소
-- Siemens GRAPPA: self-calibrated 방식 → 본 artifact 없음
-
-### Metal artifact
-- SEMAC (Siemens) / MAVRIC (GE) / MAVRIC-SL 적용
-- BW 증가, TE 최솟값, 1.5T 사용
-
-### Gibbs (Truncation) artifact
-- Matrix size 증가 / SwiftMR reconstruction
-
-### Venetian blind (TOF)
-- Slab 간 overlap 30%↑ 설정
-
-### Cross talk (Spine)
-- Slice gap 10–20% 확보 / Concatenation 증가
-
-### Slice aliasing (3D)
-- Slice oversampling 20%↑ (Selective) / 80%↑ (Non-selective)
-
----
-## 현장 이슈 사례
-- Philips eTHRIVE CS: Head Base Coil 없으면 SENSE로 변경
-- 강북삼성 Motion Free: Phase Oversampling 동일 설정 (v3.0.13.3+ 수정됨)
-- TOF MIP 혈관 끊김: SPF off → 해결
-- GE MR30.1 소스리턴: 장비 재등록
-- Shoulder FS 불량: ES 낮춤 + shim FOV 맞춤
-- GE HD16: NPW + ASSET/ARC 동시 사용 불가
-- Brain T1WI WM contrast: TE 9.4ms / TR 620ms
-- Philips DWI EPI distortion: PAT 증가 / MUSE 적용
+### PDWI / PDWI DIXON / T2 STIR / T2* GRE
+- PDWI DIXON: water/fat 분리
+- T2 STIR: TI 180–230ms | Phase dir AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)
+- T2* GRE: TE 14–20ms | FA 20–30°
 
 ---
 답변이 길어지면 마지막에 안내:
@@ -2370,21 +2849,57 @@ function clearImgs() {
 // 마지막 질문 저장 (재시도용)
 let lastQuestion = { text: '', imgSrc: null, imgMime: null, part: 'all' };
 
+// ── 공통 SSE 스트림 읽기 헬퍼 ──
+// endpoint: '/api/ask' | '/api/drive-search'
+// onToken(text): 토큰 단위 콜백
+// onDone(data): 완료 콜백 (sources 등 포함)
+// onError(msg, retryable): 에러 콜백
+async function readSSE(endpoint, body, onToken, onDone, onError) {
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok || !res.body) {
+    const data = await res.json().catch(() => ({}));
+    onError(data.error || `HTTP ${res.status}`, data.retryable ?? (res.status === 503));
+    return;
+  }
+
+  const reader  = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    const lines = buf.split('\n');
+    buf = lines.pop();
+
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue;
+      try {
+        const d = JSON.parse(line.slice(5).trim());
+        if (d.token)  { onToken(d.token); continue; }
+        if (d.error)  { onError(d.error, d.retryable ?? false); continue; }
+        if (d.done)   { onDone(d); continue; }
+      } catch {}
+    }
+  }
+}
+
+// ── AI 질문 탭 (스트리밍) ──
 async function ask(retryOverride) {
   if (busy) return;
-  const q = retryOverride?.text ?? document.getElementById('qinput').value.trim();
-  const selImg = retryOverride
-    ? null
-    : document.querySelector('.img-thumb.sel');
+  const q       = retryOverride?.text ?? document.getElementById('qinput').value.trim();
+  const selImg  = retryOverride ? null : document.querySelector('.img-thumb.sel');
   const imgSrc  = retryOverride?.imgSrc  ?? selImg?.src ?? null;
   const imgMime = retryOverride?.imgMime ?? (imgSrc ? imgSrc.split(';')[0].split(':')[1] : null);
-
   if (!q && !imgSrc) return;
 
-  // 재시도가 아닐 때만 질문 저장
-  if (!retryOverride) {
-    lastQuestion = { text: q, imgSrc, imgMime, part };
-  }
+  if (!retryOverride) lastQuestion = { text: q, imgSrc, imgMime, part };
 
   busy = true;
   document.getElementById('sbtn').disabled = true;
@@ -2406,66 +2921,59 @@ async function ask(retryOverride) {
   ch.appendChild(am);
   ch.scrollTop = ch.scrollHeight;
 
-  const usedPart = retryOverride?.part ?? part;
-  const partCtx = usedPart !== 'all' ? `[${usedPart} 부위 관련 질문]\n` : '';
+  const partCtx  = (retryOverride?.part ?? part) !== 'all' ? `[${retryOverride?.part ?? part} 부위 관련 질문]\n` : '';
   const userText = partCtx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
 
-  try {
-    const body = {
-      system: SYS,
-      messages: [{ role: 'user', content: userText }]
-    };
+  const reqBody = { system: SYS, messages: [{ role:'user', content: userText }] };
+  if (imgSrc) reqBody.image = { base64: imgSrc.split(',')[1], mimeType: imgMime };
 
-    if (imgSrc) {
-      body.image = {
-        base64: imgSrc.split(',')[1],
-        mimeType: imgMime
-      };
-    }
+  let accumulated = '';
+  let errored = false;
 
-    const res = await fetch('/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw { message: data.error || 'HTTP ' + res.status, retryable: data.retryable ?? (res.status === 503) };
-
-    const txt = data.content?.[0]?.text || '답변 없음';
-    const ac = document.getElementById(msgId);
-    if (ac) { ac.classList.remove('loading'); ac.innerHTML = fmt(txt); }
-
-  } catch(e) {
-    const ac = document.getElementById(msgId);
-    if (!ac) { busy = false; document.getElementById('sbtn').disabled = false; return; }
-    ac.classList.remove('loading');
-
-    const isRetryable = e.retryable
-      ?? (e.message?.includes('503') || e.message?.includes('과부하') || e.message?.includes('잠시') || e.message?.includes('overload'));
-
-    if (isRetryable) {
-      // 자동 재시도 1회 (5초 후)
-      ac.innerHTML = `<span style="color:var(--yellow)">⏳ AI 서버 응답이 느립니다. 5초 후 자동 재시도...</span>`;
+  await readSSE('/api/ask', reqBody,
+    (token) => {
+      // 첫 토큰 도착 시 로딩 제거
+      const el = document.getElementById(msgId);
+      if (!el) return;
+      if (el.classList.contains('loading')) {
+        el.classList.remove('loading');
+        el.innerHTML = '';
+      }
+      accumulated += token;
+      el.innerHTML = fmt(accumulated);
       ch.scrollTop = ch.scrollHeight;
-      busy = false;
-      document.getElementById('sbtn').disabled = false;
-
-      setTimeout(async () => {
-        ac.remove(); // 임시 메시지 제거
-        await ask({ ...lastQuestion });
-      }, 5000);
-      return;
-    } else {
-      // 재시도 불가 에러
-      ac.innerHTML = `<span style="color:var(--red)">오류: ${e.message || '알 수 없는 오류'}</span>
+    },
+    (data) => {
+      const el = document.getElementById(msgId);
+      if (el && accumulated) el.innerHTML = fmt(accumulated);
+    },
+    (msg, retryable) => {
+      errored = true;
+      const el = document.getElementById(msgId);
+      if (!el) return;
+      el.classList.remove('loading');
+      if (retryable) {
+        el.innerHTML = `<span style="color:var(--yellow)">⏳ 응답이 느립니다. 5초 후 자동 재시도...</span>`;
+        ch.scrollTop = ch.scrollHeight;
+        busy = false;
+        document.getElementById('sbtn').disabled = false;
+        setTimeout(() => { el.remove(); ask({ ...lastQuestion }); }, 5000);
+        return;
+      }
+      el.innerHTML = `<span style="color:var(--red)">오류: ${msg}</span>
         <button onclick="retryLast()" style="margin-top:8px;display:block;padding:5px 14px;border:1px solid rgba(77,159,255,.3);border-radius:var(--r);background:rgba(77,159,255,.07);color:var(--blue);cursor:pointer;font-family:inherit;font-size:11.5px;">↩ 다시 시도</button>`;
     }
-  }
+  ).catch(e => {
+    errored = true;
+    const el = document.getElementById(msgId);
+    if (el) { el.classList.remove('loading'); el.innerHTML = `<span style="color:var(--red)">네트워크 오류: ${e.message}</span>`; }
+  });
 
-  busy = false;
-  document.getElementById('sbtn').disabled = false;
-  ch.scrollTop = ch.scrollHeight;
+  if (!errored) {
+    busy = false;
+    document.getElementById('sbtn').disabled = false;
+    ch.scrollTop = ch.scrollHeight;
+  }
 }
 
 function retryLast() {
@@ -2485,6 +2993,253 @@ function fmt(t) {
     .replace(/(<li>[^<]*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
     .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(77,159,255,.35)">$1</a>')
     .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
+}
+
+// ── Drive 문서 검색 (스트리밍) ──
+async function driveSearch(q) {
+  dbAiBusy = true;
+  const btn = document.getElementById('dbAiSubmit');
+  const resultEl = document.getElementById('dbAiResult');
+  btn.disabled = true;
+  btn.textContent = '검색 중…';
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = '<div class="db-ai-loading"><div class="dot-pulse"><span></span><span></span><span></span></div><span>Drive 문서를 분석하는 중…</span></div>';
+
+  let accumulated = '';
+
+  await readSSE('/api/drive-search', { query: q },
+    (token) => {
+      if (resultEl.querySelector('.db-ai-loading')) resultEl.innerHTML = '';
+      accumulated += token;
+      resultEl.innerHTML = fmt(accumulated);
+    },
+    (data) => {
+      const sources = data.sources || [];
+      const srcHtml = sources.length
+        ? `<div class="db-ai-src"><span class="db-ai-src-label">📎 출처:</span>${sources.map(s =>
+            `<a class="db-ai-src-file" href="https://drive.google.com/file/d/${s.id}/view" target="_blank">
+              ${EXT_ICON[s.title.split('.').pop()] || '📄'} ${s.title}</a>`).join('')}</div>`
+        : '';
+      resultEl.innerHTML = fmt(accumulated) + srcHtml;
+    },
+    (msg, retryable) => {
+      resultEl.innerHTML = `<span class="db-ai-error">오류: ${msg}${retryable ? ' (잠시 후 다시 시도해주세요)' : ''}</span>`;
+    }
+  ).catch(e => {
+    resultEl.innerHTML = `<span class="db-ai-error">네트워크 오류: ${e.message}</span>`;
+  });
+
+  btn.disabled = false;
+  btn.textContent = '검색';
+  dbAiBusy = false;
+}
+
+// ── 이슈 DB AI 검색 (스트리밍) ──
+async function issueDbSearch(q) {
+  dbAiBusy = true;
+  const btn = document.getElementById('dbAiSubmit');
+  const resultEl = document.getElementById('dbAiResult');
+  btn.disabled = true;
+  btn.textContent = '검색 중…';
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = '<div class="db-ai-loading"><div class="dot-pulse"><span></span><span></span><span></span></div><span>이슈 DB를 분석하는 중…</span></div>';
+
+  const sysPrompt = `당신은 AiRSMed CCS팀 MRI 이슈 검색 AI입니다.
+아래 이슈 DB를 바탕으로 답변하세요. 원인/해결 구조로, 한국어로, 간결하게.
+없는 내용은 "DB에 해당 내용이 없습니다" 안내.
+
+${buildIssueDocument()}`;
+
+  let accumulated = '';
+
+  await readSSE('/api/ask', { system: sysPrompt, messages:[{ role:'user', content: q }] },
+    (token) => {
+      if (resultEl.querySelector('.db-ai-loading')) resultEl.innerHTML = '';
+      accumulated += token;
+      resultEl.innerHTML = fmt(accumulated);
+    },
+    () => {
+      const keywords = q.split(/\s+/).filter(w=>w.length>1);
+      resultEl.innerHTML = fmt(accumulated) + buildSourceTags(keywords);
+    },
+    (msg) => {
+      resultEl.innerHTML = `<span class="db-ai-error">오류: ${msg}</span>`;
+    }
+  ).catch(e => {
+    resultEl.innerHTML = `<span class="db-ai-error">네트워크 오류: ${e.message}</span>`;
+  });
+
+  btn.disabled = false;
+  btn.textContent = '검색';
+  dbAiBusy = false;
+}
+
+function buildIssueDocument() {
+  let doc = '';
+  const catNames = {brain:'Brain',spine:'Spine',msk:'MSK',field:'현장사례',case:'Case Study'};
+  Object.keys(ISSUES).forEach(cat => {
+    doc += `### [${catNames[cat]}]\n`;
+    ISSUES[cat].forEach(issue => {
+      doc += `**${issue.name}**: 원인=${issue.cause||''} / 해결=${issue.solution||''}\n`;
+    });
+  });
+  return doc;
+}
+
+// ============ AI SEARCH — DRIVE 연동 (NotebookLM style) ============
+let dbAiBusy = false;
+let currentSearchMode = 'issue'; // 'issue' | 'drive'
+
+// Drive 파일 카탈로그 (서버와 동기화)
+const DRIVE_CATALOG = [
+  { id:'1CwC3qRbEErVeVsrmUrYz4ZEb-76m45MC4Of5rwXdzxI', title:'mri101(eng)_250702', folder:'Root', ext:'pptx',
+    desc:'Clinical MRI 101 교육자료. MRI 안전, 하드웨어, K-Space, PAT/GRAPPA/SENSE, SNR, ETL/ETD, 시퀀스 종류, 제조사별 차이점 등 MRI 기초 개념 총망라.' },
+  { id:'1EZmvBVmjSkOQo3--WfibT-XLNTcxqbj1r6n-iq2stoM', title:'mri101(eng)_250521', folder:'Root', ext:'pptx',
+    desc:'Clinical MRI 101 이전 버전. MRI 원리, DICOM, PACS, 재구성 과정, 제조사 콘솔 버전 소개.' },
+  { id:'1Efuj5hTDZsVAnwxyS8oOtY41UWZC8vCn', title:'Canon Apps Training', folder:'Root', ext:'pptx',
+    desc:'Canon/Toshiba MRI 교육자료. 장비 운용, 파라미터 설정, 시퀀스 구성, 임상 적용.' },
+  { id:'1eY-Zif_llHXRP4K-NWbVgbkVGoK_PvSZ', title:'(GE) User_CV_FSE', folder:'GE', ext:'pdf',
+    desc:'GE FSE 시퀀스 CV. ETL, TE, TR, bandwidth, echo spacing, NEX, fat sat 옵션, 임상 적용 팁.' },
+  { id:'15P_CbkVPgk52DiQVxNFOiHMOboT-gTPN', title:'(GE) User_CV_SSFSE_CUBE_EPI', folder:'GE', ext:'pdf',
+    desc:'GE SSFSE, CUBE, EPI 시퀀스 CV. Single-shot FSE, 3D CUBE, EPI DWI 파라미터 가이드.' },
+  { id:'1Xvj-EmlP0kC2pgWXfDBlP4lh7nCyixlV', title:'(GE) User_CV_GRE', folder:'GE', ext:'pdf',
+    desc:'GE GRE 시퀀스 CV. SPGR, FGRE, FIESTA, mFFE 파라미터, FA, TE, TR 설정 가이드.' },
+  { id:'1VVxUHUh3gDkbXsEDZ4Nyz3dT7vLWS2Ox', title:'(GE) CASE Study-2013', folder:'GE', ext:'pdf',
+    desc:'GE MRI 케이스 스터디 2013. 임상 artifact 사례, 원인 분석, 해결 방법. Brain/Spine/MSK 케이스 포함.' },
+  { id:'1GWhHJpp3tb-s13XSrvRnIlpmxPuUr6c7', title:'(GE) 750W Hardware', folder:'GE', ext:'pdf',
+    desc:'GE Discovery MR750w 하드웨어 매뉴얼. 시스템 구성, 코일 종류, 그라디언트 스펙, 안전 사항.' },
+  { id:'1PLbaVScqOkh96OT1saJyeVVE1HG0JFvk', title:'GE 1.5T Signa Operator Manual', folder:'GE', ext:'pdf',
+    desc:'GE Signa 1.5T 운영자 매뉴얼. 장비 운용, 스캔 프로토콜, 코일 설치, 트러블슈팅, ARC/ASSET.' },
+  { id:'1_b5Px-0fcaOGUPJg0qPmyuBmLxPTuQo7', title:'(Siemens) magnets_spins_and_resonances', folder:'Siemens', ext:'pdf',
+    desc:'Siemens MRI 원리 교재. 자기장, 스핀, 공명, T1/T2 relaxation, k-space, 시퀀스 기초 이론.' },
+  { id:'17WuqmYQ2fNRznFFE_pmfwVgjotghPZce', title:'(Siemens) mri_glossary', folder:'Siemens', ext:'pdf',
+    desc:'Siemens MRI 용어집. GRAPPA, TurboFactor, TI, PAT, Restore, iPAT 등 Siemens 전용 용어 정의.' },
+  { id:'1kv_vQkfxz2FkSeHAqLg9a0q7gPSltMnN', title:'(Siemens) mri_acronyms', folder:'Siemens', ext:'pdf',
+    desc:'Siemens MRI 약어집. 파라미터 약어와 명칭 전체 정리.' },
+  { id:'1msKARNe5ORh3V6P3bBt_YuM14UUxu7EC', title:'(Siemens) magnets_flows_and_artifacts', folder:'Siemens', ext:'pdf',
+    desc:'Siemens artifact 교재. 혈류 artifact, Gibbs, Ghosting, Chemical shift, Wraparound, B0 불균일, 원인과 해결.' },
+  { id:'1r0ozWfJ5VSs2qK9TniV80W5djoLd3PTi', title:'(Siemens) Syngo', folder:'Siemens', ext:'pdf',
+    desc:'Siemens Syngo 소프트웨어 가이드. VB/VD/VE/XA 버전별 UI 차이, 파라미터 설정, 시퀀스 구성.' },
+  { id:'1s1Xq_br9_vmCX9VHxWKgd4d5rPlWZyPV', title:'Brain Anatomy', folder:'General', ext:'pdf',
+    desc:'뇌 해부학 자료. 뇌 구조, 각 영역 기능, MRI 해부학적 landmark, 신경 경로 설명.' },
+  { id:'19d_IRti1vo7cgie2371qUT9ZB6vzxXlE', title:'Gross Anatomy of the Brain', folder:'General', ext:'docx',
+    desc:'뇌 대해부학 문서. 뇌간, 소뇌, 대뇌, 변연계 등 뇌 전체 구조 상세 설명.' },
+  { id:'1U2QEBJh6KvQcs9KX2OPFH-ibtBp5s_Tb', title:'Parameter 정리(권도훈)', folder:'Philips', ext:'docx',
+    desc:'Philips MRI 파라미터 정리. SENSE factor, mDIXON, Drive, Echo spacing, Scan percentage 등 Philips 특화 파라미터 가이드.' },
+  { id:'1Pm_EU9uxnVdUtlc3f1DcOsHGHSyd3rVb', title:'IFU_p6i_int_pnl(Korean)', folder:'Philips', ext:'pdf',
+    desc:'Philips 인터페이스 패널 한국어 설명서. 장비 조작, 코일 연결, 스캔 시작, 오류 대응.' },
+  { id:'1zxsNbHeosbJRfwCJUsX7FKYQxzOOgCWk', title:'Ingenia iRF coil information', folder:'Philips', ext:'pptx',
+    desc:'Philips Ingenia iRF 코일 정보. 코일 종류, 연결 방법, SENSE factor 설정, 코일별 적합 시퀀스.' },
+];
+
+const FOLDER_BADGE = {
+  'GE':'drive-badge-ge','Siemens':'drive-badge-sie',
+  'Philips':'drive-badge-phi','General':'drive-badge-gen','Root':'drive-badge-root'
+};
+const EXT_ICON = { pdf:'📄', pptx:'📊', docx:'📝' };
+
+// 검색 모드 전환
+function setSearchMode(mode) {
+  currentSearchMode = mode;
+  document.getElementById('modeIssue').classList.toggle('on', mode==='issue');
+  document.getElementById('modeDrive').classList.toggle('on', mode==='drive');
+  document.getElementById('issueSection').style.display = mode==='issue' ? '' : 'none';
+  document.getElementById('driveSection').style.display  = mode==='drive' ? '' : 'none';
+
+  const icon = document.getElementById('searchModeIcon');
+  if (mode === 'drive') {
+    icon.textContent = '📂';
+    document.getElementById('dbAiQuery').placeholder = 'Drive 문서에서 검색 — "GE FSE ETL 설정", "Siemens artifact 해결", "Philips SENSE factor"…';
+    renderDriveList();
+  } else {
+    icon.textContent = '🔍';
+    document.getElementById('dbAiQuery').placeholder = '이슈 DB 검색 — "ICA pseudo-stenosis 해결법", "Shoulder PDWI FS 파라미터"…';
+  }
+
+  // 검색 결과 초기화
+  const r = document.getElementById('dbAiResult');
+  r.style.display = 'none';
+  r.innerHTML = '';
+}
+
+// Drive 파일 목록 렌더링
+function renderDriveList() {
+  const el = document.getElementById('driveFileList');
+  if (el.dataset.rendered) return;
+  el.dataset.rendered = '1';
+
+  const folders = {};
+  DRIVE_CATALOG.forEach(f => {
+    if (!folders[f.folder]) folders[f.folder] = [];
+    folders[f.folder].push(f);
+  });
+
+  const folderOrder = ['Root','GE','Siemens','Philips','General'];
+  let html = '';
+  folderOrder.forEach(foldName => {
+    if (!folders[foldName]) return;
+    html += `<div class="drive-folder-section">
+      <div class="drive-folder-label">📁 ${foldName === 'Root' ? '전체 자료' : foldName}</div>`;
+    folders[foldName].forEach(f => {
+      const badge = FOLDER_BADGE[f.folder] || 'drive-badge-root';
+      const icon = EXT_ICON[f.ext] || '📄';
+      html += `<a class="drive-file-card" href="https://drive.google.com/file/d/${f.id}/view" target="_blank">
+        <span class="drive-file-icon">${icon}</span>
+        <div class="drive-file-info">
+          <div class="drive-file-title">${f.title}</div>
+          <div class="drive-file-desc">${f.desc}</div>
+        </div>
+        <span class="drive-file-badge ${badge}">${f.folder}</span>
+      </a>`;
+    });
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+// AI 검색 실행 (모드별 분기)
+async function dbAiSearch() {
+  if (dbAiBusy) return;
+  const q = document.getElementById('dbAiQuery').value.trim();
+  if (!q) return;
+
+  if (currentSearchMode === 'drive') {
+    await driveSearch(q);
+  } else {
+    await issueDbSearch(q);
+  }
+}
+
+// Drive 문서 검색
+function buildSourceTags(keywords) {
+  const related = [];
+  Object.keys(ISSUES).forEach(cat => {
+    ISSUES[cat].forEach(issue => {
+      const text = `${issue.name} ${issue.cause||''} ${issue.solution||''}`.toLowerCase();
+      if (keywords.some(kw => text.includes(kw.toLowerCase()))) related.push({cat, name:issue.name});
+    });
+  });
+  if (!related.length) return '';
+  const tags = related.slice(0,6).map(r =>
+    `<span class="db-ai-src-tag" onclick="jumpToIssue('${r.cat}','${r.name.replace(/'/g,"\\'")}')">📌 ${r.name}</span>`
+  ).join('');
+  return `<div class="db-ai-src"><span class="db-ai-src-label">관련 이슈:</span> ${tags}</div>`;
+}
+
+function jumpToIssue(cat, name) {
+  setSearchMode('issue');
+  setDBCat(document.querySelector(`.df[data-cat="${cat}"]`) || document.querySelector('.df[data-cat="all"]'));
+  document.getElementById('dbSearch').value = name;
+  renderDB();
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.db-card');
+    for (const card of cards) {
+      if (card.querySelector('.db-card-name')?.textContent.includes(name)) {
+        card.scrollIntoView({ behavior:'smooth', block:'center' });
+        break;
+      }
+    }
+  }, 100);
 }
 
 // ============ DB RENDER ============
@@ -2507,15 +3262,16 @@ function renderDB() {
   let html = '';
   let total = 0;
   const isSearch = q.length > 0;
-
   const cats = dbCat === 'all' ? Object.keys(ISSUES) : [dbCat];
+
+  const CAT_LABEL = { brain:'Brain', spine:'Spine', msk:'MSK', field:'현장', case:'CASE' };
 
   cats.forEach(cat => {
     ISSUES[cat].forEach((issue, idx) => {
-      const nameMatch = issue.name.toLowerCase().includes(q);
+      const nameMatch  = issue.name.toLowerCase().includes(q);
       const causeMatch = (issue.cause||'').toLowerCase().includes(q);
-      const solMatch = (issue.solution||'').toLowerCase().includes(q);
-      const tipMatch = (issue.tip||'').toLowerCase().includes(q);
+      const solMatch   = (issue.solution||'').toLowerCase().includes(q);
+      const tipMatch   = (issue.tip||'').toLowerCase().includes(q);
       if (isSearch && !nameMatch && !causeMatch && !solMatch && !tipMatch) return;
       total++;
 
@@ -2523,43 +3279,43 @@ function renderDB() {
       const bodyId = `body_${cat}_${idx}`;
       const autoOpen = isSearch;
 
-      const solLines = (issue.solution||'').split('\n').map(l => l.trim()).filter(Boolean);
-      const causeLines = (issue.cause||'').split('\n').map(l => l.trim()).filter(Boolean);
+      // 원인 줄 목록
+      const causeLines = (issue.cause||'').split('\n').map(l=>l.trim()).filter(Boolean);
+      const solLines   = (issue.solution||'').split('\n').map(l=>l.trim()).filter(Boolean);
 
-      const solHtml = solLines.map(l =>
-        `<div style="display:flex;gap:5px;align-items:baseline;margin-bottom:2px"><span style="color:var(--green);flex-shrink:0;font-size:11px">›</span><span>${hl(l, q)}</span></div>`
-      ).join('');
       const causeHtml = causeLines.map(l =>
-        `<div style="display:flex;gap:5px;align-items:baseline;margin-bottom:2px"><span style="color:var(--yellow);flex-shrink:0;font-size:11px">›</span><span>${hl(l, q)}</span></div>`
+        `<div class="db-box-row"><span class="db-bullet-cause">▸</span><span>${hl(l,q)}</span></div>`
+      ).join('');
+      const solHtml = solLines.map(l =>
+        `<div class="db-box-row"><span class="db-bullet-sol">▸</span><span>${hl(l,q)}</span></div>`
       ).join('');
 
-      html += `
-        <div class="db-card${autoOpen?' expanded':''}" id="${cardId}" onclick="toggleCard('${bodyId}','${cardId}')">
-          <div class="db-card-head">
-            <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${cat === 'field' ? '현장' : cat === 'case' ? 'CASE' : cat.toUpperCase()}</span>
-            <span class="db-card-name">${hl(issue.name, q)}</span>
-            <span class="db-chevron">▼</span>
-          </div>
-          <div class="db-card-body${autoOpen?' open':''}" id="${bodyId}">
-            <div class="db-summary">
-              <div class="db-box">
-                <div class="db-box-label lbl-cause">⚡ 원인</div>
-                <div class="db-box-content">${causeHtml}</div>
-              </div>
-              <div class="db-box">
-                <div class="db-box-label lbl-sol">✅ 해결</div>
-                <div class="db-box-content">${solHtml}</div>
-              </div>
+      html += `<div class="db-card${autoOpen?' expanded':''}" id="${cardId}" onclick="toggleCard('${bodyId}','${cardId}')">
+        <div class="db-card-head">
+          <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${CAT_LABEL[cat]||cat}</span>
+          <span class="db-card-name">${hl(issue.name,q)}</span>
+          <span class="db-chevron">▼</span>
+        </div>
+        <div class="db-card-body${autoOpen?' open':''}" id="${bodyId}">
+          <div class="db-summary">
+            <div class="db-box">
+              <div class="db-box-label lbl-cause">⚡ 원인</div>
+              <div class="db-box-content">${causeHtml || '<span style="color:var(--text3)">—</span>'}</div>
             </div>
-            ${issue.tip ? `<div class="db-tip">💡 ${hl(issue.tip, q)}</div>` : ''}
-            ${issue.images ? renderSlider(issue.images, cardId) : ''}
-            <button class="ai-ask-btn" onclick="event.stopPropagation();askFromDB('${issue.name.replace(/'/g,"\\'")}')">💬 AI에게 더 물어보기</button>
+            <div class="db-box">
+              <div class="db-box-label lbl-sol">✅ 해결</div>
+              <div class="db-box-content">${solHtml || '<span style="color:var(--text3)">—</span>'}</div>
+            </div>
           </div>
-        </div>`;
+          ${issue.tip ? `<div class="db-tip">💡 ${hl(issue.tip,q)}</div>` : ''}
+          ${issue.images ? renderSlider(issue.images, cardId) : ''}
+          <button class="ai-ask-btn" onclick="event.stopPropagation();askFromDB('${issue.name.replace(/'/g,"\\'")}')">💬 AI에게 더 물어보기</button>
+        </div>
+      </div>`;
     });
   });
 
-  if (!html) html = '<div class="db-empty">검색 결과가 없습니다.</div>';
+  if (!html) html = `<div style="padding:32px;text-align:center;color:var(--text3);font-size:13px;">검색 결과가 없습니다.</div>`;
   content.innerHTML = html;
   document.getElementById('dbCount').textContent = `${total}건`;
 }
@@ -2602,503 +3358,1673 @@ renderDB();
 updateMobileUI('chat');
 
 // ============ PARAMETER GUIDE DATA ============
-const PAT = {
-  s2:'<span class="mfr mfr-s">Siemens GRAPPA 2</span>',
-  s23:'<span class="mfr mfr-s">Siemens GRAPPA 2–3</span>',
-  p17:'<span class="mfr mfr-p">Philips SENSE 1.7–2</span>',
-  p2:'<span class="mfr mfr-p">Philips SENSE 2–2.5</span>',
-  p25:'<span class="mfr mfr-p">Philips SENSE 2.5</span>',
-  g2:'<span class="mfr mfr-g">GE ASSET/ARC 2</span>',
-  g175:'<span class="mfr mfr-g">GE ASSET/ARC 1.75–2</span>',
-  c17:'<span class="mfr mfr-c">Canon SPEEDER 1.5–1.7</span>',
-  c2:'<span class="mfr mfr-c">Canon SPEEDER 2</span>',
+const TYPE_CLS = {
+  'TSE':'stb-se','SE':'stb-se','IR TSE':'stb-ir','GRE':'stb-gre',
+  'EPI':'stb-epi','MRA':'stb-mra','SWI':'stb-gre','MP-RAGE':'stb-ir',
+  '3D GRE':'stb-gre','3D TSE':'stb-se'
 };
-function pat(...keys){ return '<div class="mfr-row">'+keys.map(k=>PAT[k]).join('')+'</div>'; }
 
-// seq(name, typeBadge, params[], note?)
-// params: [key, value_html]
-function seq(name, type, params, note='') {
-  const typeMap = {
-    'TSE':'stb-se','SE':'stb-se','IR TSE':'stb-ir','GRE':'stb-gre',
-    'EPI':'stb-epi','MRA':'stb-mra','SWI':'stb-gre','MP-RAGE':'stb-ir'
+// 제조사 pill 헬퍼
+function mfrPills(list) {
+  const map = {
+    'Siemens': 'mfr-s', 'Philips': 'mfr-p', 'GE': 'mfr-g', 'Canon': 'mfr-c'
   };
-  const cls = typeMap[type] || 'stb-se';
-  const rows = params.map(([k,v])=>`<div class="seq-param-row"><span class="seq-param-key">${k}</span><span class="seq-param-val">${v}</span></div>`).join('');
+  return '<div class="mfr-row">' +
+    list.map(({vendor, val}) =>
+      `<span class="mfr ${map[vendor]||'mfr-s'}">${vendor} ${val}</span>`
+    ).join('') + '</div>';
+}
+
+// 하위항목 빌더 (AX/COR/SAG)
+function subRows(items) {
+  if (!items || !items.length) return '';
+  return '<div class="seq-sub">' +
+    items.map(([lbl, val]) =>
+      `<div class="seq-sub-row"><span class="seq-sub-label">${lbl}</span><span>${val}</span></div>`
+    ).join('') + '</div>';
+}
+
+// 카드 빌더
+function seq(name, type, rows, note) {
+  const cls = TYPE_CLS[type] || 'stb-se';
+  const rowsHtml = rows.map(([key, val, subs, mfrs]) => {
+    let cell = val || '';
+    if (mfrs) cell += mfrPills(mfrs);
+    if (subs) cell += subRows(subs);
+    return `<tr><td>${key}</td><td>${cell}</td></tr>`;
+  }).join('');
   const noteHtml = note ? `<div class="seq-note">${note}</div>` : '';
   return `<div class="seq-card">
-    <div class="seq-card-head">
+    <div class="seq-card-head" onclick="this.parentElement.classList.toggle('open')">
       <span class="seq-name">${name}</span>
       <span class="seq-type-badge ${cls}">${type}</span>
+      <span class="seq-toggle">▼</span>
     </div>
-    <div class="seq-card-body">${rows}${noteHtml}</div>
+    <div class="seq-card-body">
+      <table class="seq-params">${rowsHtml}</table>
+      ${noteHtml}
+    </div>
   </div>`;
 }
 
-const hi  = v => `<span class="hi">${v}</span>`;
-const hib = v => `<span class="hi-b">${v}</span>`;
-const hig = v => `<span class="hi-g">${v}</span>`;
+// 강조 헬퍼
+const hi  = v => `<span class="pv-hi">${v}</span>`;
+const hib = v => `<span class="pv-hib">${v}</span>`;
+const hig = v => `<span class="pv-hig">${v}</span>`;
 
+// Drive function tag
+const drv = (s,p,g,c) =>
+  `<div class="seq-sub">` +
+  `<div class="seq-sub-row"><span class="seq-sub-label">Siemens</span><span>${s}</span></div>` +
+  `<div class="seq-sub-row"><span class="seq-sub-label">Philips</span><span>${p}</span></div>` +
+  `<div class="seq-sub-row"><span class="seq-sub-label">GE</span><span>${g}</span></div>` +
+  `<div class="seq-sub-row"><span class="seq-sub-label">Canon</span><span>${c}</span></div>` +
+  `</div>`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PARAM_DATA: 노션 원문 그대로
+// seq(시퀀스명, 타입, [[파라미터명, 값, [[하위레이블, 값]], [{vendor, val}]], ...], 노트)
+// ─────────────────────────────────────────────────────────────────────────────
 const PARAM_DATA = {
-  'brain-3t': [
-    seq('T1WI','TSE',[
-      ['TE', hi('9–15ms')],['TR','400–700ms'],
-      ['Freq voxel', hi('0.6–0.8mm')],['Phase voxel','0.7–1.1mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['Echo spacing','10–12ms'],['ETD',hi('≤40ms')],['ETL','3–5'],
-      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
-    ],'ETD 40ms 이하 엄수'),
-    seq('T1 FLAIR','IR TSE',[
-      ['TE','9–15ms'],['TR',hi('2000–9000ms')],['TI','TR에 따라 조정 (table value)'],
-      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.1mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD',hi('≤40ms')],['ETL','3–5'],
-      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
-    ]),
-    seq('T2WI','TSE',[
-      ['TE',hi('90–120ms')],['TR','3000–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.7–1.0mm')],['Phase voxel','0.8–1.2mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD',hi('180–240ms')],['ETL','15–26'],
-      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
-    ]),
-    seq('T2 FLAIR','IR TSE',[
-      ['TE','90–120ms'],['TR',hi('7000–9000ms')],['TI',hi('~2500ms')],
-      ['Freq voxel','0.7–1.0mm'],['Phase voxel','0.8–1.2mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD','180–240ms'],['ETL','15–26'],
-    ],'Siemens: freeze 기능으로 TI 자동조정 / GE: TI Auto / Philips: table value 수동입력'),
-    seq('DWI','EPI',[
-      ['TE','최솟값'],['TR','최솟값'],
-      ['Freq/Phase voxel',hi('1.4–1.8mm')],
-      ['PAT', pat('s2','p25','g2','c2')],
-      ['NEX','SS-EPI 3 / resolve 1'],
-      ['Echo spacing','SS-EPI 0.9–1.0ms / resolve 0.4–0.5ms'],
-      ['Phase dir','AX=AP'],
-    ],'PAT 최대 3 / FOV 350mm 이하 / MUSE 사용 시 EPI distortion 감소'),
-    seq('TOF','MRA',[
-      ['TE',hi('~2.3ms (3T out-of-phase)')],['TR','23–30ms'],['FA','18–25°'],
-      ['Freq voxel','0.5–0.8mm'],['Slice voxel',hi('≤0.6mm 권장')],
-      ['PAT', pat('s23','p2','g2','c17')],
-      ['Phase dir','RL'],['Slice OS','10%↑'],
-      ['SPF',hi('off 권장')],
-    ],'SPF(Slice Partial Fourier) ON 시 ICA 신호소실 위험'),
-    seq('SWI','SWI',[
-      ['TE','19–23ms'],['TR','27–35ms'],['FA','15°'],
-      ['Freq voxel','0.8–1.0mm'],
-      ['PAT', pat('s2','p17','g2')],
-      ['ACQ Slice','2–4mm'],['Recon Slice','1–2mm'],
-      ['Phase dir','RL'],['Slice OS','10%↑'],
-    ]),
-    seq('T2* GRE','GRE',[
-      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
-      ['Freq voxel','0.8–1.0mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['Phase dir','AX=RL'],
-    ]),
-    seq('T1WI IR 3D','MP-RAGE',[
-      ['TE','최솟값–2.3ms'],['TR','7–12ms'],['TI','table value'],['FA','8–15°'],
-      ['ACQ Slice',hi('1.0–1.4mm')],['Recon Slice',hi('0.5–0.7mm')],
-      ['PAT', pat('s23','p17','g2','c17')],
-      ['Phase dir','COR=RL / AX=RL / SAG=AP'],
-    ],'Siemens: Slice res 50% / Philips: Recon voxel 0.45–0.6mm / GE: ZIP2'),
-  ],
-  'brain-1p5t': [
-    seq('T1WI','TSE',[
-      ['TE',hi('9–15ms')],['TR','450–700ms'],
-      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.1mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD',hi('≤40ms')],['ETL','3–5'],
-      ['Phase dir','AX=RL / COR=RL / SAG=AP'],
-    ],'3T 대비 TR 범위 동일, PAT도 동일'),
-    seq('T1 FLAIR','IR TSE',[
-      ['TE','15–25ms'],['TR',hi('1600–2200ms')],['TI',hi('734–980ms (table value)')],
-      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.7–1.0mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD','≤50ms'],['ETL','3–5'],
-    ]),
-    seq('T2WI','TSE',[
-      ['TE',hi('80–100ms')],['TR','2500–6000ms (Drive ON)'],
-      ['Freq voxel','0.5–0.7mm'],['Phase voxel','0.6–0.8mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD',hi('160–200ms')],['ETL','16–24'],
-    ],'3T 대비 ETD 범위 약간 좁음'),
-    seq('T2 FLAIR','IR TSE',[
-      ['TE','90–125ms'],['TR',hi('8500–11000ms')],['TI',hi('2439–2800ms (table value)')],
-      ['Freq voxel','0.7–0.9mm'],['Phase voxel','0.8–1.1mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['ETD','180–250ms'],['ETL','16–28'],
-    ]),
-    seq('DWI','EPI',[
-      ['TE','최솟값'],['TR','최솟값'],
-      ['Freq/Phase voxel','1.4–1.8mm'],
-      ['PAT', pat('s2','p25','g2','c2')],
-      ['NEX','SS-EPI 3 / resolve 1'],
-      ['Echo spacing',hi('SS-EPI 0.9–1.0ms / resolve 0.4–0.5ms')],
-    ]),
-    seq('TOF','MRA',[
-      ['TE',hi('~4.6ms (1.5T out-of-phase)')],['TR','23–30ms'],['FA','18–25°'],
-      ['Freq voxel','0.5–0.8mm'],['Slice voxel','1.0–1.4mm'],
-      ['PAT', pat('s23','p2','g2','c17')],
-      ['SPF',hi('off 권장')],
-    ],'1.5T TE가 3T(2.3ms)와 다름 — out-of-phase TE 확인 필수'),
-    seq('SWI','SWI',[
-      ['TE','원본 유지 (table 확인)'],['FA','18–20°'],
-      ['Freq voxel','0.8–1.0mm'],
-      ['PAT', pat('s23','p2','g2')+'<span style="font-size:10px;color:var(--text3)"> SENSE P2–2.5, S1–1.5</span>'],
-      ['ACQ Slice','2–4mm'],['Recon Slice','1–2mm'],
-    ]),
-    seq('T2* GRE','GRE',[
-      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','18–25°'],
-      ['Freq voxel','0.8–1.0mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-    ]),
-    seq('T1 GRE','GRE',[
-      ['TE',hi('1.8–2.8ms')],['TR','190–250ms'],['FA',hi('60–80°')],
-      ['Freq voxel','0.7–0.8mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-    ]),
-    seq('T1WI IR 3D','MP-RAGE',[
-      ['TE','최솟값–4.6ms (in-phase)'],['TR','7–12ms'],['TI','734–980ms'],['FA','8–15°'],
-      ['ACQ Slice',hi('1.0–1.4mm')],['Recon Slice',hi('0.5–0.7mm')],
-      ['PAT', pat('s23','p17','g2','c2')],
-    ]),
-  ],
-  'cspine-3t': [
-    seq('T2WI SAG','TSE',[
-      ['TE','90–120ms'],['TR','2500–5000ms (Drive ON)'],
-      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','2–4'],['ETD',hi('180–240ms')],['ETL','15–26'],
-      ['Phase dir',hi('SAG=FH (OS 70%↑)')],['Flow comp','SAG=Freq'],
-    ]),
-    seq('T2WI AXL','TSE',[
-      ['TE','90–120ms'],['TR','2000–4000ms'],
-      ['Freq voxel','0.5–0.7mm'],
-      ['ETD',hi('120–160ms')],['ETL','10–16'],
-      ['Phase dir',hi('AXL=RL (OS 20%↑)')],['Flow comp','AXL=Slice or off'],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','400–700ms'],
-      ['Freq voxel','0.6–0.8mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TI',hi('150–180ms')],
-      ['ETD','140ms 이하'],['ETL','11–15'],
-    ],'B0 불균일 심할 경우 DIXON FS 사용'),
-    seq('T2* GRE','GRE',[
-      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
-      ['Phase dir','AXL=RL (OS 20–40%↑)'],
-    ]),
-  ],
-  'cspine-1p5t': [
-    seq('T2WI SAG','TSE',[
-      ['TE','90–120ms'],['TR','2500–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 2'],
-      ['ETD',hi('180–240ms')],['ETL','15–26'],
-      ['Phase dir',hi('SAG=FH (OS 70%↑), AXL=AP (OS 30%↑)')],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['Freq voxel','0.6–0.8mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['ETD','≤40ms'],['ETL','3–5'],
-      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 2'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
-      ['Freq voxel','0.7–0.9mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['ETD','≤140ms'],['ETL','11–15'],
-    ]),
-    seq('T2* GRE (mFFE)','GRE',[
-      ['TE',hi('18–25ms')],['TR','450–800ms'],['FA','20–30°'],
-      ['Freq voxel','0.6–0.8mm'],
-      ['PAT', pat('s2','p17','g175','c17')],
-      ['Phase dir','AXL=RL (OS 20–40%↑)'],
-    ]),
-  ],
-  'tspine-grid': [
-    seq('T2WI SAG/AXL','TSE',[
-      ['기준','C-Spine과 동일 파라미터 적용'],
-      ['Phase dir','SAG=FH / AXL=RL'],
-    ],'C-Spine 가이드라인 참고'),
-  ],
-  'lspine-3t': [
-    seq('T2WI SAG','TSE',[
-      ['TE','90–120ms'],['TR','2500–5000ms (Drive ON)'],
-      ['Freq voxel',hi('0.6–0.8mm')],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','SAG 1–2'],['ETD',hi('180–240ms')],
-      ['Phase dir',hi('SAG=FH (OS 70%↑)')],
-    ]),
-    seq('T2WI AXL','TSE',[
-      ['TE','90–120ms'],['TR','2000–4000ms'],
-      ['ETD','180–240ms'],
-      ['Phase dir',hi('AXL=RL (OS 20%↑)')],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','최솟값'],['TR','400–700ms'],
-      ['PAT', pat('s2','p17','g2','c17')],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TI',hi('150–180ms')],
-    ]),
-  ],
-  'lspine-1p5t': [
-    seq('T2WI SAG','TSE',[
-      ['TE','90–120ms'],['TR','2500–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.55–0.75mm')],['Phase voxel','0.8–1.0mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','SAG 1–2 ('+hig('2 권장')+'). AXL 1–2 (2 권장)'],
-      ['ETD',hi('180–240ms')],['ETL','15–26'],
-      ['Phase dir','SAG=FH (OS 70%↑) / AXL=AP (OS 40%↑)'],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
-      ['ETD','≤140ms'],['ETL','11–15'],
-    ]),
-  ],
-  'wholespine-grid': [
-    seq('T2WI SAG (3T/1.5T)','TSE',[
-      ['Coverage','2–3 station (멀티 스테이션)'],
-      ['TE','90–120ms'],['TR','2500–6000ms'],
-      ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.9–1.2mm (scan% 60%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','SAG=1, COR=1'],['ETD','180–240ms'],['ETL','15–26'],
-      ['Phase dir','SAG=FH (OS 70%↑) / COR=FH (OS 70%↑)'],
-      ['Station overlap',hi('충분히 확보')],
-    ],'Station 간 경계부 이음매 확인 필수'),
-  ],
-  'shoulder-3t': [
-    seq('PDWI FS','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.6mm (scan% 70%↑)'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
-      ['ETD',hi('≤40ms')],['ETL','3–5'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],
-      ['TI',hi('180–230ms')+'<span style="color:var(--text3);font-size:10px"> 180=FAT bright / 230=FAT dark</span>'],
-      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ],'TI 180ms=FAT bright / 230ms=FAT dark — 목적에 맞게 선택'),
-    seq('T2WI FS','TSE',[
-      ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
-      ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.55–0.75mm'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ]),
-    seq('T2* GRE (mFFE)','GRE',[
-      ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
-      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.7–2.2</span><span class="mfr mfr-s">Siemens GRAPPA 2</span><span class="mfr mfr-g">GE 1.75–2.0</span><span class="mfr mfr-c">Canon 1.5–1.7</span></div>'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ]),
-  ],
-  'shoulder-1p5t': [
-    seq('PDWI FS','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ],'3T 대비 Freq voxel 0.45–0.55mm (3T 0.4–0.55mm)'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.3–0.45mm'],
-      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2300–4000ms'],
-      ['TI',hi('140–170ms')+'<span style="color:var(--text3);font-size:10px"> (3T: 180–230ms와 다름)</span>'],
-      ['ETD','≤140ms'],['ETL','11–15'],
-      ['Phase dir','AX=AP(40%↑) / COR=FH(70%↑) / SAG=FH(70%↑)'],
-    ]),
-  ],
-  'elbow-grid': [
-    seq('PDWI FS (3T/1.5T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
-      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
-      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
-    ],'3T와 1.5T 동일 파라미터'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm (scan% 70%↑)'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
-      ['ETD','≤40ms'],['ETL','3–5'],
-      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],
-      ['TI',hi('180–230ms')+'<span style="color:var(--text3);font-size:10px"> (1.5T: 140–170ms)</span>'],
-      ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
-      ['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=AP(20%↑) / COR=FH(50%↑) / SAG=FH(50%↑)'],
-    ]),
-  ],
-  'wrist-grid': [
-    seq('PDWI FS (3T/1.5T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.35–0.45mm')+'<span style="color:var(--text3);font-size:10px"> ← MSK 최소</span>'],
-      ['Phase voxel','0.40–0.55mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
-      ['Phase dir','AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)'],
-      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
-    ],'3T와 1.5T 동일. MSK 중 가장 작은 voxel'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.35–0.5mm (scan% 70%↑)'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
-      ['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-      ['Freq voxel','0.35–0.45mm'],['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=RL(10%↑) / COR=FH(50%↑) / SAG=AP(20%↑)'],
-    ]),
-  ],
-  'hip-grid': [
-    seq('PDWI FS (3T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.7–0.9mm')],['Phase voxel','0.9–1.1mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p2','g2','c2')],
-      ['NEX','AX 1–2 / COR '+hig('1–2(2 권장)')+' / SAG 1'],
-      ['Echo spacing','8.5–11ms'],['ETD',hi('≤90ms')],['ETL','6–10'],
-      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=FH(50%↑)'],
-    ],'3T Hip: PAT 2–2.5 필수 / Siemens COR만 PAT3 가능'),
-    seq('PDWI FS (1.5T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.75–0.95mm')],['Phase voxel','0.95–1.2mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p2','g2','c2')],
-      ['NEX','AX 1–2 / COR '+hig('1–2(2 권장)')+' / SAG 1'],
-      ['ETD',hi('≤90ms')],['ETL','6–10'],
-      ['Phase dir','AX=AP(20%↑) / COR=RL(30%↑) / SAG=FH(50%↑)'],
-    ],'1.5T: AX OS 10%→20%, COR OS 20%→30% (3T보다 큼)'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.7–0.9mm'],
-      ['PAT', pat('s2','p2','g2','c2')],['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-      ['Freq voxel','0.7–0.9mm'],['ETD','120–160ms'],['ETL','12–20'],
-    ]),
-  ],
-  'knee-3t': [
-    seq('PDWI FS','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–10'],['Refocusing FA','110–130°'],
-      ['Phase dir','AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
-      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
-    ]),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],
-      ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–1.75</span><span class="mfr mfr-c">Canon off–1.5–1.7</span></div>'],
-      ['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-      ['Freq voxel','0.4–0.55mm'],['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=RL(10%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
-    ]),
-  ],
-  'knee-1p5t': [
-    seq('PDWI FS','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–10'],
-      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH('+hig('60%↑')+')'],
-    ],'3T 대비: Freq 0.45–0.55mm(3T 0.4–0.55mm) / AX OS 10%→20%'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel','0.45–0.55mm'],
-      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms')],
-      ['ETD','≤140ms'],['ETL','11–15'],
-      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(60%↑)'],
-    ]),
-  ],
-  'ankle-grid': [
-    seq('PDWI FS (3T/1.5T 동일)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
-      ['PAT', pat('s2','p17','g2','c17')],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–20'],['Refocusing FA','110–130°'],
-      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
-      ['Flow comp','AX=Slice or off / COR=Freq or off / SAG=Freq or off'],
-    ],'3T와 1.5T 동일 파라미터'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel',hi('0.3–0.45mm')],
-      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-      ['Freq voxel','0.4–0.5mm'],['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=RL(20%↑) / COR=RL(20%↑) / SAG=FH(70%↑)'],
-    ]),
-  ],
-  'foot-grid': [
-    seq('PDWI FS (3T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 2.0–2.5</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–2</span><span class="mfr mfr-c">Canon off–1.5–2</span></div>'],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–20'],
-      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
-    ],'Foot 3T: Philips PAT 2.0–2.5 필수 (Ankle 3T off–1.7과 다름)'),
-    seq('PDWI FS (1.5T)','TSE',[
-      ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-      ['Freq voxel',hi('0.45–0.55mm')],['Phase voxel','0.6–0.75mm (scan% 70%↑)'],
-      ['PAT','<div class="mfr-row"><span class="mfr mfr-p">Philips SENSE 1.5–2.0</span><span class="mfr mfr-s">Siemens off–2</span><span class="mfr mfr-g">GE off–2</span><span class="mfr mfr-c">Canon off–1.5–2</span></div>'],
-      ['NEX','1'],['Echo spacing','8.5–11ms'],
-      ['ETD',hi('≤90ms')],['ETL','6–20'],
-      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
-    ],'1.5T Foot: Freq 0.45–0.55mm (3T 0.4–0.5mm 대비 약간 큼)'),
-    seq('T1WI','TSE',[
-      ['TE','8–15ms'],['TR','450–700ms'],['Freq voxel',hi('0.3–0.45mm')],
-      ['PAT', pat('s2','p17','g2','c17')],['ETD','≤40ms'],['ETL','3–5'],
-    ]),
-    seq('T2 STIR','IR TSE',[
-      ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-      ['Freq voxel','0.4–0.5mm'],['ETD','120–160ms'],['ETL','12–20'],
-      ['Phase dir','AX=AP(10%↑) / COR=RL(20%↑) / SAG=AP(10%↑)'],
-    ]),
-  ],
+
+// ════════════════════════════════ BRAIN 3T ════════════════════════════════
+'brain-3t': [
+  seq('T1WI','TSE',[
+    ['TE', hi('9–15ms')],
+    ['TR', hi('450–700ms')],
+    ['Freq voxel', hi('0.5–0.7mm')],
+    ['Phase voxel', '0.6–0.8mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Echo spacing', '9–12ms (BW sync)'],
+    ['ETD', hi('≤40ms')+'  (ETL × ES = ETD)'],
+    ['ETL', '3–5'],
+    ['Refocusing FA', '110–150°'],
+    ['Phase dir', '', [
+      ['AX','RL'],['COR','RL'],['SAG','AP'],
+    ]],
+    ['Flow comp', '', [
+      ['AX','Slice or no'],['COR','Freq or no'],['SAG','Freq'],
+    ]],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', hi('9–15ms')],
+    ['TR', hi('2000–9000ms')],
+    ['TI', 'TR에 따라 조정 (table value)'],
+    ['Freq voxel', '0.6–0.8mm'],
+    ['Phase voxel', '0.7–1.1mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Echo spacing', '10–12ms'],
+    ['ETD', hi('≤40ms')],
+    ['ETL', '3–5'],
+    ['Refocusing FA', '110–150°'],
+    ['Phase dir', '', [['AX','RL'],['COR','RL'],['SAG','AP']]],
+    ['TI 조정', 'Siemens: freeze / GE: TI Auto / Philips: table value 수동 입력'],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('80–100ms')],
+    ['TR', '2500–6000ms (Drive ON)' + drv('Restore','Drive','Fast Recovery','T2 Plus')],
+    ['Freq voxel', hi('0.45–0.6mm')],
+    ['Phase voxel', '0.55–0.7mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Echo spacing', '9–11ms'],
+    ['ETD', hi('160–200ms')],
+    ['ETL', '16–24'],
+    ['Refocusing FA', '110–150°'],
+    ['Phase dir', '', [['AX','RL'],['COR','RL'],['SAG','AP']]],
+    ['Flow comp', '', [['AX','Slice or off'],['COR','Freq'],['SAG','Freq']]],
+  ]),
+
+  seq('T2 FLAIR','IR TSE',[
+    ['TE', hi('90–120ms')],
+    ['TR', hi('7000–9000ms')],
+    ['TI', hi('~2500ms')],
+    ['Freq voxel', '0.7–1.0mm'],
+    ['Phase voxel', '0.8–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['ETD', '180–240ms'],['ETL', '15–26'],
+    ['TI 조정', 'Siemens: freeze (TR 변경 시 자동) / GE: TI Auto / Philips: TI VALUE TABLE 수동'],
+  ], 'Boundary artifact: TR·TI 비율 유지 필수'),
+
+  seq('DWI','EPI',[
+    ['TE', '최솟값'],
+    ['TR', '4000–8000ms'],
+    ['b-value', '0, 1000 (또는 500, 1000)'],
+    ['Freq/Phase voxel', hi('1.4–1.8mm')],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.5'},
+      {vendor:'Siemens', val:'GRAPPA 2 (최대 3)'},
+      {vendor:'GE', val:'ARC 2'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['NEX', 'SS-EPI: 3 / resolve: 1'],
+    ['Echo spacing', 'SS-EPI: 0.9–1.0ms / resolve: 0.4–0.5ms'],
+    ['Phase dir', 'AX = AP'],
+    ['FOV', '≤350mm 권장'],
+  ], 'EPI distortion 감소: MUSE 사용 / PAT 최대 3'),
+
+  seq('TOF','MRA',[
+    ['TE', hi('~2.3ms')+'  (3T out-of-phase)'],
+    ['TR', '23–30ms'],
+    ['FA', '18–25°'],
+    ['Freq voxel', '0.5–0.8mm'],
+    ['Slice voxel', hi('≤0.6mm 권장')],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA 2–3 (OS 10%)'},
+      {vendor:'GE', val:'ARC 2'},
+      {vendor:'Canon', val:'SPEEDER 1.7–2.0'},
+    ]],
+    ['SPF', hi('off 권장')+'  (on → ICA pseudo-stenosis 위험)'],
+    ['Phase dir', 'RL'],
+    ['Slice OS', '10%↑'],
+  ], 'ICA 협착 오인 방지: Slice voxel ≤0.6mm + SPF off'),
+
+  seq('SWI','SWI',[
+    ['TE', '19–23ms'],['TR', '27–35ms'],['FA', '15°'],
+    ['Freq voxel', '0.8–1.0mm'],
+    ['Phase voxel', '0.9–1.1mm (scan% 60%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE P 2–2.5, S 1–1.5'},
+      {vendor:'Siemens', val:'GRAPPA 2–3 (OS 30%)'},
+      {vendor:'GE', val:'ARC 2'},
+    ]],
+    ['ACQ slice', '2–4mm'],['Recon slice', '1–2mm'],
+    ['Phase dir', 'RL'],['Slice OS', '10%↑'],
+  ]),
+
+  seq('T2* GRE','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30° (원본유지)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Phase dir', 'AX = RL'],
+  ]),
+
+  seq('T1WI IR 3D','MP-RAGE',[
+    ['TE', '최솟값 – 2.3ms'],['TR', '7–12ms'],['TI', 'table value'],['FA', '8–15°'],
+    ['ACQ slice', hi('1.0–1.4mm')],['Recon slice', hi('0.5–0.7mm')],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2'},
+      {vendor:'Siemens', val:'GRAPPA 2–3 (OS 30%)'},
+      {vendor:'GE', val:'ARC 2–2.5'},
+      {vendor:'Canon', val:'SPEEDER 1.7–2.0'},
+    ]],
+    ['Recon 방법', '', [
+      ['Siemens','Slice resolution 50%'],
+      ['Philips','Recon Voxel 0.45–0.6mm'],
+      ['GE','ZIP2'],
+      ['Canon','Fine recon ON'],
+    ]],
+    ['Phase dir', '', [['COR','RL'],['AX','RL'],['SAG','AP']]],
+  ]),
+],
+
+// ════════════════════════════════ BRAIN 1.5T ═════════════════════════════
+'brain-1p5t': [
+  seq('T1WI','TSE',[
+    ['TE', hi('9–15ms')],['TR', hi('450–700ms')],
+    ['Freq voxel', '0.6–0.8mm'],['Phase voxel', '0.7–1.1mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','RL'],['COR','RL'],['SAG','AP']]],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', '15–25ms'],['TR', hi('1600–2200ms')],['TI', hi('734–980ms (table value)')],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1']]],
+    ['ETD', '≤50ms'],['ETL', '4–6'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('80–100ms')],
+    ['TR', '2500–6000ms (Drive ON)' + drv('Restore','Drive','Fast Recovery','T2 Plus')],
+    ['Freq voxel', hi('0.5–0.7mm')],['Phase voxel', '0.6–0.8mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['ETD', hi('160–200ms')],['ETL', '16–24'],
+  ]),
+
+  seq('T2 FLAIR','IR TSE',[
+    ['TE', '90–125ms'],['TR', hi('8500–11000ms')],['TI', hi('2439–2800ms (table value)')],
+    ['ETD', '180–250ms'],['ETL', '16–28'],
+  ]),
+
+  seq('DWI','EPI',[
+    ['TE', '최솟값'],['TR', '4000–8000ms'],
+    ['Freq/Phase voxel', hi('1.4–1.8mm')],
+    ['NEX', 'SS-EPI: 3 / resolve: 1'],
+    ['Echo spacing', 'SS-EPI: 0.9–1.0ms / resolve: 0.4–0.5ms'],
+    ['Phase dir', 'AX = AP'],
+  ]),
+
+  seq('TOF','MRA',[
+    ['TE', hi('~4.6ms')+'  (1.5T out-of-phase — 3T 2.3ms와 다름!)'],
+    ['TR', '23–30ms'],['FA', '18–25°'],
+    ['Slice voxel', '1.0–1.4mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA 2–3'},
+      {vendor:'GE', val:'ARC 2'},
+      {vendor:'Canon', val:'SPEEDER 1.7–2.0'},
+    ]],
+    ['SPF', hi('off 권장')],
+  ], '1.5T TOF TE ≠ 3T — out-of-phase TE 반드시 확인'),
+
+  seq('T2* GRE','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '18–25°'],
+    ['Freq voxel', '0.8–1.0mm'],
+  ]),
+
+  seq('T1 GRE','GRE',[
+    ['TE', hi('1.8–2.8ms')],['TR', '190–250ms'],['FA', hi('60–80°')],
+    ['Freq voxel', '0.7–0.8mm'],
+  ]),
+
+  seq('T1WI IR 3D','MP-RAGE',[
+    ['TE', '최솟값 – 4.6ms (in-phase)'],['TR', '7–12ms'],['TI', '734–980ms'],['FA', '8–15°'],
+    ['ACQ slice', '1.0–1.4mm'],['Recon slice', '0.5–0.7mm'],
+  ]),
+],
+
+// ════════════════════════════════ C-SPINE 3T ═════════════════════════════
+'cspine-3t': [
+  seq('T2WI SAG','TSE',[
+    ['TE', hi('90–120ms')],
+    ['TR', '2500–5000ms (Drive ON)' + drv('Restore','Drive','Fast Recovery','T2 Plus')],
+    ['Freq voxel', hi('0.5–0.7mm'), [['AX','0.45–0.6mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)', [['AX','0.5–0.7mm'],['COR','0.8–1.0mm'],['SAG','0.8–1.0mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','2'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['Echo spacing', '9–12ms'],
+    ['ETD', hi('180–240ms')],['ETL', '15–26'],
+    ['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice'],['COR','Freq'],['SAG','Freq']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', hi('8–15ms')],['TR', hi('450–700ms')],
+    ['Freq voxel', '0.5–0.7mm', [['AX','0.45–0.6mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
+    ['Phase voxel', '0.8–1.1mm (scan% 70%↑)', [['AX','0.6–0.8mm'],['COR','0.8–1.1mm'],['SAG','0.8–1.1mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['Echo spacing', '8–12ms'],['ETD', '≤40ms'],['ETL', '3–5'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice or off'],['COR','Freq (Philips: Sensitized)'],['SAG','Freq (Philips: Sensitized)']]],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', '15–25ms'],['TR', hi('1600–2200ms')],['TI', hi('734–980ms (table value)')],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.8–1.1mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1']]],
+    ['ETD', '≤50ms'],['ETL', '4–6'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice'],['COR','Freq'],['SAG','Freq']]],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TI', hi('150–180ms')],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+  ], 'B0 불균일 심할 경우 → T2WI DIXON FS 사용'),
+
+  seq('T2WI DIXON FS','TSE',[
+    ['TE', hi('80–110ms')],
+    ['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.55–0.7mm', [['AX','0.5–0.7mm'],['SAG','0.55–0.7mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)', [['AX','0.6–0.8mm'],['SAG','0.85–1.1mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['Echo spacing', '11–14ms'],['ETD', '160–220ms'],['ETL', '15–20'],
+    ['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 50%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice'],['SAG','Freq']]],
+  ], 'mDIXON / DIXON / FLEX / IDEAL — B0 불균일 지역(경추-흉추 이행부)에서 STIR 대신'),
+
+  seq('T1WI DIXON FS','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.65–0.85mm', [['AX','0.5–0.8mm'],['SAG','0.65–0.85mm']]],
+    ['Phase voxel', '0.9–1.2mm (scan% 70%↑)', [['AX','0.7–0.9mm'],['SAG','0.9–1.2mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['Echo spacing', '11–14ms'],['ETD', '36–50ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 50%↑)'],['SAG','FH (OS 70%↑)']]],
+  ], 'Contrast 후 Fat sat T1WI — mDIXON / DIXON / FLEX / IDEAL / Contrast'),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '12–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.65–0.85mm', [['AX','0.5–0.8mm'],['SAG','0.65–0.85mm']]],
+    ['Phase voxel', '0.9–1.2mm (scan% 70%↑)', [['AX','0.7–0.8mm'],['SAG','0.9–1.2mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', '', [['AX','2'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['Echo spacing', '8–12ms'],['ETD', '≤40ms'],['ETL', '3–5'],['Refocusing FA', '110–150°'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice or off'],['COR','Freq'],['SAG','Freq']]],
+  ], 'SPIR / SPAIR / Chem SAT — Contrast 후 T1WI FS'),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Phase dir', 'AX = RL (OS 20–40%↑)'],
+  ]),
+],
+
+// ════════════════════════════════ C-SPINE 1.5T ═══════════════════════════
+'cspine-1p5t': [
+  seq('T2WI SAG','TSE',[
+    ['TE', hi('90–120ms')],
+    ['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.6–0.8mm'), [['AX','0.45–0.6mm'],['COR','0.6–0.8mm'],['SAG','0.6–0.8mm']]],
+    ['Phase voxel', '0.9–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['SAG','1–2 (2 권장)'],['AX','2']]],
+    ['ETD', hi('180–240ms')],['ETL', '15–26'],
+    ['Phase dir', '', [['SAG','FH (OS 70%↑)'],['AX','AP (OS 30%↑)']]],
+    ['Flow comp', '', [['SAG','Freq'],['AX','Slice']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.6–0.8mm', [['AX','0.5–0.7mm'],['SAG','0.6–0.8mm']]],
+    ['Phase voxel', '0.9–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', '', [['SAG','1–2 (2 권장)'],['AX','2']]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['SAG','FH (OS 70%↑)'],['AX','AP (OS 30%↑)']]],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', '15–25ms'],['TR', hi('1600–2200ms')],['TI', hi('734–980ms (table value)')],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2 (OS 10%)'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1']]],
+    ['ETD', '≤50ms'],['ETL', '4–6'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2300–4000ms'],['TI', hi('140–170ms')],
+    ['Freq voxel', '0.7–0.9mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+  ]),
+
+  seq('T2WI DIXON FS','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.55–0.7mm'],['Phase voxel', '0.8–1.0mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '160–220ms'],['ETL', '15–20'],
+  ]),
+
+  seq('T1WI DIXON FS','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.7–0.9mm', [['AX','0.6–0.8mm'],['SAG','0.7–0.9mm']]],
+    ['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '12–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.65–0.85mm', [['AX','0.6–0.8mm'],['SAG','0.65–0.85mm']]],
+    ['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', '', [['AX','2'],['SAG','1–2 (2 권장)']]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 30%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('18–25ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.6–0.8mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Phase dir', 'AX = RL (OS 20–40%↑)'],
+  ]),
+],
+
+'tspine-grid': [
+  seq('T2WI SAG/AXL','TSE',[
+    ['적용 기준', 'C-Spine과 동일 파라미터 적용'],
+    ['Phase dir', '', [['SAG','FH'],['AXL','RL']]],
+  ], 'C-Spine 3T/1.5T 가이드라인 동일 적용'),
+],
+
+// ════════════════════════════════ L-SPINE 3T ═════════════════════════════
+'lspine-3t': [
+  seq('T2WI SAG','TSE',[
+    ['TE', hi('90–120ms')],
+    ['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.5–0.7mm'), [['AX','0.5–0.7mm'],['COR','0.55–0.75mm'],['SAG','0.55–0.75mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)', [['AX','0.6–0.8mm'],['COR','0.8–1.0mm'],['SAG','0.8–1.0mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['Echo spacing', '9–12ms'],['ETD', hi('180–240ms')],['ETL', '15–26'],['Refocusing FA', '110–150°'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice'],['COR','Freq'],['SAG','Freq']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.5–0.7mm', [['AX','0.5–0.7mm'],['COR','0.55–0.75mm'],['SAG','0.55–0.75mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', '15–25ms'],['TR', hi('1600–2200ms')],['TI', hi('734–980ms (table value)')],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.2mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1']]],
+    ['ETD', '≤50ms'],['ETL', '4–6'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TI', hi('150–180ms')],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', hi('70–100ms')],
+    ['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.55–0.75mm', [['AX','0.5–0.7mm'],['COR','0.55–0.75mm'],['SAG','0.55–0.75mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)', [['AX','0.65–0.8mm'],['COR','0.9–1.1mm'],['SAG','0.9–1.1mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['ETD', '140–200ms'],['ETL', '14–22'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ], 'SPIR / SPAIR / FAT / Chem SAT'),
+
+  seq('T2WI DIXON FS','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.55–0.75mm'],['Phase voxel', '0.8–1.0mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '160–220ms'],['ETL', '15–20'],
+  ], 'B0 불균일 시 T2 STIR 대신 사용 — mDIXON / DIXON / FLEX / IDEAL'),
+
+  seq('T1WI DIXON FS','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.65–0.85mm'],['Phase voxel', '0.9–1.2mm'],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ], 'Contrast 후 Fat sat T1WI'),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '12–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.65–0.85mm'],['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['SAG','1–2 (2 권장)']]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+],
+
+// ════════════════════════════════ L-SPINE 1.5T ═══════════════════════════
+'lspine-1p5t': [
+  seq('T2WI SAG','TSE',[
+    ['TE', hi('90–120ms')],
+    ['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.55–0.75mm'), [['AX','0.5–0.7mm'],['COR','0.55–0.75mm'],['SAG','0.55–0.75mm']]],
+    ['Phase voxel', '0.8–1.0mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['COR','1'],['SAG','1–2 (2 권장)']]],
+    ['ETD', hi('180–240ms')],['ETL', '15–26'],
+    ['Phase dir', '', [['SAG','FH (OS 70%↑)'],['AX','AP (OS 40%↑)']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.55–0.75mm'],['Phase voxel', '0.8–1.0mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1 FLAIR','IR TSE',[
+    ['TE', '15–25ms'],['TR', hi('1600–2200ms')],['TI', hi('734–980ms (table value)')],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.2mm'],
+    ['ETD', '≤50ms'],['ETL', '4–6'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2300–4000ms'],['TI', hi('140–170ms')],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '70–100ms'],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.55–0.75mm'],['Phase voxel', '0.8–1.0mm'],
+    ['ETD', '140–200ms'],['ETL', '14–22'],
+  ]),
+
+  seq('T2WI DIXON FS','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.55–0.75mm'],['Phase voxel', '0.8–1.0mm'],
+    ['ETD', '160–220ms'],['ETL', '15–20'],
+  ]),
+
+  seq('T1WI DIXON FS','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.2mm'],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '12–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.65–0.85mm'],['Phase voxel', '0.9–1.2mm'],
+    ['NEX', '', [['AX','1–2 (2 권장)'],['SAG','1–2 (2 권장)']]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+],
+
+'wholespine-grid': [
+  seq('T2WI SAG (3T/1.5T)','TSE',[
+    ['Coverage', '2–3 station (멀티 스테이션)'],
+    ['TE', '90–120ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.6–0.8mm'],['Phase voxel', '0.9–1.2mm (scan% 60%↑)'],
+    ['NEX', 'SAG=1, COR=1'],
+    ['ETD', '180–240ms'],['ETL', '15–26'],
+    ['Phase dir', '', [['SAG','FH (OS 70%↑)'],['COR','FH (OS 70%↑)']]],
+    ['Station overlap', hi('충분히 확보')],
+  ], 'Station 간 경계부 이음매 확인 필수'),
+],
+
+// ════════════════════════════════ SHOULDER 3T ════════════════════════════
+'shoulder-3t': [
+  seq('PDWI FS','TSE',[
+    ['TE', hi('25–35ms')],
+    ['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.4–0.55mm'), [['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
+    ['Phase voxel', '0.50–0.7mm (scan% 70%↑)', [['AX','0.50–0.7mm'],['COR','0.50–0.7mm'],['SAG','0.50–0.7mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('120–160ms')],['ETL', '12–20'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ]),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.50–0.7mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('80–100ms')],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.45–0.6mm'],['Phase voxel', '0.55–0.75mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '160–200ms'],['ETL', '16–22'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.45–0.6mm'],['Phase voxel', '0.55–0.75mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.45mm'), [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.4–0.6mm (scan% 70%↑)', [['AX','0.4–0.6mm'],['COR','0.4–0.6mm'],['SAG','0.4–0.6mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.4–0.5mm'), [['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+    ['Phase voxel', '0.5–0.7mm (scan% 70%↑)', [['AX','0.5–0.7mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ], 'SPIR / SPAIR / Chem SAT — Contrast 후 T1WI FS'),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],
+    ['TI', hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.55–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ], 'TI 180ms=FAT bright / 230ms=FAT dark — 목적에 맞게 선택'),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.55–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.2'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+],
+
+'shoulder-1p5t': [
+  seq('PDWI FS','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.45–0.55mm')],['Phase voxel', '0.55–0.7mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', hi('120–160ms')],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ], '3T 대비 Freq voxel 0.45–0.55mm (3T: 0.4–0.55mm)'),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.45–0.6mm'],['Phase voxel', '0.55–0.75mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.4–0.6mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.4–0.5mm')],['Phase voxel', '0.5–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2300–4000ms'],['TI', hi('140–170ms')+'  (3T: 180–230ms와 다름)'],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+    ['Phase dir', '', [['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.45–0.55mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.7–2.0'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ASSET/ARC 1.75–2.0'},
+      {vendor:'Canon', val:'SPEEDER 1.5–1.7'},
+    ]],
+  ]),
+],
+
+// ════════════════════════════════ ELBOW / WRIST / HAND ═══════════════════
+'elbow-grid': [
+  seq('PDWI FS (3T/1.5T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.4–0.55mm'), [['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
+    ['Phase voxel', '0.50–0.65mm (scan% 70%↑)', [['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('120–160ms')],['ETL', '12–20'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ], '3T와 1.5T 동일 파라미터 적용'),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.50–0.65mm'],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.45–0.6mm'],['Phase voxel', '0.55–0.75mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.45–0.6mm'],['Phase voxel', '0.55–0.75mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.45mm'), [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.4–0.55mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.4–0.55mm')],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],
+    ['TI', hi('180–230ms')+'  (1.5T: 140–170ms)'],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.4–0.55mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+  ]),
+],
+
+'wrist-grid': [
+  seq('PDWI FS (3T/1.5T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.35–0.45mm')+'  ← MSK 최소 voxel', [['AX','0.35–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+    ['Phase voxel', '0.40–0.55mm (scan% 70%↑)', [['AX','0.40–0.55mm'],['COR','0.40–0.55mm'],['SAG','0.40–0.55mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('120–160ms')],['ETL', '12–20'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ], 'MSK 부위 중 가장 작은 voxel — 3T와 1.5T 동일'),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.35–0.45mm'],['Phase voxel', '0.40–0.55mm'],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.35–0.5mm'],['Phase voxel', '0.40–0.6mm'],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.35–0.5mm'],['Phase voxel', '0.40–0.6mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.45mm'), [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.35–0.5mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.35–0.45mm')],['Phase voxel', '0.40–0.55mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['Freq voxel', '0.35–0.45mm'],['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.35–0.45mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+  ]),
+],
+
+'hand-grid': [
+  seq('PDWI FS','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.3–0.45mm')+'  ← 상지 최소', [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.35–0.55mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', hi('120–160ms')],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+  ]),
+
+  seq('PDWI DIXON','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.35–0.55mm'],
+    ['ETD', '120–160ms'],
+  ], 'water/fat 동시 획득 — mDIXON / DIXON'),
+
+  seq('T2WI / T2WI FS','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.35–0.55mm'],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['T2WI FS NEX', hig('1–2 (2 권장)')],
+  ]),
+
+  seq('T2WI DIXON','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.35–0.55mm'],
+    ['ETD', '160–220ms'],
+  ], 'water/fat 분리'),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.4mm')],['Phase voxel', '0.35–0.5mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.35–0.55mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI DIXON','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.3–0.45mm'],['Phase voxel', '0.35–0.55mm'],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ], 'Contrast 후 mDIXON / DIXON'),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.3–0.45mm'],
+  ]),
+],
+
+// ════════════════════════════════ HIP ════════════════════════════════════
+'hip-grid': [
+  seq('PDWI FS (3T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.7–0.9mm'), [['AX','0.7–0.9mm'],['COR','0.7–0.9mm'],['SAG','0.7–0.9mm']]],
+    ['Phase voxel', '0.9–1.1mm (scan% 70%↑)', [['AX','0.9–1.1mm'],['COR','0.9–1.1mm'],['SAG','0.9–1.1mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5  ← 필수'},
+      {vendor:'Siemens', val:'GRAPPA off–2 (COR: PAT3 가능)'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['NEX', '', [['AX','1–2'],['COR','1–2 (2 권장)'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('≤90ms')],['ETL', '6–10'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 50%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ], 'Philips PAT 2–2.5 필수 / Siemens COR만 PAT3 가능'),
+
+  seq('PDWI FS (1.5T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.75–0.95mm'), [['AX','0.75–0.95mm'],['COR','0.75–0.95mm'],['SAG','0.75–0.95mm']]],
+    ['Phase voxel', '0.95–1.2mm (scan% 70%↑)', [['AX','0.95–1.2mm'],['COR','0.95–1.2mm'],['SAG','0.95–1.2mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5  ← 필수'},
+      {vendor:'Siemens', val:'GRAPPA off–2 (COR: PAT3 가능)'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['NEX', '', [['AX','1–2'],['COR','1–2 (2 권장)'],['SAG','1']]],
+    ['ETD', hi('≤90ms')],['ETL', '6–10'],
+    ['Phase dir', '', [['AX','AP (OS 20%↑)'],['COR','RL (OS 30%↑)'],['SAG','FH (OS 50%↑)']]],
+  ], '1.5T: Phase OS 3T보다 큼 (AX 10→20%↑, COR 20→30%↑)'),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.1mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['ETD', '≤90ms'],['ETL', '6–10'],
+  ]),
+
+  seq('PDWI DIXON','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.7–0.9mm'],['Phase voxel', '0.9–1.1mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['ETD', '≤90ms'],
+  ], 'water/fat 동시 획득'),
+
+  seq('T2WI (3T)','TSE',[
+    ['TE', hi('80–100ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', '0.6–0.8mm', [['AX','0.6–0.8mm'],['COR','0.6–0.8mm'],['SAG','0.6–0.8mm']]],
+    ['Phase voxel', '0.9–1.2mm (scan% 70%↑)', [['AX','0.9–1.2mm'],['COR','0.9–1.2mm'],['SAG','0.9–1.2mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA 2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['ETD', '160–200ms'],['ETL', '14–22'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 50%↑)']]],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '70–100ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.6–0.8mm'],['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['NEX', hig('COR 2 권장')],['ETD', '140–200ms'],['ETL', '14–22'],
+  ]),
+
+  seq('T2WI DIXON','TSE',[
+    ['TE', '80–110ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.6–0.8mm'],['Phase voxel', '0.9–1.2mm'],
+    ['ETD', '160–220ms'],
+  ], 'water/fat 분리 — mDIXON / DIXON / FLEX / IDEAL'),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.6–0.8mm'],['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.65–0.85mm'],['Phase voxel', '0.9–1.2mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+    ['NEX', hig('COR 2 권장')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ], 'Contrast 후 Fat sat T1'),
+
+  seq('T1WI DIXON','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.65–0.85mm'],['Phase voxel', '0.9–1.2mm'],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ], 'Contrast 후 mDIXON / DIXON'),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['Freq voxel', '0.7–0.9mm'],['ETD', '120–160ms'],['ETL', '12–20'],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.6–0.8mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ARC 2.0–2.5'},
+      {vendor:'Canon', val:'SPEEDER 2'},
+    ]],
+  ]),
+],
+
+// ════════════════════════════════ KNEE ═══════════════════════════════════
+'knee-3t': [
+  seq('PDWI FS','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.4–0.55mm'), [['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
+    ['Phase voxel', '0.50–0.7mm (scan% 70%↑)', [['AX','0.50–0.7mm'],['COR','0.50–0.7mm'],['SAG','0.50–0.7mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('≤90ms')],['ETL', '6–10'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 60%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ]),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', '≤90ms'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 60%↑)']]],
+  ]),
+
+  seq('T2WI','TSE',[
+    ['TE', hi('80–100ms')],['TR', '2500–6000ms (Drive ON)'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['ETD', '160–200ms'],['ETL', '16–22'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 60%↑)']]],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.4–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.45mm'), [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.4–0.55mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.4–0.55mm')],['Phase voxel', '0.50–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['Freq voxel', '0.4–0.55mm'],['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','RL (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 60%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.4–0.55mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+  ]),
+],
+
+'knee-1p5t': [
+  seq('PDWI FS','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.45–0.55mm')+'  (3T: 0.4–0.55mm)'],['Phase voxel', '0.50–0.7mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', hi('≤90ms')],['ETL', '6–10'],
+    ['Phase dir', '', [['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG',hig('FH (OS 60%↑)')]]],
+  ], '3T 대비: Freq voxel 0.45–0.55mm / AX OS 10→20%↑'),
+
+  seq('T2WI','TSE',[
+    ['TE', '80–100ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.45–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['ETD', '160–200ms'],['ETL', '16–22'],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.45–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.45–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–1.75'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.45–0.55mm'],['Phase voxel', '0.50–0.7mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2300–4000ms'],['TI', hi('140–170ms')],
+    ['ETD', '≤140ms'],['ETL', '11–15'],
+    ['Phase dir', '', [['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 60%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', '14–20ms'],['TR', '450–800ms'],['FA', '20–30°'],
+  ]),
+],
+
+// ════════════════════════════════ ANKLE ══════════════════════════════════
+'ankle-grid': [
+  seq('PDWI FS (3T/1.5T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.4–0.5mm'), [['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+    ['Phase voxel', '0.50–0.65mm (scan% 70%↑)', [['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['Echo spacing', '8.5–11ms'],['ETD', hi('≤90ms')],['ETL', '6–20'],['Refocusing FA', '110–130°'],
+    ['Phase dir', '', [['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 70%↑)']]],
+    ['Flow comp', '', [['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+  ], '3T와 1.5T 동일 파라미터'),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['ETD', '≤90ms'],
+  ]),
+
+  seq('PDWI DIXON','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['ETD', '≤90ms'],
+  ], 'water/fat 동시 획득'),
+
+  seq('T2WI (3T)','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms'],
+    ['Freq voxel', hi('0.35–0.45mm')],['Phase voxel', '0.45–0.6mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+  ], 'Ankle T2WI 3T: Freq voxel 0.35–0.45mm — 매우 작은 voxel'),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.35–0.5mm'],['Phase voxel', '0.45–0.65mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],
+  ]),
+
+  seq('T2WI DIXON','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['ETD', '160–220ms'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', hi('0.3–0.45mm'), [['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
+    ['Phase voxel', '0.40–0.6mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE off–1.7'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2.0'},
+      {vendor:'Canon', val:'SPEEDER off–1.7'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI DIXON','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['Freq voxel', '0.4–0.5mm'],['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 70%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.4–0.5mm'],
+  ]),
+],
+
+// ════════════════════════════════ FOOT ═══════════════════════════════════
+'foot-grid': [
+  seq('PDWI FS (3T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.4–0.5mm'), [['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+    ['Phase voxel', '0.50–0.65mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5  ← 필수'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', hi('≤90ms')],['ETL', '6–20'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ], 'Foot 3T: Philips PAT 2.0–2.5 필수 (Ankle 3T off–1.7과 다름!)'),
+
+  seq('PDWI FS (1.5T)','TSE',[
+    ['TE', hi('25–35ms')],['TR', '2300–6000ms (Drive ON)'],
+    ['Freq voxel', hi('0.45–0.55mm')+'  (3T: 0.4–0.5mm)'],['Phase voxel', '0.6–0.75mm (scan% 70%↑)'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 1.5–2.0'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['NEX', '', [['AX','1'],['COR','1'],['SAG','1']]],
+    ['ETD', hi('≤90ms')],['ETL', '6–20'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ]),
+
+  seq('PDWI','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '≤90ms'],
+  ]),
+
+  seq('PDWI DIXON','TSE',[
+    ['TE', '25–35ms'],['TR', '2300–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '≤90ms'],
+  ], 'water/fat 동시 획득'),
+
+  seq('T2WI (3T)','TSE',[
+    ['TE', hi('60–80ms')],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ]),
+
+  seq('T2WI FS','TSE',[
+    ['TE', '60–80ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '120–160ms'],
+  ]),
+
+  seq('T2WI DIXON','TSE',[
+    ['TE', '80–110ms'],['TR', '2500–6000ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '160–220ms'],
+  ]),
+
+  seq('T1WI','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI FS','TSE',[
+    ['TE', '8–15ms'],['TR', '450–700ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['NEX', hig('1–2 (2 권장)')],['ETD', '≤40ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T1WI DIXON','TSE',[
+    ['TE', '12–20ms'],['TR', '500–800ms'],
+    ['Freq voxel', '0.4–0.5mm'],['Phase voxel', '0.50–0.65mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+    ['ETD', '36–50ms'],['ETL', '3–5'],
+  ]),
+
+  seq('T2 STIR','IR TSE',[
+    ['TE', '50–70ms'],['TR', '2500–4000ms'],['TI', hi('180–230ms')],
+    ['Freq voxel', '0.4–0.5mm'],['ETD', '120–160ms'],['ETL', '12–20'],
+    ['Phase dir', '', [['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ]),
+
+  seq('T2* GRE (mFFE)','GRE',[
+    ['TE', hi('14–20ms')],['TR', '450–800ms'],['FA', '20–30°'],
+    ['Freq voxel', '0.4–0.5mm'],
+    ['PAT', '', null, [
+      {vendor:'Philips', val:'SENSE 2.0–2.5'},
+      {vendor:'Siemens', val:'GRAPPA off–2'},
+      {vendor:'GE', val:'ASSET/ARC off–2'},
+      {vendor:'Canon', val:'SPEEDER off–1.5–2'},
+    ]],
+  ]),
+],
+
 };
 
 // ============ PARAMETER PANEL FUNCTIONS ============
@@ -3106,7 +5032,12 @@ function renderParamGrid(gridId, dataKey) {
   const el = document.getElementById(gridId);
   if (!el || el.dataset.rendered) return;
   const data = PARAM_DATA[dataKey];
-  if (data) { el.innerHTML = data.join(''); el.dataset.rendered = '1'; }
+  if (!data) return;
+  el.innerHTML = data.join('');
+  // 첫 번째 카드 자동 펼치기
+  const firstCard = el.querySelector('.seq-card');
+  if (firstCard) firstCard.classList.add('open');
+  el.dataset.rendered = '1';
 }
 
 function setParamPage(el) {
@@ -3146,6 +5077,7 @@ function renderCurrentParamPage(pageId) {
     'pp-shoulder': [['shoulder-3t-grid','shoulder-3t'],['shoulder-1p5t-grid','shoulder-1p5t']],
     'pp-elbow':    [['elbow-grid','elbow-grid']],
     'pp-wrist':    [['wrist-grid','wrist-grid']],
+    'pp-hand':     [['hand-grid','hand-grid']],
     'pp-hip':      [['hip-grid','hip-grid']],
     'pp-knee':     [['knee-3t-grid','knee-3t'],['knee-1p5t-grid','knee-1p5t']],
     'pp-ankle':    [['ankle-grid','ankle-grid']],
