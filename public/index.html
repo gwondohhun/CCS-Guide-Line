@@ -777,228 +777,96 @@ mark {
   .seq-name { font-size: 13px; }
 }
 
-/* ── DB MODE TABS ──────────────────────────── */
-.db-mode-tabs {
+/* ── NOTEBOOKLM LAUNCHER ─────────────────────── */
+.nlm-launcher {
+  margin: 14px 14px 0;
+  background: linear-gradient(135deg, rgba(26,115,232,.12), rgba(77,159,255,.06));
+  border: 1px solid rgba(77,159,255,.3);
+  border-radius: var(--r3);
+  padding: 18px 20px;
   display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
+  align-items: center;
+  gap: 16px;
   flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 14px;
 }
-.db-mode-tab {
-  flex: 1;
-  padding: 10px 8px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--text3);
-  font-size: 12px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all .15s;
-  letter-spacing: .2px;
-}
-.db-mode-tab.on {
-  color: var(--blue);
-  border-bottom-color: var(--blue);
-  background: rgba(77,159,255,.05);
-}
-.db-mode-tab:hover:not(.on) { color: var(--text2); background: var(--surface2); }
-
-/* ── DRIVE FILE LIST ────────────────────────── */
-.drive-file-list {
-  padding: 14px;
+.nlm-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1a73e8, #4285f4);
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(26,115,232,.35);
 }
-.drive-folder-section { margin-bottom: 4px; }
-.drive-folder-label {
-  font-size: 10px;
+.nlm-info { flex: 1; min-width: 160px; }
+.nlm-title {
+  font-size: 14px;
   font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  padding: 8px 4px 4px;
-}
-.drive-file-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  padding: 10px 13px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  transition: all .15s;
-  text-decoration: none;
-}
-.drive-file-card:hover {
-  border-color: var(--border2);
-  background: var(--surface2);
-  box-shadow: 0 2px 10px rgba(0,0,0,.3);
-}
-.drive-file-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-.drive-file-info { flex: 1; min-width: 0; }
-.drive-file-title {
-  font-size: 12.5px;
-  font-weight: 600;
   color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 3px;
 }
-.drive-file-desc {
-  font-size: 11px;
+.nlm-desc {
+  font-size: 11.5px;
   color: var(--text3);
-  margin-top: 3px;
   line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
-.drive-file-badge {
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 20px;
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-.drive-badge-ge   { background: rgba(139,92,246,.1); color: var(--ge);     border: 1px solid rgba(139,92,246,.2); }
-.drive-badge-sie  { background: rgba(0,180,180,.1);  color: var(--siemens);border: 1px solid rgba(0,180,180,.2); }
-.drive-badge-phi  { background: rgba(59,130,246,.1); color: var(--philips);border: 1px solid rgba(59,130,246,.2); }
-.drive-badge-gen  { background: rgba(52,211,153,.1); color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
-.drive-badge-root { background: rgba(251,191,36,.1); color: var(--yellow); border: 1px solid rgba(251,191,36,.2); }
-
-/* Drive 검색 결과 소스 */
-.db-ai-src { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.db-ai-src-label { color: var(--text3); }
-.db-ai-src-file {
+.nlm-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  background: rgba(52,211,153,.07);
-  border: 1px solid rgba(52,211,153,.2);
-  border-radius: var(--r);
-  padding: 3px 9px;
-  font-size: 10.5px;
-  color: var(--green);
-  text-decoration: none;
-  transition: background .1s;
-}
-.db-ai-src-file:hover { background: rgba(52,211,153,.15); }
-
-@media (max-width: 768px) {
-  .db-mode-tab { font-size: 11px; padding: 9px 5px; }
-  .drive-file-list { padding: 10px; }
-  .drive-file-title { font-size: 12px; }
-}
-
-/* ── AI SEARCH BAR (NotebookLM style) ──────── */
-.db-ai-search-bar {
-  padding: 16px 16px 0;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(to bottom, rgba(77,159,255,.04), transparent);
-  flex-shrink: 0;
-}
-.db-ai-input-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--surface2);
-  border: 1.5px solid var(--border2);
-  border-radius: 12px;
-  padding: 10px 14px;
-  transition: border-color .15s;
-}
-.db-ai-input-wrap:focus-within {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(77,159,255,.1);
-}
-.db-ai-icon { font-size: 15px; flex-shrink: 0; }
-#dbAiQuery {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-size: 13px;
-  font-family: inherit;
-  min-width: 0;
-}
-#dbAiQuery::placeholder { color: var(--text3); font-size: 12px; }
-.db-ai-btn {
-  background: var(--blue);
+  gap: 6px;
+  background: linear-gradient(135deg, #1a73e8, #4285f4);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 6px 16px;
-  font-size: 12px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+  box-shadow: 0 4px 14px rgba(26,115,232,.35);
+  white-space: nowrap;
   flex-shrink: 0;
-  transition: opacity .15s;
 }
-.db-ai-btn:hover { opacity: .85; }
-.db-ai-btn:disabled { opacity: .45; cursor: not-allowed; }
-
-.db-ai-result {
-  margin: 10px 0 14px;
-  background: var(--surface);
-  border: 1px solid var(--border2);
+.nlm-btn:hover {
+  background: linear-gradient(135deg, #1557b0, #1a73e8);
+  box-shadow: 0 6px 20px rgba(26,115,232,.5);
+  transform: translateY(-1px);
+}
+.nlm-btn:active { transform: scale(.97); }
+.nlm-setup {
+  margin: 14px 14px 0;
+  background: rgba(251,146,60,.06);
+  border: 1px solid rgba(251,146,60,.25);
   border-radius: var(--r3);
   padding: 14px 16px;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text);
-  max-height: 320px;
-  overflow-y: auto;
-}
-.db-ai-result h4 { margin: 10px 0 4px; font-size: 13px; color: var(--blue); }
-.db-ai-result ul { padding-left: 18px; margin: 4px 0 8px; }
-.db-ai-result li { margin-bottom: 3px; }
-.db-ai-result strong { color: var(--yellow); font-weight: 700; }
-.db-ai-loading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text3);
   font-size: 12px;
-  padding: 6px 0;
+  color: var(--text2);
+  line-height: 1.6;
+  flex-shrink: 0;
 }
-.db-ai-src {
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
+.nlm-setup b { color: var(--orange); }
+.nlm-setup code {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 6px;
   font-size: 11px;
-  color: var(--text3);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: center;
+  color: var(--yellow);
 }
-.db-ai-src-tag {
-  background: rgba(77,159,255,.08);
-  border: 1px solid rgba(77,159,255,.2);
-  border-radius: 20px;
-  padding: 2px 8px;
-  font-size: 10px;
-  color: var(--blue);
-  cursor: pointer;
-  transition: background .1s;
-}
-.db-ai-src-tag:hover { background: rgba(77,159,255,.18); }
-.db-ai-error { color: var(--red); font-size: 12px; }
 
 @media (max-width: 768px) {
-  .db-ai-search-bar { padding: 12px 10px 0; }
-  #dbAiQuery { font-size: 12px; }
-  .db-ai-btn { padding: 5px 12px; font-size: 11px; }
-  .db-ai-result { font-size: 12px; max-height: 240px; }
+  .nlm-launcher { margin: 10px 10px 0; padding: 14px 15px; gap: 12px; }
+  .nlm-icon-wrap { width: 42px; height: 42px; font-size: 18px; border-radius: 12px; }
+  .nlm-title { font-size: 13px; }
+  .nlm-desc { font-size: 11px; }
+  .nlm-btn { padding: 9px 16px; font-size: 12px; width: 100%; justify-content: center; }
 }
 
 .sidebar-overlay {
@@ -1414,26 +1282,12 @@ mark {
 
   <!-- DB PANEL -->
   <div id="dbPanel">
-    <!-- 검색 모드 탭 -->
-    <div class="db-mode-tabs">
-      <button class="db-mode-tab on" id="modeIssue" onclick="setSearchMode('issue')">📋 이슈 DB</button>
-      <button class="db-mode-tab" id="modeDrive" onclick="setSearchMode('drive')">📂 Drive 문서</button>
-    </div>
 
-    <!-- 공통 AI 검색바 -->
-    <div class="db-ai-search-bar">
-      <div class="db-ai-input-wrap">
-        <span class="db-ai-icon" id="searchModeIcon">🔍</span>
-        <input id="dbAiQuery" type="text"
-          placeholder="자연어로 검색 — &quot;ICA pseudo-stenosis 해결법&quot;, &quot;GE FSE ETL 설정&quot;…"
-          onkeydown="if(event.key==='Enter')dbAiSearch()">
-        <button class="db-ai-btn" id="dbAiSubmit" onclick="dbAiSearch()">검색</button>
-      </div>
-      <div id="dbAiResult" class="db-ai-result" style="display:none"></div>
-    </div>
+    <!-- NotebookLM 런처 -->
+    <div id="nlmLauncher"></div>
 
     <!-- 이슈 DB 브라우저 -->
-    <div id="issueSection">
+    <div id="issueSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div class="db-toolbar">
         <div class="search-wrap">
           <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="renderDB()">
@@ -1451,10 +1305,6 @@ mark {
       <div class="db-grid" id="dbContent"></div>
     </div>
 
-    <!-- Drive 문서 브라우저 -->
-    <div id="driveSection" style="display:none;flex:1;overflow-y:auto;">
-      <div class="drive-file-list" id="driveFileList"></div>
-    </div>
   </div>
 
   <!-- OPERATION PANEL -->
@@ -2781,7 +2631,7 @@ function switchTab(tab) {
   document.getElementById('tabDB').classList.toggle('on', tab === 'db');
   document.getElementById('tabParam').classList.toggle('on', tab === 'param');
   document.getElementById('tabOp').classList.toggle('on', tab === 'op');
-  if (tab === 'db') renderDB();
+  if (tab === 'db') { renderDB(); renderNLMLauncher(); }
   if (tab === 'param') renderCurrentParamPage('pp-brain');
   closeSidebar(); closeOpNav();
   updateMobileUI(tab);
@@ -2995,251 +2845,35 @@ function fmt(t) {
     .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
 }
 
-// ── Drive 문서 검색 (스트리밍) ──
-async function driveSearch(q) {
-  dbAiBusy = true;
-  const btn = document.getElementById('dbAiSubmit');
-  const resultEl = document.getElementById('dbAiResult');
-  btn.disabled = true;
-  btn.textContent = '검색 중…';
-  resultEl.style.display = 'block';
-  resultEl.innerHTML = '<div class="db-ai-loading"><div class="dot-pulse"><span></span><span></span><span></span></div><span>Drive 문서를 분석하는 중…</span></div>';
+// ══════════════════════════════════════════════
+// NotebookLM 런처
+// ══════════════════════════════════════════════
+// ★ 여기에 공개된 NotebookLM 노트북 URL을 입력하세요
+const NLM_URL = '';  // 예: 'https://notebooklm.google.com/notebook/xxxxx'
 
-  let accumulated = '';
+function renderNLMLauncher() {
+  const el = document.getElementById('nlmLauncher');
+  if (!el) return;
 
-  await readSSE('/api/drive-search', { query: q },
-    (token) => {
-      if (resultEl.querySelector('.db-ai-loading')) resultEl.innerHTML = '';
-      accumulated += token;
-      resultEl.innerHTML = fmt(accumulated);
-    },
-    (data) => {
-      const sources = data.sources || [];
-      const srcHtml = sources.length
-        ? `<div class="db-ai-src"><span class="db-ai-src-label">📎 출처:</span>${sources.map(s =>
-            `<a class="db-ai-src-file" href="https://drive.google.com/file/d/${s.id}/view" target="_blank">
-              ${EXT_ICON[s.title.split('.').pop()] || '📄'} ${s.title}</a>`).join('')}</div>`
-        : '';
-      resultEl.innerHTML = fmt(accumulated) + srcHtml;
-    },
-    (msg, retryable) => {
-      resultEl.innerHTML = `<span class="db-ai-error">오류: ${msg}${retryable ? ' (잠시 후 다시 시도해주세요)' : ''}</span>`;
-    }
-  ).catch(e => {
-    resultEl.innerHTML = `<span class="db-ai-error">네트워크 오류: ${e.message}</span>`;
-  });
-
-  btn.disabled = false;
-  btn.textContent = '검색';
-  dbAiBusy = false;
-}
-
-// ── 이슈 DB AI 검색 (스트리밍) ──
-async function issueDbSearch(q) {
-  dbAiBusy = true;
-  const btn = document.getElementById('dbAiSubmit');
-  const resultEl = document.getElementById('dbAiResult');
-  btn.disabled = true;
-  btn.textContent = '검색 중…';
-  resultEl.style.display = 'block';
-  resultEl.innerHTML = '<div class="db-ai-loading"><div class="dot-pulse"><span></span><span></span><span></span></div><span>이슈 DB를 분석하는 중…</span></div>';
-
-  const sysPrompt = `당신은 AiRSMed CCS팀 MRI 이슈 검색 AI입니다.
-아래 이슈 DB를 바탕으로 답변하세요. 원인/해결 구조로, 한국어로, 간결하게.
-없는 내용은 "DB에 해당 내용이 없습니다" 안내.
-
-${buildIssueDocument()}`;
-
-  let accumulated = '';
-
-  await readSSE('/api/ask', { system: sysPrompt, messages:[{ role:'user', content: q }] },
-    (token) => {
-      if (resultEl.querySelector('.db-ai-loading')) resultEl.innerHTML = '';
-      accumulated += token;
-      resultEl.innerHTML = fmt(accumulated);
-    },
-    () => {
-      const keywords = q.split(/\s+/).filter(w=>w.length>1);
-      resultEl.innerHTML = fmt(accumulated) + buildSourceTags(keywords);
-    },
-    (msg) => {
-      resultEl.innerHTML = `<span class="db-ai-error">오류: ${msg}</span>`;
-    }
-  ).catch(e => {
-    resultEl.innerHTML = `<span class="db-ai-error">네트워크 오류: ${e.message}</span>`;
-  });
-
-  btn.disabled = false;
-  btn.textContent = '검색';
-  dbAiBusy = false;
-}
-
-function buildIssueDocument() {
-  let doc = '';
-  const catNames = {brain:'Brain',spine:'Spine',msk:'MSK',field:'현장사례',case:'Case Study'};
-  Object.keys(ISSUES).forEach(cat => {
-    doc += `### [${catNames[cat]}]\n`;
-    ISSUES[cat].forEach(issue => {
-      doc += `**${issue.name}**: 원인=${issue.cause||''} / 해결=${issue.solution||''}\n`;
-    });
-  });
-  return doc;
-}
-
-// ============ AI SEARCH — DRIVE 연동 (NotebookLM style) ============
-let dbAiBusy = false;
-let currentSearchMode = 'issue'; // 'issue' | 'drive'
-
-// Drive 파일 카탈로그 (서버와 동기화)
-const DRIVE_CATALOG = [
-  { id:'1CwC3qRbEErVeVsrmUrYz4ZEb-76m45MC4Of5rwXdzxI', title:'mri101(eng)_250702', folder:'Root', ext:'pptx',
-    desc:'Clinical MRI 101 교육자료. MRI 안전, 하드웨어, K-Space, PAT/GRAPPA/SENSE, SNR, ETL/ETD, 시퀀스 종류, 제조사별 차이점 등 MRI 기초 개념 총망라.' },
-  { id:'1EZmvBVmjSkOQo3--WfibT-XLNTcxqbj1r6n-iq2stoM', title:'mri101(eng)_250521', folder:'Root', ext:'pptx',
-    desc:'Clinical MRI 101 이전 버전. MRI 원리, DICOM, PACS, 재구성 과정, 제조사 콘솔 버전 소개.' },
-  { id:'1Efuj5hTDZsVAnwxyS8oOtY41UWZC8vCn', title:'Canon Apps Training', folder:'Root', ext:'pptx',
-    desc:'Canon/Toshiba MRI 교육자료. 장비 운용, 파라미터 설정, 시퀀스 구성, 임상 적용.' },
-  { id:'1eY-Zif_llHXRP4K-NWbVgbkVGoK_PvSZ', title:'(GE) User_CV_FSE', folder:'GE', ext:'pdf',
-    desc:'GE FSE 시퀀스 CV. ETL, TE, TR, bandwidth, echo spacing, NEX, fat sat 옵션, 임상 적용 팁.' },
-  { id:'15P_CbkVPgk52DiQVxNFOiHMOboT-gTPN', title:'(GE) User_CV_SSFSE_CUBE_EPI', folder:'GE', ext:'pdf',
-    desc:'GE SSFSE, CUBE, EPI 시퀀스 CV. Single-shot FSE, 3D CUBE, EPI DWI 파라미터 가이드.' },
-  { id:'1Xvj-EmlP0kC2pgWXfDBlP4lh7nCyixlV', title:'(GE) User_CV_GRE', folder:'GE', ext:'pdf',
-    desc:'GE GRE 시퀀스 CV. SPGR, FGRE, FIESTA, mFFE 파라미터, FA, TE, TR 설정 가이드.' },
-  { id:'1VVxUHUh3gDkbXsEDZ4Nyz3dT7vLWS2Ox', title:'(GE) CASE Study-2013', folder:'GE', ext:'pdf',
-    desc:'GE MRI 케이스 스터디 2013. 임상 artifact 사례, 원인 분석, 해결 방법. Brain/Spine/MSK 케이스 포함.' },
-  { id:'1GWhHJpp3tb-s13XSrvRnIlpmxPuUr6c7', title:'(GE) 750W Hardware', folder:'GE', ext:'pdf',
-    desc:'GE Discovery MR750w 하드웨어 매뉴얼. 시스템 구성, 코일 종류, 그라디언트 스펙, 안전 사항.' },
-  { id:'1PLbaVScqOkh96OT1saJyeVVE1HG0JFvk', title:'GE 1.5T Signa Operator Manual', folder:'GE', ext:'pdf',
-    desc:'GE Signa 1.5T 운영자 매뉴얼. 장비 운용, 스캔 프로토콜, 코일 설치, 트러블슈팅, ARC/ASSET.' },
-  { id:'1_b5Px-0fcaOGUPJg0qPmyuBmLxPTuQo7', title:'(Siemens) magnets_spins_and_resonances', folder:'Siemens', ext:'pdf',
-    desc:'Siemens MRI 원리 교재. 자기장, 스핀, 공명, T1/T2 relaxation, k-space, 시퀀스 기초 이론.' },
-  { id:'17WuqmYQ2fNRznFFE_pmfwVgjotghPZce', title:'(Siemens) mri_glossary', folder:'Siemens', ext:'pdf',
-    desc:'Siemens MRI 용어집. GRAPPA, TurboFactor, TI, PAT, Restore, iPAT 등 Siemens 전용 용어 정의.' },
-  { id:'1kv_vQkfxz2FkSeHAqLg9a0q7gPSltMnN', title:'(Siemens) mri_acronyms', folder:'Siemens', ext:'pdf',
-    desc:'Siemens MRI 약어집. 파라미터 약어와 명칭 전체 정리.' },
-  { id:'1msKARNe5ORh3V6P3bBt_YuM14UUxu7EC', title:'(Siemens) magnets_flows_and_artifacts', folder:'Siemens', ext:'pdf',
-    desc:'Siemens artifact 교재. 혈류 artifact, Gibbs, Ghosting, Chemical shift, Wraparound, B0 불균일, 원인과 해결.' },
-  { id:'1r0ozWfJ5VSs2qK9TniV80W5djoLd3PTi', title:'(Siemens) Syngo', folder:'Siemens', ext:'pdf',
-    desc:'Siemens Syngo 소프트웨어 가이드. VB/VD/VE/XA 버전별 UI 차이, 파라미터 설정, 시퀀스 구성.' },
-  { id:'1s1Xq_br9_vmCX9VHxWKgd4d5rPlWZyPV', title:'Brain Anatomy', folder:'General', ext:'pdf',
-    desc:'뇌 해부학 자료. 뇌 구조, 각 영역 기능, MRI 해부학적 landmark, 신경 경로 설명.' },
-  { id:'19d_IRti1vo7cgie2371qUT9ZB6vzxXlE', title:'Gross Anatomy of the Brain', folder:'General', ext:'docx',
-    desc:'뇌 대해부학 문서. 뇌간, 소뇌, 대뇌, 변연계 등 뇌 전체 구조 상세 설명.' },
-  { id:'1U2QEBJh6KvQcs9KX2OPFH-ibtBp5s_Tb', title:'Parameter 정리(권도훈)', folder:'Philips', ext:'docx',
-    desc:'Philips MRI 파라미터 정리. SENSE factor, mDIXON, Drive, Echo spacing, Scan percentage 등 Philips 특화 파라미터 가이드.' },
-  { id:'1Pm_EU9uxnVdUtlc3f1DcOsHGHSyd3rVb', title:'IFU_p6i_int_pnl(Korean)', folder:'Philips', ext:'pdf',
-    desc:'Philips 인터페이스 패널 한국어 설명서. 장비 조작, 코일 연결, 스캔 시작, 오류 대응.' },
-  { id:'1zxsNbHeosbJRfwCJUsX7FKYQxzOOgCWk', title:'Ingenia iRF coil information', folder:'Philips', ext:'pptx',
-    desc:'Philips Ingenia iRF 코일 정보. 코일 종류, 연결 방법, SENSE factor 설정, 코일별 적합 시퀀스.' },
-];
-
-const FOLDER_BADGE = {
-  'GE':'drive-badge-ge','Siemens':'drive-badge-sie',
-  'Philips':'drive-badge-phi','General':'drive-badge-gen','Root':'drive-badge-root'
-};
-const EXT_ICON = { pdf:'📄', pptx:'📊', docx:'📝' };
-
-// 검색 모드 전환
-function setSearchMode(mode) {
-  currentSearchMode = mode;
-  document.getElementById('modeIssue').classList.toggle('on', mode==='issue');
-  document.getElementById('modeDrive').classList.toggle('on', mode==='drive');
-  document.getElementById('issueSection').style.display = mode==='issue' ? '' : 'none';
-  document.getElementById('driveSection').style.display  = mode==='drive' ? '' : 'none';
-
-  const icon = document.getElementById('searchModeIcon');
-  if (mode === 'drive') {
-    icon.textContent = '📂';
-    document.getElementById('dbAiQuery').placeholder = 'Drive 문서에서 검색 — "GE FSE ETL 설정", "Siemens artifact 해결", "Philips SENSE factor"…';
-    renderDriveList();
-  } else {
-    icon.textContent = '🔍';
-    document.getElementById('dbAiQuery').placeholder = '이슈 DB 검색 — "ICA pseudo-stenosis 해결법", "Shoulder PDWI FS 파라미터"…';
+  if (!NLM_URL) {
+    el.innerHTML = `<div class="nlm-setup">
+      <b>⚙️ NotebookLM 설정 필요</b><br>
+      <code>index.html</code> 상단의 <code>NLM_URL</code> 변수에 공개 NotebookLM 노트북 URL을 입력해주세요.<br>
+      <small style="color:var(--text3)">NotebookLM → 공유 → "링크가 있는 모든 사람" 설정 후 URL 복사</small>
+    </div>`;
+    return;
   }
 
-  // 검색 결과 초기화
-  const r = document.getElementById('dbAiResult');
-  r.style.display = 'none';
-  r.innerHTML = '';
-}
-
-// Drive 파일 목록 렌더링
-function renderDriveList() {
-  const el = document.getElementById('driveFileList');
-  if (el.dataset.rendered) return;
-  el.dataset.rendered = '1';
-
-  const folders = {};
-  DRIVE_CATALOG.forEach(f => {
-    if (!folders[f.folder]) folders[f.folder] = [];
-    folders[f.folder].push(f);
-  });
-
-  const folderOrder = ['Root','GE','Siemens','Philips','General'];
-  let html = '';
-  folderOrder.forEach(foldName => {
-    if (!folders[foldName]) return;
-    html += `<div class="drive-folder-section">
-      <div class="drive-folder-label">📁 ${foldName === 'Root' ? '전체 자료' : foldName}</div>`;
-    folders[foldName].forEach(f => {
-      const badge = FOLDER_BADGE[f.folder] || 'drive-badge-root';
-      const icon = EXT_ICON[f.ext] || '📄';
-      html += `<a class="drive-file-card" href="https://drive.google.com/file/d/${f.id}/view" target="_blank">
-        <span class="drive-file-icon">${icon}</span>
-        <div class="drive-file-info">
-          <div class="drive-file-title">${f.title}</div>
-          <div class="drive-file-desc">${f.desc}</div>
-        </div>
-        <span class="drive-file-badge ${badge}">${f.folder}</span>
-      </a>`;
-    });
-    html += '</div>';
-  });
-  el.innerHTML = html;
-}
-
-// AI 검색 실행 (모드별 분기)
-async function dbAiSearch() {
-  if (dbAiBusy) return;
-  const q = document.getElementById('dbAiQuery').value.trim();
-  if (!q) return;
-
-  if (currentSearchMode === 'drive') {
-    await driveSearch(q);
-  } else {
-    await issueDbSearch(q);
-  }
-}
-
-// Drive 문서 검색
-function buildSourceTags(keywords) {
-  const related = [];
-  Object.keys(ISSUES).forEach(cat => {
-    ISSUES[cat].forEach(issue => {
-      const text = `${issue.name} ${issue.cause||''} ${issue.solution||''}`.toLowerCase();
-      if (keywords.some(kw => text.includes(kw.toLowerCase()))) related.push({cat, name:issue.name});
-    });
-  });
-  if (!related.length) return '';
-  const tags = related.slice(0,6).map(r =>
-    `<span class="db-ai-src-tag" onclick="jumpToIssue('${r.cat}','${r.name.replace(/'/g,"\\'")}')">📌 ${r.name}</span>`
-  ).join('');
-  return `<div class="db-ai-src"><span class="db-ai-src-label">관련 이슈:</span> ${tags}</div>`;
-}
-
-function jumpToIssue(cat, name) {
-  setSearchMode('issue');
-  setDBCat(document.querySelector(`.df[data-cat="${cat}"]`) || document.querySelector('.df[data-cat="all"]'));
-  document.getElementById('dbSearch').value = name;
-  renderDB();
-  setTimeout(() => {
-    const cards = document.querySelectorAll('.db-card');
-    for (const card of cards) {
-      if (card.querySelector('.db-card-name')?.textContent.includes(name)) {
-        card.scrollIntoView({ behavior:'smooth', block:'center' });
-        break;
-      }
-    }
-  }, 100);
+  el.innerHTML = `<div class="nlm-launcher">
+    <div class="nlm-icon-wrap">🔬</div>
+    <div class="nlm-info">
+      <div class="nlm-title">NotebookLM AI 검색</div>
+      <div class="nlm-desc">파라미터 가이드라인 · 이슈 DB · Drive 문서 전체를 소스로 AI 검색</div>
+    </div>
+    <a class="nlm-btn" href="${NLM_URL}" target="_blank" rel="noopener">
+      <span>🔍</span> NotebookLM에서 검색
+    </a>
+  </div>`;
 }
 
 // ============ DB RENDER ============
@@ -3354,6 +2988,7 @@ function askFromDB(name) {
 
 // Initial render
 renderDB();
+renderNLMLauncher();
 // Init mobile UI
 updateMobileUI('chat');
 
