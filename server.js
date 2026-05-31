@@ -113,6 +113,25 @@ async function streamGemini(apiKey, system, parts, res) {
   res.end();
 }
 
+// ── /api/ask ──────────────────────────────────
+app.post('/api/ask', async (req, res) => {
+  const { messages, system, image } = req.body;
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+    res.write(`data: ${JSON.stringify({ error: 'GEMINI_API_KEY 없음', retryable: false })}\n\n`);
+    return res.end();
+  }
+
+  const parts = [];
+  if (image?.base64) {
+    parts.push({ inline_data: { mime_type: image.mimeType, data: image.base64 } });
+  }
+  parts.push({ text: messages?.[0]?.content || '' });
+
+  await streamGemini(apiKey, system || '', parts, res);
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`서버 포트 ${PORT}`));
