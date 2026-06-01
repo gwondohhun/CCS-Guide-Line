@@ -140,6 +140,66 @@ body {
 /* ── DB PANEL ────────────────────────────────── */
 #nlmPanel { background: var(--bg); }
 #dbPanel { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+#dbPanel.on { display: flex; }
+
+/* ── DB 레이아웃 (사이드바 + 메인) ── */
+.db-layout { display: flex; flex: 1; overflow: hidden; }
+
+.db-sidebar {
+  width: 168px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 12px 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.db-sidebar-section {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .9px;
+  padding: 6px 10px 5px;
+}
+.db-pb {
+  width: 100%;
+  text-align: left;
+  padding: 7px 10px;
+  border-radius: var(--r);
+  border: none;
+  background: none;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 12.5px;
+  font-family: inherit;
+  transition: all .12s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+.db-pb-icon { font-size: 12px; flex-shrink: 0; }
+.db-pb.on {
+  background: linear-gradient(90deg, rgba(77,159,255,.15), rgba(77,159,255,.05));
+  color: var(--blue);
+  font-weight: 600;
+  border-left: 2px solid var(--blue);
+  padding-left: 8px;
+}
+.db-pb:hover:not(.on) { background: var(--surface); color: var(--text); }
+
+.db-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+.db-main #nlmInline { flex-shrink: 0; }
+.db-main #issueSection { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
 
 .db-toolbar {
   padding: 10px 14px;
@@ -585,6 +645,22 @@ mark {
   .seq-params td:first-child { width: 34%; max-width: 110px; font-size: 10px; }
   .seq-params td { padding: 6px 11px; font-size: 12px; }
   .seq-name { font-size: 13px; }
+
+  /* DB sidebar: overlay */
+  .db-sidebar {
+    position: fixed;
+    left: -178px; top: 0; bottom: 0;
+    width: 178px; z-index: 100;
+    transition: left .25s cubic-bezier(.4,0,.2,1);
+    padding-top: 60px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  .db-sidebar.open { left: 0; }
+  .db-toolbar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; }
+  .search-wrap { max-width: 100%; }
+  .filter-group { flex-wrap: wrap; gap: 5px; }
+  .df { padding: 6px 11px; font-size: 11.5px; }
+  .db-grid { padding: 10px; gap: 8px; }
 }
 
 /* ── NOTEBOOKLM CARD ──────────────────────────── */
@@ -806,6 +882,14 @@ mark {
   .op-content { padding: 10px 10px 20px; }
   .op-title { font-size: 16px; margin-bottom: 3px; }
   .op-title-sub { font-size: 11px; margin-bottom: 14px; }
+  .op-nav {
+    position: fixed; left: -210px; top: 0; bottom: 0; width: 210px; z-index: 100;
+    transition: left .25s cubic-bezier(.4,0,.2,1); padding-top: 60px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.5);
+  }
+  .op-nav.open { left: 0; }
+  .op-content { padding: 14px 14px 24px; }
+  .op-page-title { font-size: 18px; }
   .op-step { padding: 11px 12px; gap: 11px; }
   .op-step-num { width: 26px; height: 26px; font-size: 11px; }
   .op-step-title { font-size: 13px; }
@@ -819,7 +903,46 @@ mark {
 #opPanel { flex: 1; display: none; overflow: hidden; }
 #opPanel.on { display: flex; flex-direction: column; }
 
-/* ── Operation 아코디언 래퍼 ── */
+/* ── Operation 레이아웃 ── */
+.op-layout { display: flex; flex: 1; overflow: hidden; }
+.op-nav {
+  width: 192px; background: var(--bg2); border-right: 1px solid var(--border);
+  padding: 12px 8px; overflow-y: auto; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.op-nav-section {
+  font-size: 9.5px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .9px; padding: 10px 10px 5px; margin-top: 4px;
+}
+.op-nav-section:first-child { margin-top: 0; }
+.op-nav-btn {
+  width: 100%; text-align: left; padding: 8px 10px; border-radius: var(--r);
+  border: none; background: none; color: var(--text2); cursor: pointer;
+  font-size: 12.5px; font-family: inherit; transition: all .12s; -webkit-tap-highlight-color: transparent;
+}
+.op-nav-btn.on {
+  background: linear-gradient(90deg, rgba(77,159,255,.15), rgba(77,159,255,.05));
+  color: var(--blue); font-weight: 600; border-left: 2px solid var(--blue); padding-left: 8px;
+}
+.op-nav-btn:hover:not(.on) { background: var(--surface); color: var(--text); }
+.op-content { flex: 1; overflow-y: auto; padding: 20px 20px 28px; }
+.op-page { display: none; }
+.op-page.on { display: block; }
+.op-page-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: -.4px; }
+.op-page-sub { font-size: 12px; color: var(--text3); margin-bottom: 18px; }
+
+/* ── 아코디언 카드 래퍼 (더 이상 안 씀) ── */
+.op-accordion-wrap {
+  flex: 1; overflow-y: auto; padding: 12px 14px 28px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.op-section-label {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .8px; padding: 10px 4px 4px; margin-top: 4px;
+}
+.op-section-label:first-child { margin-top: 0; padding-top: 4px; }
+
+/* ── 아코디언 카드 ── */
 .op-accordion-wrap {
   flex: 1;
   overflow-y: auto;
@@ -1028,6 +1151,7 @@ mark {
 </head>
 <body>
 
+
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="logo">
@@ -1055,6 +1179,7 @@ mark {
 
 <!-- Mobile overlay -->
 
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="main">
 
   <!-- NLM PANEL -->
@@ -1064,26 +1189,54 @@ mark {
 
   <!-- DB PANEL -->
   <div id="dbPanel">
+    <div class="db-layout">
 
-    <!-- 이슈 DB 브라우저 -->
-    <div id="issueSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
-      <div class="db-toolbar">
-        <div class="search-wrap">
-          <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="syncSearch('db', this.value)">
-        </div>
-        <div class="filter-group">
-          <button class="df on" data-cat="all"   onclick="setDBCat(this)">전체</button>
-          <button class="df" data-cat="brain"  onclick="setDBCat(this)">Brain</button>
-          <button class="df" data-cat="spine"  onclick="setDBCat(this)">Spine</button>
-          <button class="df" data-cat="msk"    onclick="setDBCat(this)">MSK</button>
-          <button class="df" data-cat="field"  onclick="setDBCat(this)">현장사례</button>
-          <button class="df" data-cat="case"   onclick="setDBCat(this)">📖 Case Study</button>
-        </div>
-        <span class="db-count-pill" id="dbCount">—</span>
-      </div>
-      <div class="db-grid" id="dbContent"></div>
-    </div>
+      <!-- 왼쪽 사이드바 -->
+      <aside class="db-sidebar" id="dbSidebar">
+        <button class="op-nav-btn" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeDbSidebar()">✕ 닫기</button>
+        <div class="db-sidebar-section">부위 선택</div>
+        <button class="db-pb on" data-part="all" data-cat="all" onclick="setDbPart(this)"><span class="db-pb-icon">◎</span> 전체</button>
+        <button class="db-pb" data-part="Brain"       data-cat="brain" onclick="setDbPart(this)">🧠 Brain</button>
+        <button class="db-pb" data-part="C-Spine"     data-cat="spine" onclick="setDbPart(this)">• C-Spine</button>
+        <button class="db-pb" data-part="T-Spine"     data-cat="spine" onclick="setDbPart(this)">• T-Spine</button>
+        <button class="db-pb" data-part="L-Spine"     data-cat="spine" onclick="setDbPart(this)">• L-Spine</button>
+        <button class="db-pb" data-part="Whole Spine" data-cat="spine" onclick="setDbPart(this)">• Whole Spine</button>
+        <button class="db-pb" data-part="Shoulder"    data-cat="msk"   onclick="setDbPart(this)">• Shoulder</button>
+        <button class="db-pb" data-part="Knee"        data-cat="msk"   onclick="setDbPart(this)">• Knee</button>
+        <button class="db-pb" data-part="Hip"         data-cat="msk"   onclick="setDbPart(this)">• Hip</button>
+        <button class="db-pb" data-part="Ankle"       data-cat="msk"   onclick="setDbPart(this)">• Ankle</button>
+        <button class="db-pb" data-part="Wrist"       data-cat="msk"   onclick="setDbPart(this)">• Wrist</button>
+        <button class="db-pb" data-part="Elbow"       data-cat="msk"   onclick="setDbPart(this)">• Elbow</button>
+        <button class="db-pb" data-part="Foot"        data-cat="msk"   onclick="setDbPart(this)">• Foot</button>
+        <button class="db-pb" data-part="Abdomen"     data-cat="field" onclick="setDbPart(this)">• Abdomen</button>
+      </aside>
 
+      <!-- 오른쪽 메인 -->
+      <div class="db-main" id="dbMain">
+        <!-- NLM 카드 (통합) -->
+        <div id="nlmInline"></div>
+
+        <!-- 이슈 DB 브라우저 -->
+        <div id="issueSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+          <div class="db-toolbar">
+            <div class="search-wrap">
+              <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="syncSearch('db', this.value)">
+            </div>
+            <div class="filter-group">
+              <button class="df on" data-cat="all"   onclick="setDBCat(this)">전체</button>
+              <button class="df" data-cat="brain"  onclick="setDBCat(this)">Brain</button>
+              <button class="df" data-cat="spine"  onclick="setDBCat(this)">Spine</button>
+              <button class="df" data-cat="msk"    onclick="setDBCat(this)">MSK</button>
+              <button class="df" data-cat="field"  onclick="setDBCat(this)">현장사례</button>
+              <button class="df" data-cat="case"   onclick="setDBCat(this)">📖 Case Study</button>
+            </div>
+            <span class="db-count-pill" id="dbCount">—</span>
+          </div>
+          <div class="db-grid" id="dbContent"></div>
+        </div>
+      </div><!-- db-main -->
+
+    </div><!-- db-layout -->
   </div>
 
   <!-- OPERATION PANEL -->
@@ -2240,6 +2393,7 @@ function isMobile() { return window.innerWidth <= 768; }
 function toggleSidebar() {
   if (document.getElementById('tabOp').classList.contains('on'))    { openOpNav();    return; }
   if (document.getElementById('tabParam').classList.contains('on')) { openParamNav(); return; }
+  if (document.getElementById('tabDB').classList.contains('on'))    { openDbSidebar(); return; }
 }
 
 
@@ -2275,7 +2429,7 @@ function switchTab(tab) {
   document.getElementById('tabParam').classList.toggle('on', tab === 'param');
   document.getElementById('tabOp').classList.toggle('on',    tab === 'op');
 
-  if (tab === 'db')    { renderDB(); }
+  if (tab === 'db')    { renderDB(); renderNLMLauncher(); }
   if (tab === 'nlm')   { renderNLMLauncher(); }
   if (tab === 'param') { renderCurrentParamPage('pp-brain'); }
   closeOpNav();
@@ -2337,9 +2491,89 @@ function clearImgs() {
 const NLM_URL = 'https://notebooklm.google.com/notebook/ba396ff2-4374-4294-b583-d7f6bcc52454';
 
 function renderNLMLauncher() {
-  const el = document.getElementById('nlmLauncher');
-  if (!el) return;
-  el.innerHTML = `
+  // DB 탭 통합 카드 + 별도 NLM 탭 둘 다 렌더링
+  const targets = [
+    document.getElementById('nlmInline'),   // DB 탭 안
+    document.getElementById('nlmLauncher'), // NLM 탭
+  ];
+  const html = `
+  <div class="nlm-card">
+    <div class="nlm-card-top">
+      <div class="nlm-logo-row">
+        <div class="nlm-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#1a73e8"/>
+            <path d="M7 8h10M7 12h10M7 16h6" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="18" cy="16" r="3.5" fill="#34a853" stroke="white" stroke-width="1.2"/>
+            <path d="M16.8 16l.8.8 1.6-1.6" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nlm-title-col">
+          <div class="nlm-title">NotebookLM AI 검색</div>
+          <div class="nlm-sub">AiRSMed CCS 전용 노트북</div>
+        </div>
+        <a class="nlm-open-pill" href="${NLM_URL}" target="_blank" rel="noopener">열기 ↗</a>
+      </div>
+      <p class="nlm-desc-text">파라미터 가이드라인 · 이슈 DB · 교육자료 전체를 소스로 AI가 답변합니다.<br>질문을 입력하고 버튼을 누르면 NotebookLM으로 이동해요.</p>
+    </div>
+    <div class="nlm-search-row">
+      <input class="nlm-input" id="nlmQuery" type="text"
+        placeholder="예: Shoulder PDWI FS 3T 파라미터 알려줘"
+        oninput="syncSearch('nlm', this.value)"
+        onkeydown="if(event.key==='Enter')nlmGo()">
+      <button class="nlm-go-btn" onclick="nlmGo()">검색 →</button>
+    </div>
+    <div class="nlm-chips">
+      <button class="nlm-chip" onclick="nlmGoQuery('ICA pseudo-stenosis 원인과 해결법')">ICA pseudo-stenosis</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('Shoulder PDWI FS 3T 파라미터')">Shoulder PDWI 3T</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('T2 FLAIR boundary artifact 해결')">T2 FLAIR artifact</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('Philips SENSE factor 설정법')">Philips SENSE</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('GE FSE ETL Echo spacing 설정')">GE FSE ETL</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('Metal artifact SEMAC MAVRIC 해결')">Metal artifact</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('DWI EPI distortion 줄이는 법')">DWI distortion</button>
+      <button class="nlm-chip" onclick="nlmGoQuery('TOF SPF ICA 혈관 끊김')">TOF SPF</button>
+    </div>
+  </div>`;
+  targets.forEach(el => { if (el) el.innerHTML = html; });
+}
+
+// DB 사이드바 부위 선택
+function setDbPart(el) {
+  document.querySelectorAll('.db-pb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  const cat = el.dataset.cat;
+  const partName = el.dataset.part;
+  // 카테고리 필터 버튼도 동기화
+  document.querySelectorAll('.df').forEach(b => {
+    b.classList.toggle('on', b.dataset.cat === cat);
+  });
+  dbCat = cat;
+  renderDB();
+  // NLM 검색창에 부위명 프리필 (전체 제외)
+  if (partName !== 'all') {
+    const nlmQ = document.getElementById('nlmQuery');
+    if (nlmQ) { nlmQ.value = partName; nlmQ.classList.add('synced'); }
+    const dbS = document.getElementById('dbSearch');
+    if (dbS) dbS.value = '';
+  } else {
+    const nlmQ = document.getElementById('nlmQuery');
+    if (nlmQ) { nlmQ.value = ''; nlmQ.classList.remove('synced'); }
+  }
+  if (isMobile()) closeDbSidebar();
+}
+
+function openDbSidebar() {
+  document.getElementById('dbSidebar')?.classList.add('open');
+  const o = document.getElementById('sidebarOverlay');
+  if (o) { o.classList.add('open'); o.onclick = closeDbSidebar; }
+}
+function closeDbSidebar() {
+  document.getElementById('dbSidebar')?.classList.remove('open');
+  const o = document.getElementById('sidebarOverlay');
+  if (o) { o.classList.remove('open'); o.onclick = null; }
+}
+
+
   <div class="nlm-card">
     <div class="nlm-card-top">
       <div class="nlm-logo-row">
@@ -2436,6 +2670,32 @@ function showNlmToast(q) {
   requestAnimationFrame(() => toast.classList.add('show'));
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.remove('show'), 9000);
+}
+
+function setOpPage(el) {
+  document.querySelectorAll('.op-nav .op-nav-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.op-page').forEach(p => p.classList.remove('on'));
+  const pg = document.getElementById(el.dataset.oppage);
+  if (pg) pg.classList.add('on');
+  if (isMobile()) closeOpNav();
+  // 해당 페이지의 첫 아코디언 카드 자동 open
+  const firstCard = pg?.querySelector('.op-acc-card');
+  if (firstCard) firstCard.classList.add('open');
+}
+
+function openOpNav() {
+  const nav = document.getElementById('opNav');
+  const o   = document.getElementById('sidebarOverlay');
+  if (nav) nav.classList.add('open');
+  if (o)   { o.classList.add('open'); o.onclick = closeOpNav; }
+}
+
+function closeOpNav() {
+  const nav = document.getElementById('opNav');
+  const o   = document.getElementById('sidebarOverlay');
+  if (nav) nav.classList.remove('open');
+  if (o)   { o.classList.remove('open'); o.onclick = null; }
 }
 
 function toggleOpCard(id) {
