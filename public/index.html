@@ -1364,7 +1364,7 @@ mark {
       <span class="context-pill" id="plabel">전체</span>
     </div>
     <div class="chat-msgs" id="chatMsgs">
-      <div class="msg ai">안녕하세요! MRI 파라미터 및 아티팩트에 대해 질문해주세요.<br>좌측에서 부위를 선택하거나 이미지를 첨부할 수 있어요.</div>
+      <div class="msg ai">안녕하세요! MRI 파라미터 및 아티팩트에 대해 질문해주세요.<br>질문을 입력하면 <strong style="color:var(--blue)">NotebookLM</strong>으로 연결돼요. 좌측에서 부위를 선택할 수 있어요.</div>
     </div>
     <div id="imgRow" style="display:none" class="img-strip">
       <button class="btn-clear-img" onclick="clearImgs()">✕ 삭제</button>
@@ -2843,94 +2843,57 @@ async function readSSE(endpoint, body, onToken, onDone, onError) {
 
 // ── AI 질문 탭 (스트리밍) ──
 async function ask(retryOverride) {
-  if (busy) return;
-  const q       = retryOverride?.text ?? document.getElementById('qinput').value.trim();
-  const selImg  = retryOverride ? null : document.querySelector('.img-thumb.sel');
-  const imgSrc  = retryOverride?.imgSrc  ?? selImg?.src ?? null;
-  const imgMime = retryOverride?.imgMime ?? (imgSrc ? imgSrc.split(';')[0].split(':')[1] : null);
-  if (!q && !imgSrc) return;
+  const q      = retryOverride?.text ?? document.getElementById('qinput').value.trim();
+  const selImg = retryOverride ? null : document.querySelector('.img-thumb.sel');
+  if (!q && !selImg) return;
 
-  if (!retryOverride) lastQuestion = { text: q, imgSrc, imgMime, part };
-
-  busy = true;
-  document.getElementById('sbtn').disabled = true;
   const ch = document.getElementById('chatMsgs');
 
+  // 사용자 메시지 말풍선 표시
   if (q && !retryOverride) {
     const um = document.createElement('div');
     um.className = 'msg user';
     um.textContent = (part !== 'all' ? `[${part}] ` : '') + q;
     ch.appendChild(um);
     document.getElementById('qinput').value = '';
+    ch.scrollTop = ch.scrollHeight;
   }
 
-  const msgId = 'ai_' + Date.now();
+  // NLM 연동 안내 말풍선
   const am = document.createElement('div');
-  am.className = 'msg ai loading';
-  am.id = msgId;
-  am.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
+  am.className = 'msg ai';
+  const partCtx = part !== 'all' ? `[${part}] ` : '';
+  const fullQ   = partCtx + q;
+
+  am.innerHTML = `
+    <div style="margin-bottom:8px;font-size:13px;line-height:1.6;">
+      <strong style="color:var(--blue)">NotebookLM</strong>에서 답변드릴게요.<br>
+      <span style="color:var(--text2)">아래 버튼을 누르면 질문이 클립보드에 복사되고 NotebookLM이 열려요.</span>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 13px;margin-bottom:10px;font-size:12.5px;color:var(--text2);word-break:keep-all;">
+      📝 <em>"${fullQ}"</em>
+    </div>
+    <a href="${NLM_URL}" target="_blank" rel="noopener"
+       onclick="try{navigator.clipboard.writeText('${fullQ.replace(/'/g,"\\'")}');}catch(e){}"
+       style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#1a73e8,#4285f4);
+              color:#fff;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;
+              text-decoration:none;transition:opacity .12s;">
+      🔍 NotebookLM에서 검색하기
+    </a>`;
+
   ch.appendChild(am);
   ch.scrollTop = ch.scrollHeight;
 
-  const partCtx  = (retryOverride?.part ?? part) !== 'all' ? `[${retryOverride?.part ?? part} 부위 관련 질문]\n` : '';
-  const userText = partCtx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
-
-  const reqBody = { system: SYS, messages: [{ role:'user', content: userText }] };
-  if (imgSrc) reqBody.image = { base64: imgSrc.split(',')[1], mimeType: imgMime };
-
-  let accumulated = '';
-  let errored = false;
-
-  await readSSE('/api/ask', reqBody,
-    (token) => {
-      // 첫 토큰 도착 시 로딩 제거
-      const el = document.getElementById(msgId);
-      if (!el) return;
-      if (el.classList.contains('loading')) {
-        el.classList.remove('loading');
-        el.innerHTML = '';
-      }
-      accumulated += token;
-      el.innerHTML = fmt(accumulated);
-      ch.scrollTop = ch.scrollHeight;
-    },
-    (data) => {
-      const el = document.getElementById(msgId);
-      if (el && accumulated) el.innerHTML = fmt(accumulated);
-    },
-    (msg, retryable) => {
-      errored = true;
-      const el = document.getElementById(msgId);
-      if (!el) return;
-      el.classList.remove('loading');
-      if (retryable) {
-        el.innerHTML = `<span style="color:var(--yellow)">⏳ 응답이 느립니다. 5초 후 자동 재시도...</span>`;
-        ch.scrollTop = ch.scrollHeight;
-        busy = false;
-        document.getElementById('sbtn').disabled = false;
-        setTimeout(() => { el.remove(); ask({ ...lastQuestion }); }, 5000);
-        return;
-      }
-      el.innerHTML = `<span style="color:var(--red)">오류: ${msg}</span>
-        <button onclick="retryLast()" style="margin-top:8px;display:block;padding:5px 14px;border:1px solid rgba(77,159,255,.3);border-radius:var(--r);background:rgba(77,159,255,.07);color:var(--blue);cursor:pointer;font-family:inherit;font-size:11.5px;">↩ 다시 시도</button>`;
-    }
-  ).catch(e => {
-    errored = true;
-    const el = document.getElementById(msgId);
-    if (el) { el.classList.remove('loading'); el.innerHTML = `<span style="color:var(--red)">네트워크 오류: ${e.message}</span>`; }
-  });
-
-  if (!errored) {
-    busy = false;
-    document.getElementById('sbtn').disabled = false;
-    ch.scrollTop = ch.scrollHeight;
-  }
+  // 클립보드 자동 복사
+  try { await navigator.clipboard.writeText(fullQ); } catch(e) {}
 }
 
 function retryLast() {
   if (!lastQuestion.text && !lastQuestion.imgSrc) return;
   ask({ ...lastQuestion });
 }
+
+
 
 function fmt(t) {
   return t
