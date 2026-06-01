@@ -817,157 +817,175 @@ mark {
 
 /* ── OPERATION PANEL ─────────────────────────── */
 #opPanel { flex: 1; display: none; overflow: hidden; }
-#opPanel.on { display: flex; }
-.op-layout { display: flex; flex: 1; overflow: hidden; }
+#opPanel.on { display: flex; flex-direction: column; }
 
-.op-nav {
-  width: 192px;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
-  padding: 12px 8px;
+/* ── Operation 아코디언 래퍼 ── */
+.op-accordion-wrap {
+  flex: 1;
   overflow-y: auto;
-  flex-shrink: 0;
+  padding: 12px 14px 28px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 }
-.op-nav-section {
-  font-size: 9.5px;
+
+.op-section-label {
+  font-size: 10px;
   font-weight: 700;
   color: var(--text3);
   text-transform: uppercase;
-  letter-spacing: .9px;
-  padding: 10px 10px 5px;
+  letter-spacing: .8px;
+  padding: 10px 4px 4px;
   margin-top: 4px;
 }
-.op-nav-section:first-child { margin-top: 0; }
-.op-nav-btn {
-  width: 100%;
-  text-align: left;
-  padding: 8px 10px;
-  border-radius: var(--r);
-  border: none;
-  background: none;
-  color: var(--text2);
-  cursor: pointer;
-  font-size: 12.5px;
-  font-family: inherit;
-  transition: all .12s;
-  -webkit-tap-highlight-color: transparent;
-}
-.op-nav-btn.on {
-  background: linear-gradient(90deg, rgba(77,159,255,.15), rgba(77,159,255,.05));
-  color: var(--blue);
-  font-weight: 600;
-  border-left: 2px solid var(--blue);
-  padding-left: 8px;
-}
-.op-nav-btn:hover:not(.on) { background: var(--surface); color: var(--text); }
+.op-section-label:first-child { margin-top: 0; padding-top: 4px; }
 
-/* ── Operation 콘텐츠 ── */
-.op-content { flex: 1; overflow-y: auto; padding: 20px 20px 28px; }
-.op-page { display: none; }
-.op-page.on { display: block; }
-
-.op-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
-  letter-spacing: -.4px;
-}
-.op-title-sub {
-  font-size: 12px;
-  color: var(--text3);
-  margin-bottom: 18px;
-}
-
-.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-@media (max-width: 680px) { .op-grid { grid-template-columns: 1fr; } }
-
-/* ── Operation 카드 ── */
-.op-card {
+/* ── 아코디언 카드 ── */
+.op-acc-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r3);
   overflow: hidden;
-  margin-bottom: 14px;
+  transition: border-color .15s;
 }
-.op-card:last-of-type { margin-bottom: 0; }
+.op-acc-card.open {
+  border-color: rgba(77,159,255,.35);
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
 
-.op-card-header {
+/* 카드 헤더 버튼 */
+.op-acc-head {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px 10px;
+  gap: 10px;
+  padding: 13px 15px;
   background: var(--surface2);
-  border-bottom: 1px solid var(--border);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .12s;
 }
-.op-badge {
-  font-size: 9.5px;
+.op-acc-head:hover { background: rgba(255,255,255,.03); }
+.op-acc-card.open .op-acc-head { background: rgba(77,159,255,.06); }
+
+.op-acc-vendor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.op-acc-plan-dot { font-size: 15px; flex-shrink: 0; line-height: 1; }
+
+.op-acc-title {
+  font-size: 13.5px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  padding: 3px 9px;
-  border-radius: 20px;
+  color: var(--text);
+  flex: 1;
 }
-.badge-purpose  { background: rgba(52,211,153,.1);  color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
-.badge-coverage { background: rgba(77,159,255,.1);  color: var(--blue);   border: 1px solid rgba(77,159,255,.2); }
-.badge-plan     { background: rgba(251,146,60,.1);  color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
-.badge-manual   { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
-
-.op-list { list-style: none; padding: 8px 16px 10px; }
-.op-list li {
-  padding: 6px 0;
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.6;
-  border-bottom: 1px solid rgba(30,42,61,.5);
+.op-acc-sub {
+  font-size: 11px;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+.op-acc-chevron {
+  font-size: 10px;
+  color: var(--text3);
+  transition: transform .2s;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
   display: flex;
-  gap: 8px;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
 }
-.op-list li:last-child { border-bottom: none; }
-.op-list li::before { content: '—'; color: var(--text3); font-size: 10px; flex-shrink: 0; margin-top: 3px; }
-.op-list li b { color: var(--text); font-weight: 600; }
+.op-acc-card.open .op-acc-chevron {
+  transform: rotate(180deg);
+  color: var(--blue);
+  background: rgba(77,159,255,.1);
+}
 
-/* ── 스텝 — 모바일 최적화 ── */
+/* 아코디언 바디 */
+.op-acc-body {
+  display: none;
+  border-top: 1px solid var(--border);
+  animation: slideDown .14s ease;
+}
+.op-acc-card.open .op-acc-body { display: block; }
+
+/* ── 스텝 ── */
 .op-step {
   display: flex;
   gap: 13px;
-  padding: 13px 16px;
+  padding: 12px 15px;
   border-bottom: 1px solid rgba(30,42,61,.5);
   align-items: flex-start;
 }
 .op-step:last-child { border-bottom: none; }
 .op-step-num {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--blue2), #1d4ed8);
   color: #fff;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   margin-top: 1px;
-  box-shadow: 0 0 10px rgba(77,159,255,.35);
+  box-shadow: 0 0 8px rgba(77,159,255,.3);
 }
 .op-step-content { flex: 1; min-width: 0; }
 .op-step-title {
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   line-height: 1.3;
 }
 .op-step-desc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text2);
   line-height: 1.6;
   word-break: keep-all;
+}
+
+/* ── 노션 링크 ── */
+.op-notion-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid rgba(77,159,255,.25);
+  border-radius: var(--r);
+  margin: 12px 15px 14px;
+  background: rgba(77,159,255,.06);
+  transition: all .12s;
+  font-weight: 500;
+}
+.op-notion-link:hover { background: rgba(77,159,255,.14); border-color: rgba(77,159,255,.5); }
+
+@media (max-width: 768px) {
+  .op-accordion-wrap { padding: 10px 10px 24px; gap: 5px; }
+  .op-acc-head { padding: 12px 13px; }
+  .op-acc-title { font-size: 13px; }
+  .op-step { padding: 11px 13px; gap: 11px; }
+  .op-step-title { font-size: 12.5px; }
+  .op-step-desc { font-size: 12px; }
+}
+@media (max-width: 480px) {
+  .op-acc-title { font-size: 12.5px; }
+  .op-step-num { width: 24px; height: 24px; font-size: 11px; }
+}
 }
 
 /* ── 노션 링크 ── */
@@ -1037,6 +1055,7 @@ mark {
 
 <!-- Mobile overlay -->
 
+<div class="main">
 
   <!-- NLM PANEL -->
   <div id="nlmPanel" style="display:none;flex:1;flex-direction:column;overflow-y:auto;">
@@ -1069,439 +1088,322 @@ mark {
 
   <!-- OPERATION PANEL -->
   <div id="opPanel">
-    <div class="op-layout">
-      <nav class="op-nav" id="opNav">
-        <button class="op-nav-btn" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeOpNav()">✕ 닫기</button>
-        <div class="op-nav-section">🪄 Operation Manual</div>
-        <button class="op-nav-btn on" data-page="op-siemens-v"  onclick="setOpPage(this)">Siemens V-version</button>
-        <button class="op-nav-btn"   data-page="op-siemens-x"  onclick="setOpPage(this)">Siemens X-version</button>
-        <button class="op-nav-btn"   data-page="op-philips-r3" onclick="setOpPage(this)">Philips R3</button>
-        <button class="op-nav-btn"   data-page="op-philips-r5" onclick="setOpPage(this)">Philips R5</button>
-        <button class="op-nav-btn"   data-page="op-ge"         onclick="setOpPage(this)">GE</button>
-        <button class="op-nav-btn"   data-page="op-canon"      onclick="setOpPage(this)">Toshiba / Canon</button>
-        <button class="op-nav-btn"   data-page="op-hitachi"    onclick="setOpPage(this)">Hitachi / Fujifilm</button>
-        <div class="op-nav-section">👌 Planning</div>
-        <button class="op-nav-btn" data-page="op-plan-brain"      onclick="setOpPage(this)">Brain</button>
-        <button class="op-nav-btn" data-page="op-plan-cspine"     onclick="setOpPage(this)">C-spine</button>
-        <button class="op-nav-btn" data-page="op-plan-lspine"     onclick="setOpPage(this)">L-spine</button>
-        <button class="op-nav-btn" data-page="op-plan-wholespine" onclick="setOpPage(this)">Whole-spine</button>
-        <button class="op-nav-btn" data-page="op-plan-shoulder"   onclick="setOpPage(this)">Shoulder</button>
-        <button class="op-nav-btn" data-page="op-plan-elbow"      onclick="setOpPage(this)">Elbow</button>
-        <button class="op-nav-btn" data-page="op-plan-wrist"      onclick="setOpPage(this)">Wrist</button>
-        <button class="op-nav-btn" data-page="op-plan-hip"        onclick="setOpPage(this)">Hip</button>
-        <button class="op-nav-btn" data-page="op-plan-knee"       onclick="setOpPage(this)">Knee</button>
-        <button class="op-nav-btn" data-page="op-plan-ankle"      onclick="setOpPage(this)">Ankle</button>
-        <button class="op-nav-btn" data-page="op-plan-liver"      onclick="setOpPage(this)">Liver / Pancreas / MRCP</button>
-        <button class="op-nav-btn" data-page="op-plan-prostate"   onclick="setOpPage(this)">Prostate</button>
-        <button class="op-nav-btn" data-page="op-plan-pelvis"     onclick="setOpPage(this)">Pelvis (Female)</button>
-        <button class="op-nav-btn" data-page="op-plan-breast"     onclick="setOpPage(this)">Breast</button>
-      </nav>
+    <div class="op-accordion-wrap">
 
-      <div class="op-content">
-        <div id="opMenuBtn" style="display:none;margin-bottom:12px;">
-          <button onclick="openOpNav()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:var(--r);padding:6px 14px;font-size:12px;font-family:inherit;cursor:pointer;">☰ 메뉴</button>
+      <!-- ── 섹션 헤더 ── -->
+      <div class="op-section-label">🪄 Operation Manual</div>
+
+      <!-- SIEMENS V -->
+      <div class="op-acc-card" id="acc-siemens-v">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-siemens-v')">
+          <span class="op-acc-vendor-dot" style="background:#00b4b4"></span>
+          <span class="op-acc-title">Siemens — V-version</span>
+          <span class="op-acc-sub">Syngo VB / VD / VE</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient → Register → 필수 항목(굵은 글씨) 모두 입력 → Confirm → 원하는 프로토콜 선택 후 &lt;&lt; 클릭하여 이동</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">완료된 시리즈 선택 → Transfer 메뉴에서 DICOM 전송 설정 확인 후 전송</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR</div><div class="op-step-desc">3D 데이터셋 우클릭 → MPR/MIP 선택 → 축 방향 조정</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">MIP</div><div class="op-step-desc">TOF/CE-MRA 시리즈에서 MIP 생성 → 슬래브 두께·방향 설정</div></div></div>
+          <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">Composing</div><div class="op-step-desc">다중 슬랩 시리즈를 하나로 합성 (Whole Spine 등에 사용)</div></div></div>
+          <div class="op-step"><div class="op-step-num">6</div><div class="op-step-content"><div class="op-step-title">ADC</div><div class="op-step-desc">DWI 완료 후 ADC map 자동 생성 확인; 없으면 후처리 메뉴에서 수동 생성</div></div></div>
+          <div class="op-step"><div class="op-step-num">7</div><div class="op-step-content"><div class="op-step-title">Subtraction</div><div class="op-step-desc">Pre/Post contrast 시리즈 선택 → Image Math → Subtraction</div></div></div>
+          <div class="op-step"><div class="op-step-num">8</div><div class="op-step-content"><div class="op-step-title">minIP</div><div class="op-step-desc">MRCP 등에서 최소값 투사 영상 생성</div></div></div>
         </div>
+      </div>
 
-        <!-- SIEMENS V -->
-        <div class="op-page on" id="op-siemens-v">
-          <div class="op-title">Siemens — V-version</div>
-          <div class="op-title-sub">Syngo MR VB / VD / VE software</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient → Register → 필수 항목(굵은 글씨) 모두 입력 → Confirm → 원하는 프로토콜 선택 후 &lt;&lt; 클릭하여 이동</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">완료된 시리즈 선택 → Transfer 메뉴에서 DICOM 전송 설정 확인 후 전송</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR</div><div class="op-step-desc">3D 데이터셋 우클릭 → MPR/MIP 선택 → 축 방향 조정</div></div></div>
-            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">MIP</div><div class="op-step-desc">TOF/CE-MRA 시리즈에서 MIP 생성 → 슬래브 두께·방향 설정</div></div></div>
-            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">Composing</div><div class="op-step-desc">다중 슬랩 시리즈를 하나로 합성 (Whole Spine 등에 사용)</div></div></div>
-            <div class="op-step"><div class="op-step-num">6</div><div class="op-step-content"><div class="op-step-title">ADC</div><div class="op-step-desc">DWI 완료 후 ADC map 자동 생성 확인; 없으면 후처리 메뉴에서 수동 생성</div></div></div>
-            <div class="op-step"><div class="op-step-num">7</div><div class="op-step-content"><div class="op-step-title">Subtraction</div><div class="op-step-desc">Pre/Post contrast 시리즈 선택 → Image Math → Subtraction</div></div></div>
-            <div class="op-step"><div class="op-step-num">8</div><div class="op-step-content"><div class="op-step-title">minIP</div><div class="op-step-desc">MRCP 등에서 최소값 투사 영상 생성</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- SIEMENS X -->
+      <div class="op-acc-card" id="acc-siemens-x">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-siemens-x')">
+          <span class="op-acc-vendor-dot" style="background:#00b4b4"></span>
+          <span class="op-acc-title">Siemens — X-version</span>
+          <span class="op-acc-sub">Syngo XA</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient → Register → 필수 항목 입력 → Confirm → 프로토콜 선택 &lt;&lt;</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">시리즈 선택 → Transfer → DICOM 전송 (X-version 인터페이스 기준)</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR / MIP</div><div class="op-step-desc">3D 데이터셋에서 후처리 탭 진입 → 방향 및 슬래브 설정</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">Composing / ADC / Subtraction / minIP</div><div class="op-step-desc">V-version과 동일 방식; UI 위치만 상이</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-siemens-x">
-          <div class="op-title">Siemens — X-version</div>
-          <div class="op-title-sub">Syngo MR XA software</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient → Register → 필수 항목 입력 → Confirm → 프로토콜 선택 &lt;&lt;</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">시리즈 선택 → Transfer → DICOM 전송 (X-version 인터페이스 기준)</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR / MIP</div><div class="op-step-desc">3D 데이터셋에서 후처리 탭 진입 → 방향 및 슬래브 설정</div></div></div>
-            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">Composing / ADC / Subtraction / minIP</div><div class="op-step-desc">V-version과 동일 방식; UI 위치만 상이</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- PHILIPS R3 -->
+      <div class="op-acc-card" id="acc-philips-r3">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-philips-r3')">
+          <span class="op-acc-vendor-dot" style="background:#3b82f6"></span>
+          <span class="op-acc-title">Philips — R3</span>
+          <span class="op-acc-sub">Achieva / Ingenia R3</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient registration → 필수 필드 입력 → Exam card 선택 → Start</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Examination 우클릭 → Send → DICOM node 선택</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR</div><div class="op-step-desc">View → MPR; 3평면 동시 확인 가능</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">MIP</div><div class="op-step-desc">MRA/TOF 시리즈 → 후처리 탭 → MIP 생성</div></div></div>
+          <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">Composing</div><div class="op-step-desc">Multi-station Whole Spine 합성</div></div></div>
+          <div class="op-step"><div class="op-step-num">6</div><div class="op-step-content"><div class="op-step-title">ADC</div><div class="op-step-desc">DWI 후 자동 생성; EPI distortion 확인 필요</div></div></div>
+          <div class="op-step"><div class="op-step-num">7</div><div class="op-step-content"><div class="op-step-title">Subtraction / minIP</div><div class="op-step-desc">후처리 탭에서 각각 선택</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-philips-r3">
-          <div class="op-title">Philips — R3</div>
-          <div class="op-title-sub">Achieva / Ingenia R3 software</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient registration → 필수 필드 입력 → Exam card 선택 → Start</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Examination 우클릭 → Send → DICOM node 선택</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR</div><div class="op-step-desc">View → MPR; 3평면 동시 확인 가능</div></div></div>
-            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">MIP</div><div class="op-step-desc">MRA/TOF 시리즈 → 후처리 탭 → MIP 생성</div></div></div>
-            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">Composing</div><div class="op-step-desc">Multi-station Whole Spine 합성</div></div></div>
-            <div class="op-step"><div class="op-step-num">6</div><div class="op-step-content"><div class="op-step-title">ADC</div><div class="op-step-desc">DWI 후 자동 생성; EPI distortion 확인 필요</div></div></div>
-            <div class="op-step"><div class="op-step-num">7</div><div class="op-step-content"><div class="op-step-title">Subtraction / minIP</div><div class="op-step-desc">후처리 탭에서 각각 선택</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- PHILIPS R5 -->
+      <div class="op-acc-card" id="acc-philips-r5">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-philips-r5')">
+          <span class="op-acc-vendor-dot" style="background:#3b82f6"></span>
+          <span class="op-acc-title">Philips — R5</span>
+          <span class="op-acc-sub">Ingenia / Elition R5</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">기본 워크플로우</div><div class="op-step-desc">R3과 동일한 흐름 — 인터페이스 디자인 및 메뉴 위치 일부 변경</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">CS SENSE (R5 추가기능)</div><div class="op-step-desc">Compressed Sensing 파라미터 설정 주의; Head Base Coil 유무 먼저 확인</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">SmartBracket / SmartExam</div><div class="op-step-desc">자동 patient positioning 기능 활용</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">R3과 동일; Exam card 우클릭 → Send</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-philips-r5">
-          <div class="op-title">Philips — R5</div>
-          <div class="op-title-sub">Ingenia / Elition R5 software</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">기본 워크플로우</div><div class="op-step-desc">R3과 동일한 흐름 — 인터페이스 디자인 및 메뉴 위치 일부 변경</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">CS SENSE (R5 추가기능)</div><div class="op-step-desc">Compressed Sensing 파라미터 설정 주의; Head Base Coil 유무 먼저 확인</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">SmartBracket / SmartExam</div><div class="op-step-desc">자동 patient positioning 기능 활용</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- GE -->
+      <div class="op-acc-card" id="acc-ge">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-ge')">
+          <span class="op-acc-vendor-dot" style="background:#8b5cf6"></span>
+          <span class="op-acc-title">GE</span>
+          <span class="op-acc-sub">Signa / Discovery</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Patient Registration</div><div class="op-step-desc">New Patient 입력 → Protocol 선택 → Scan</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Series 선택 → Send To → DICOM destination 선택</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR / MIP / MinIP</div><div class="op-step-desc">Functool 진입 → 원하는 후처리 항목 선택</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">ADC Map</div><div class="op-step-desc">DWI 완료 후 Functool에서 ADC 자동 생성 확인</div></div></div>
+          <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">Subtraction</div><div class="op-step-desc">Pre/Post 시리즈 선택 → Subtract</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-ge">
-          <div class="op-title">GE Healthcare</div>
-          <div class="op-title-sub">Signa / SIGNA Premier / Discovery</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">New Patient → 정보 입력 → Protocol 선택 → Scan</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Send To → DICOM destination 선택</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR / MIP</div><div class="op-step-desc">AW (Advanced Workstation) 또는 Console 내 후처리</div></div></div>
-            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">ADC</div><div class="op-step-desc">DWI 이후 자동 생성; NPW+ASSET 동시사용 불가 주의 (GE 기기 제한)</div></div></div>
-            <div class="op-step"><div class="op-step-num">5</div><div class="op-step-content"><div class="op-step-title">ZIP2 (Recon)</div><div class="op-step-desc">ACQ 약 50% 크기로 설정 (Fine Recon 옵션)</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- CANON -->
+      <div class="op-acc-card" id="acc-canon">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-canon')">
+          <span class="op-acc-vendor-dot" style="background:#ef4444"></span>
+          <span class="op-acc-title">Toshiba / Canon</span>
+          <span class="op-acc-sub">Vantage / Galan</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Patient Registration</div><div class="op-step-desc">환자 정보 입력 → 검사 프로토콜 선택 → Start</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">시리즈 선택 → DICOM 전송 설정 후 전송</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MPR / MIP</div><div class="op-step-desc">3D 시리즈에서 후처리 메뉴 진입 → 방향 설정</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">ADC / Subtraction</div><div class="op-step-desc">후처리 탭에서 각각 선택</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-canon">
-          <div class="op-title">Toshiba / Canon</div>
-          <div class="op-title-sub">Vantage / Galan / Orian series</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient 등록 → Exam 선택 → Scan Protocol 설정</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Archive → Send → 목적지 설정</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">PAT 명칭</div><div class="op-step-desc">SPEEDER (구 Toshiba) / RAPID (Canon 신형)</div></div></div>
-            <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">Fine Recon</div><div class="op-step-desc">Recon voxel = ACQ 약 50%로 설정 (T2 Plus 기능 사용 시 TR 증가 가능)</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- HITACHI -->
+      <div class="op-acc-card" id="acc-hitachi">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-hitachi')">
+          <span class="op-acc-vendor-dot" style="background:#f59e0b"></span>
+          <span class="op-acc-title">Hitachi / Fujifilm</span>
+          <span class="op-acc-sub">Echelon / SCENARIA</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Patient Registration</div><div class="op-step-desc">환자 정보 입력 → 프로토콜 선택 → Scan 시작</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">시리즈 선택 → 전송 대상 설정 → 전송</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">후처리</div><div class="op-step-desc">MPR / MIP / ADC 각각 후처리 메뉴에서 선택</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-hitachi">
-          <div class="op-title">Hitachi / Fujifilm</div>
-          <div class="op-title-sub">Echelon / Trillium series</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-manual">Operation Steps</span></div>
-            <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Exam Registration</div><div class="op-step-desc">Patient 등록 → Exam Protocol 선택</div></div></div>
-            <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">DICOM Export</div><div class="op-step-desc">Fujifilm 인터페이스 기준으로 전송 설정</div></div></div>
-            <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">최신 정보</div><div class="op-step-desc">노션 원본 페이지에서 최신 업데이트 내용 확인 권장</div></div></div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <!-- ── Planning 섹션 ── -->
+      <div class="op-section-label" style="margin-top:8px;">👌 Planning</div>
+
+      <div class="op-acc-card" id="acc-plan-brain">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-brain')">
+          <span class="op-acc-plan-dot">🧠</span>
+          <span class="op-acc-title">Brain</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Scout / Localizer</div><div class="op-step-desc">3-plane scout 획득 → AC-PC line 기준으로 AX 슬라이스 설정</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AX Slice 방향</div><div class="op-step-desc">AC-PC line에 평행하게 설정 / 뇌 전체 포함 (vertex ~ foramen magnum)</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">FOV / Phase dir</div><div class="op-step-desc">FOV: 220–240mm / Phase dir: RL (wrap 최소화)</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">Saturation Band</div><div class="op-step-desc">필요 시 eye / orbit 전방에 sat band 설정하여 안구운동 artifact 제거</div></div></div>
         </div>
+      </div>
 
-        <!-- PLANNING PAGES -->
-        <div class="op-page" id="op-plan-brain">
-          <div class="op-title">Planning — Brain</div>
-          <div class="op-title-sub">두개저(foramen magnum) ~ 두정부(vertex)</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>뇌 구조이상, 뇌혈관 질환, 염증 질환</li>
-                <li>외상 후 손상 평가, 신경계 증상 원인 확인</li>
-                <li>수술 전/후 평가, 전이, 선천성·퇴행성 질환</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-coverage">Coverage</span></div>
-              <ul class="op-list">
-                <li>두개저(foramen magnum) ~ 두정부(vertex)</li>
-                <li>대뇌·소뇌·뇌간(midbrain, pons, medulla) 포함</li>
-              </ul>
-            </div>
-          </div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-            <ul class="op-list">
-              <li><b>AX</b> — Anterior commissure - Posterior commissure Line (AC-PC line) 기준</li>
-              <li><b>SAG</b> — 정중시상면(midline sagittal) 정렬</li>
-              <li><b>COR</b> — AC-PC line에 수직</li>
-              <li><b>OBL COR</b> — Hippocampus 장축 평행 (해마 평가 시)</li>
-              <li><b>Brain MRA(TOF)</b> — Circle of Willis 중심; slab 경계 조정으로 venetian blind 방지</li>
-              <li><b>Veno(MRV)</b> — Superior sagittal sinus ~ Jugular vein 커버</li>
-            </ul>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-cspine">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-cspine')">
+          <span class="op-acc-plan-dot">🦴</span>
+          <span class="op-acc-title">C-spine</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">SAG 설정</div><div class="op-step-desc">Midline sagittal 기준 → C1–T1 포함 / Phase dir: FH / OS 70%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL 설정</div><div class="op-step-desc">각 disc level에 평행하게 개별 설정 또는 C2–C7 일괄 / Phase dir: AP / OS 30%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">Flow Compensation</div><div class="op-step-desc">SAG: Freq 방향 / AXL: Slice 방향으로 설정 (혈류 artifact 감소)</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-cspine">
-          <div class="op-title">Planning — C-Spine</div>
-          <div class="op-title-sub">두개저(foramen magnum) ~ T1–T2 상부 / C1–C7 전체</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>신경 구조 평가, 퇴행성 변화</li>
-                <li>외상·종양·염증·감염, 추간판탈출증</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>SAG</b> — C3~4 / Vertebral Body와 CSF 사이</li>
-                <li><b>AX</b> — 각 Disc에 평행하게 기울임</li>
-                <li><b>OBL</b> — Foramen 평가 시 사선 방향</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-lspine">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-lspine')">
+          <span class="op-acc-plan-dot">🦴</span>
+          <span class="op-acc-title">L-spine</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">SAG 설정</div><div class="op-step-desc">T12–S1 포함 / Phase dir: FH / OS 70%↑ / 양측 pedicle 포함 FOV</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL 설정</div><div class="op-step-desc">각 disc에 평행하게 L1–S1 (5–6 level) / Phase dir: AP / OS 40%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">Saturation Band</div><div class="op-step-desc">복부 전방에 SAT band 설정 → 장 운동 artifact 감소</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-lspine">
-          <div class="op-title">Planning — L-Spine</div>
-          <div class="op-title-sub">T12 ~ S1–S2 / L1–L5 및 요천추 이행 부위</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>신경 구조 평가, 퇴행성 변화</li>
-                <li>외상·종양·염증·감염, 추간판탈출증</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>SAG</b> — L3~4 / Vertebral Body와 CSF 사이</li>
-                <li><b>AX</b> — 각 Disc에 평행하게 기울임</li>
-                <li><b>COR</b> — 척추 커버리지 전체 확인용</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-wholespine">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-wholespine')">
+          <span class="op-acc-plan-dot">🦴</span>
+          <span class="op-acc-title">Whole-spine</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">Station 계획</div><div class="op-step-desc">2–3 station (C/T/L) → Station 간 overlap 충분히 확보</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">각 Station SAG</div><div class="op-step-desc">Phase dir: FH / OS 70%↑ / FOV는 각 부위 척추 폭에 맞게</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">Composing</div><div class="op-step-desc">촬영 후 Composing 기능으로 전척추 합성 이미지 생성</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-wholespine">
-          <div class="op-title">Planning — Whole Spine</div>
-          <div class="op-title-sub">C1 ~ S2 전체 / 2~3 station</div>
-          <div class="op-card">
-            <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-            <ul class="op-list">
-              <li><b>SAG</b> — 각 station 별 척추 중심선 정렬; OS 70%이상</li>
-              <li><b>COR</b> — 척추 전체 정렬 확인; OS 70%이상</li>
-              <li><b>Station overlap</b> — 인접 station 간 충분히 확보 (Insufficient overlap artifact 방지)</li>
-            </ul>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-shoulder">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-shoulder')">
+          <span class="op-acc-plan-dot">💪</span>
+          <span class="op-acc-title">Shoulder</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일 위치</div><div class="op-step-desc">Shoulder / Flex coil → 환측 어깨 중앙에 위치 / 팔 중립 자세</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">COR 설정</div><div class="op-step-desc">Supraspinatus tendon에 평행하게 / AC joint ~ 관절와 하방 포함 / Phase dir: FH / OS 70%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">SAG 설정</div><div class="op-step-desc">COR에 수직 / 관절와 전후방 포함 / Phase dir: FH</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">AXL 설정</div><div class="op-step-desc">AC joint ~ 관절와 하방 포함 / Phase dir: AP / OS 40%↑</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-shoulder">
-          <div class="op-title">Planning — Shoulder</div>
-          <div class="op-title-sub">Glenohumeral joint · Rotator cuff 전체</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>회전근개 파열, 연부조직 손상</li>
-                <li>관절염, 활막염, 종양 등</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — AC joint ~ Proximal humeral</li>
-                <li><b>COR</b> — Supraspinatus에 평행</li>
-                <li><b>SAG</b> — Supraspinatus에 수직</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-elbow">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-elbow')">
+          <span class="op-acc-plan-dot">💪</span>
+          <span class="op-acc-title">Elbow</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">자세</div><div class="op-step-desc">팔을 몸 옆에 두고 supination / Flex coil 사용</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">COR / SAG</div><div class="op-step-desc">epicondyle 기준 COR 설정 / Phase dir: FH / OS 50%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">AXL</div><div class="op-step-desc">관절면에 수직 / Phase dir: AP / OS 20%↑</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-elbow">
-          <div class="op-title">Planning — Elbow</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>인대 손상, 건병증, 관절염, 신경 포착 증후군, 종양 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — Epicondyle 기준 수평</li>
-                <li><b>COR</b> — Humeroradial joint에 평행</li>
-                <li><b>SAG</b> — Humeroradial joint에 수직</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-wrist">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-wrist')">
+          <span class="op-acc-plan-dot">💪</span>
+          <span class="op-acc-title">Wrist</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">자세</div><div class="op-step-desc">Superman position (팔을 머리 위로) 또는 몸 옆 / Wrist coil 또는 Flex small coil</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">COR</div><div class="op-step-desc">carpal bone 기준 평행 / Phase dir: FH / OS 50%↑ / 소관절 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">AXL / SAG</div><div class="op-step-desc">AXL: Phase dir RL / SAG: Phase dir AP</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-wrist">
-          <div class="op-title">Planning — Wrist</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>TFCC 손상, 인대 손상, 수근관절염, 신경 포착, 종양 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 수근골(carpal bone) 기준 수평</li>
-                <li><b>COR</b> — 요골·척골 장축에 평행</li>
-                <li><b>SAG</b> — 요골·척골 장축에 수직</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-hip">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-hip')">
+          <span class="op-acc-plan-dot">🦵</span>
+          <span class="op-acc-title">Hip</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일</div><div class="op-step-desc">Body / Spine coil 조합 사용 / 양측 고관절 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">COR</div><div class="op-step-desc">femoral neck 평행 / 양측 acetabulum 포함 / Phase dir: RL / OS 30%↑</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">AXL / SAG</div><div class="op-step-desc">AXL: Phase AP / SAG: Phase FH / Philips PAT 2–2.5 필수</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-hip">
-          <div class="op-title">Planning — Hip</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>비구순 손상, 관절염, 대퇴골두 괴사, 활막염, 종양 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 대퇴골두 기준 수평; 양측 비교 FOV</li>
-                <li><b>COR</b> — 고관절 장축에 평행 (비구순 핵심)</li>
-                <li><b>SAG</b> — 고관절 장축에 수직</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-knee">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-knee')">
+          <span class="op-acc-plan-dot">🦵</span>
+          <span class="op-acc-title">Knee</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일 / 자세</div><div class="op-step-desc">Knee coil / 5–10° 외회전 / 슬개골 상방 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">SAG</div><div class="op-step-desc">ACL에 평행 / Phase dir: FH / OS 60%↑ / 관절면 전체 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">COR / AXL</div><div class="op-step-desc">COR: Phase RL / AXL: Phase RL / meniscus 상하단 포함</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-knee">
-          <div class="op-title">Planning — Knee</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>반월판 손상, 인대 손상(ACL/PCL/MCL/LCL), 관절연골, 관절염, 종양 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>SAG</b> — 대퇴골 posterior condylar line 기준</li>
-                <li><b>COR</b> — SAG에 수직; 십자인대·반월판 후각</li>
-                <li><b>AX</b> — 슬개골 ~ 경골 근위부</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-ankle">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-ankle')">
+          <span class="op-acc-plan-dot">🦵</span>
+          <span class="op-acc-title">Ankle</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일 / 자세</div><div class="op-step-desc">Foot-ankle coil / 발 중립 자세 (90°) / Flex coil 가능</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">SAG</div><div class="op-step-desc">발 장축에 평행 / Phase dir: FH / OS 70%↑ / Achilles tendon 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">COR / AXL</div><div class="op-step-desc">COR: Phase RL / AXL: SAG 기준 수직 (talus 포함)</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-ankle">
-          <div class="op-title">Planning — Ankle</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>인대 손상, 건염/건파열, 연골 손상, 골절, 종양 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 경골 장축에 수직; 족관절 전체</li>
-                <li><b>COR</b> — 경골 장축에 평행; 인대·건 포함</li>
-                <li><b>SAG</b> — Achilles건 전체 커버</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-liver">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-liver')">
+          <span class="op-acc-plan-dot">🫁</span>
+          <span class="op-acc-title">Liver / Pancreas / MRCP</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">호흡 동기화</div><div class="op-step-desc">호흡 gating 또는 breath-hold 방식 선택 / 환자 호흡 패턴 확인</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL / COR</div><div class="op-step-desc">간 전체 포함 / Phase dir: RL (호흡 artifact 방향 고려)</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">MRCP</div><div class="op-step-desc">Thick-slab 또는 3D TSE / Phase dir: AP / 담관 전체 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">Dynamic Contrast</div><div class="op-step-desc">arterial / portal / delayed phase 타이밍 설정 (Gd 주입 후)</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-liver">
-          <div class="op-title">Planning — Liver / Pancreas / MRCP</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li><b>Liver</b> — 간암, 전이, 간경변, 혈관종, 낭종; Dynamic 포함</li>
-                <li><b>Pancreas</b> — 췌관암, 낭성 종양, 염증성 병변</li>
-                <li><b>MRCP</b> — 담관·췌관 비침습; 담석, 협착, PSC</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 횡격막 ~ 간 하극; Breath-hold</li>
-                <li><b>COR</b> — 전체 복부 커버</li>
-                <li><b>MRCP OBL</b> — 담관 장축 Thick slab 40~80mm minIP</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-prostate">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-prostate')">
+          <span class="op-acc-plan-dot">🫁</span>
+          <span class="op-acc-title">Prostate</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일 / 자세</div><div class="op-step-desc">Pelvic phased-array coil / 방광 적당히 충전 상태 확인</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL</div><div class="op-step-desc">전립선 기저부~첨부 포함 / Phase dir: RL / 정낭 포함 여부 확인</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">COR / SAG</div><div class="op-step-desc">전립선 장축에 평행/수직 설정 / DWI 포함 (b=0,1000,2000)</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-prostate">
-          <div class="op-title">Planning — Prostate</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>전립선암 검출·병기 결정 (PI-RADS 기준)</li>
-                <li>T2WI + DWI + DCE 3가지 시퀀스 조합</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 전립선 장축에 수직</li>
-                <li><b>COR</b> — 전립선 장축에 평행</li>
-                <li><b>SAG</b> — 정중시상; 전립선 전체</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-pelvis">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-pelvis')">
+          <span class="op-acc-plan-dot">🫁</span>
+          <span class="op-acc-title">Pelvis (Female)</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">자궁 장축 확인</div><div class="op-step-desc">Scout에서 자궁 위치 및 각도 확인 → 자궁 장축에 평행한 Oblique AXL 설정</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL / SAG</div><div class="op-step-desc">자궁 체부~경부 포함 / Phase dir: RL / 난소 포함 FOV</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">DWI</div><div class="op-step-desc">b=0, 800–1000 / Phase dir: RL / 방광 포함</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-pelvis">
-          <div class="op-title">Planning — Pelvis (Female)</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list"><li>자궁근종, 자궁선근증, 난소 종양, 자궁경부암 병기 등</li></ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 자궁체부 장축에 수직</li>
-                <li><b>SAG</b> — 자궁·질 장축 정중시상</li>
-                <li><b>COR</b> — 자궁체부 장축에 평행; 난소 포함</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
+      <div class="op-acc-card" id="acc-plan-breast">
+        <button class="op-acc-head" onclick="toggleOpCard('acc-plan-breast')">
+          <span class="op-acc-plan-dot">🫁</span>
+          <span class="op-acc-title">Breast</span>
+          <span class="op-acc-chevron">▼</span>
+        </button>
+        <div class="op-acc-body">
+          <div class="op-step"><div class="op-step-num">1</div><div class="op-step-content"><div class="op-step-title">코일 / 자세</div><div class="op-step-desc">Breast 전용 coil / prone 자세 / 양측 유방 코일 구멍에 위치</div></div></div>
+          <div class="op-step"><div class="op-step-num">2</div><div class="op-step-content"><div class="op-step-title">AXL / SAG</div><div class="op-step-desc">양측 유방 전체 포함 / Phase dir: RL / chest wall 포함</div></div></div>
+          <div class="op-step"><div class="op-step-num">3</div><div class="op-step-content"><div class="op-step-title">Dynamic (DCE)</div><div class="op-step-desc">Gd 주입 전후 5–6 phase / subtraction 이미지 생성</div></div></div>
+          <div class="op-step"><div class="op-step-num">4</div><div class="op-step-content"><div class="op-step-title">DWI</div><div class="op-step-desc">b=0, 800–1000 / EPI distortion 최소화 (PAT 2 이상)</div></div></div>
         </div>
+      </div>
 
-        <div class="op-page" id="op-plan-breast">
-          <div class="op-title">Planning — Breast</div>
-          <div class="op-grid">
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-purpose">Purpose</span></div>
-              <ul class="op-list">
-                <li>유방암 검출·병기, 고위험군 선별, 치료 반응 평가</li>
-                <li>Dynamic contrast-enhanced MRI (DCE) 필수</li>
-              </ul>
-            </div>
-            <div class="op-card">
-              <div class="op-card-header"><span class="op-badge badge-plan">Plan 기준선</span></div>
-              <ul class="op-list">
-                <li><b>AX</b> — 양측 유방 전체; 흉벽까지 커버</li>
-                <li><b>SAG</b> — 단측 유방 상세 평가</li>
-                <li><b>Prone position</b> — Dedicated breast coil; 체위 고정 중요</li>
-              </ul>
-            </div>
-          </div>
-          <a class="op-notion-link" href="https://app.notion.com/p/Clinical-CS-Online-Training-Center-277b27a597cb8238b2ae818606d48936?source=copy_link" target="_blank">↗ 노션 원본 보기</a>
-        </div>
-
-      </div><!-- op-content -->
-    </div><!-- op-layout -->
+    </div><!-- op-accordion-wrap -->
   </div><!-- opPanel -->
+
 
   <!-- PARAMETER GUIDE PANEL -->
   <div id="paramPanel" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
@@ -2342,19 +2244,7 @@ function toggleSidebar() {
 
 
 
-function openOpNav() {
-  const nav = document.getElementById('opNav');
-  const o   = document.getElementById('sidebarOverlay');
-  nav.classList.add('open');
-  o.classList.add('open');
-  o.onclick = closeOpNav;
-}
 
-function closeOpNav() {
-  document.getElementById('opNav').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-  document.getElementById('sidebarOverlay').onclick = closeSidebar;
-}
 
 // show/hide op menu button based on tab
 function updateMobileUI(tab) {
@@ -2392,14 +2282,7 @@ function switchTab(tab) {
   updateMobileUI(tab);
 }
 
-function setOpPage(el) {
-  document.querySelectorAll('.op-nav-btn').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('.op-page').forEach(p => p.classList.remove('on'));
-  const target = document.getElementById(el.dataset.page);
-  if (target) target.classList.add('on');
-  if (isMobile()) closeOpNav();
-}
+
 
 // ============ PART SELECT ============
 
@@ -2553,6 +2436,12 @@ function showNlmToast(q) {
   requestAnimationFrame(() => toast.classList.add('show'));
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.remove('show'), 9000);
+}
+
+function toggleOpCard(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  card.classList.toggle('open');
 }
 
 // ============ DB RENDER ============
