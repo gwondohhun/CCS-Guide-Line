@@ -137,199 +137,9 @@ body {
 /* ── MAIN LAYOUT ─────────────────────────────── */
 .main { display: flex; flex: 1; overflow: hidden; }
 
-/* ── SIDEBAR ─────────────────────────────────── */
-.sidebar {
-  width: 192px;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 14px 8px;
-  gap: 2px;
-  flex-shrink: 0;
-  overflow-y: auto;
-}
-.sidebar-section {
-  font-size: 9.5px;
-  font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .9px;
-  padding: 10px 10px 5px;
-  margin-top: 4px;
-}
-.sidebar-section:first-child { margin-top: 0; }
-.pb {
-  width: 100%;
-  text-align: left;
-  padding: 7px 10px;
-  border-radius: var(--r);
-  border: none;
-  background: none;
-  color: var(--text2);
-  cursor: pointer;
-  font-size: 12.5px;
-  font-family: inherit;
-  transition: all .12s;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.pb .pb-icon { font-size: 12px; width: 16px; flex-shrink: 0; }
-.pb.on {
-  background: linear-gradient(90deg, rgba(77,159,255,.15) 0%, rgba(77,159,255,.06) 100%);
-  color: var(--blue);
-  font-weight: 600;
-  border-left: 2px solid var(--blue);
-  padding-left: 8px;
-}
-.pb:hover:not(.on) { background: var(--surface); color: var(--text); }
-
-/* ── CHAT PANEL ──────────────────────────────── */
-#chatPanel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-
-.chat-context-bar {
-  padding: 7px 18px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.context-label { font-size: 11px; color: var(--text3); }
-.context-pill {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--cyan);
-  background: rgba(34,211,238,.08);
-  border: 1px solid rgba(34,211,238,.18);
-  padding: 2px 9px;
-  border-radius: 20px;
-}
-
-.chat-msgs { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-
-.msg { max-width: 82%; }
-.msg.user {
-  align-self: flex-end;
-  background: linear-gradient(135deg, #1d3461 0%, #1a2e52 100%);
-  border: 1px solid rgba(77,159,255,.25);
-  color: var(--text);
-  padding: 10px 15px;
-  border-radius: var(--r3) var(--r3) 4px var(--r3);
-  font-size: 13px;
-  line-height: 1.6;
-}
-.msg.ai {
-  align-self: flex-start;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 12px 15px;
-  border-radius: var(--r3) var(--r3) var(--r3) 4px;
-  font-size: 13px;
-  line-height: 1.7;
-  max-width: 88%;
-}
-.msg.loading { color: var(--text3); font-style: italic; }
-.msg h4 { color: var(--cyan); margin: 10px 0 5px; font-size: 12.5px; font-weight: 600; }
-.msg ul { padding-left: 16px; margin: 5px 0; }
-.msg li { margin: 3px 0; color: var(--text2); }
-.msg strong { color: var(--orange); font-weight: 600; }
-
-/* typing dots */
-@keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
-.dot-pulse { display: inline-flex; gap: 4px; align-items: center; padding: 2px 0; }
-.dot-pulse span { width: 5px; height: 5px; background: var(--blue); border-radius: 50%; animation: blink 1.2s infinite both; }
-.dot-pulse span:nth-child(2) { animation-delay: .2s; }
-.dot-pulse span:nth-child(3) { animation-delay: .4s; }
-
-.chat-input-area {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  padding: 12px 16px;
-  flex-shrink: 0;
-}
-.chat-input-row { display: flex; gap: 8px; align-items: flex-end; }
-.chat-textarea {
-  flex: 1;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r2);
-  color: var(--text);
-  padding: 9px 13px;
-  font-size: 13px;
-  font-family: inherit;
-  resize: none;
-  outline: none;
-  line-height: 1.5;
-  max-height: 90px;
-  transition: border-color .15s;
-}
-.chat-textarea:focus { border-color: var(--blue); }
-.chat-textarea::placeholder { color: var(--text3); }
-.btn-attach {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r2);
-  color: var(--text2);
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all .15s;
-}
-.btn-attach:hover { border-color: var(--blue); color: var(--blue); }
-.btn-send {
-  background: linear-gradient(135deg, var(--blue2) 0%, #1d4ed8 100%);
-  border: none;
-  border-radius: var(--r2);
-  color: #fff;
-  padding: 0 18px;
-  height: 38px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity .15s;
-  white-space: nowrap;
-}
-.btn-send:hover { opacity: .88; }
-.btn-send:disabled { opacity: .35; cursor: not-allowed; }
-
-.img-strip {
-  display: flex;
-  gap: 8px;
-  padding: 10px 16px 0;
-  overflow-x: auto;
-  align-items: center;
-}
-.img-thumb {
-  width: 56px; height: 56px;
-  object-fit: cover;
-  border-radius: var(--r);
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color .15s;
-  flex-shrink: 0;
-}
-.img-thumb.sel { border-color: var(--blue); }
-.btn-clear-img {
-  font-size: 11px;
-  color: var(--text3);
-  cursor: pointer;
-  white-space: nowrap;
-  border: none;
-  background: none;
-  padding: 4px 6px;
-  border-radius: var(--r);
-  transition: color .15s;
-}
-.btn-clear-img:hover { color: var(--red); }
-
 /* ── DB PANEL ────────────────────────────────── */
+#nlmPanel { background: var(--bg); }
 #dbPanel { flex: 1; display: none; flex-direction: column; overflow: hidden; }
-#dbPanel.on { display: flex; }
 
 .db-toolbar {
   padding: 10px 14px;
@@ -856,6 +666,7 @@ mark {
   min-width: 0;
 }
 .nlm-input:focus { border-color: #4285f4; }
+.nlm-input.synced { border-color: rgba(26,115,232,.6); background: rgba(26,115,232,.05); }
 .nlm-input::placeholder { color: var(--text3); font-size: 12px; }
 .nlm-go-btn {
   background: linear-gradient(135deg, #1a73e8, #4285f4);
@@ -979,91 +790,12 @@ mark {
 }
 .sidebar-overlay.open { display: block; }
 
-.btn-ham {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text2);
-  font-size: 20px;
-  cursor: pointer;
-  padding: 4px 8px;
-  margin-right: 8px;
-  line-height: 1;
-}
 
 /* ── MEDIA QUERIES ───────────────────────────── */
 @media (max-width: 768px) {
 
   /* Hamburger visible */
-  .btn-ham { display: flex; align-items: center; }
-
-  /* Logo compact */
-  .logo { margin-right: 0; }
-  .logo-sub { display: none; }
-
-  /* Nav tabs: icon only on smallest screens */
-  .nav-tab { padding: 0 10px; font-size: 11px; gap: 4px; }
-  .nav-tab-text { display: none; }
-  .topbar { padding: 0 10px; }
-
-  /* Badge hidden on mobile */
-  .badge-ccs { display: none; }
-
-  /* Sidebar becomes overlay drawer */
-  .sidebar {
-    position: fixed;
-    left: -210px;
-    top: 0;
-    bottom: 0;
-    width: 210px;
-    z-index: 100;
-    transition: left .25s cubic-bezier(.4,0,.2,1);
-    padding-top: 60px;
-    box-shadow: 4px 0 24px rgba(0,0,0,.5);
-  }
-  .sidebar.open { left: 0; }
-
-  /* Chat messages full width */
-  .msg { max-width: 95%; }
-  .msg.ai  { max-width: 98%; }
-  .chat-msgs { padding: 12px; gap: 10px; }
-
-  /* Input area compact */
-  .chat-input-area { padding: 8px 10px; }
-  .chat-textarea { font-size: 14px; max-height: 70px; padding: 8px 10px; }
-  .btn-send { padding: 0 13px; font-size: 12px; }
-  .btn-attach { width: 36px; height: 36px; }
-
-  /* DB toolbar: stack */
-  .db-toolbar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; }
-  .search-wrap { max-width: 100%; }
-  .filter-group { flex-wrap: wrap; gap: 5px; }
-  .df { padding: 6px 11px; font-size: 11.5px; }
-  .db-count-pill { margin-left: 0; align-self: flex-start; }
-  .db-grid { padding: 10px; gap: 8px; }
-
-  /* Operation panel: overlay nav */
-  .op-nav {
-    position: fixed;
-    left: -210px;
-    top: 0; bottom: 0;
-    width: 210px;
-    z-index: 100;
-    transition: left .25s cubic-bezier(.4,0,.2,1);
-    padding-top: 60px;
-    box-shadow: 4px 0 24px rgba(0,0,0,.5);
-  }
-  .op-nav.open { left: 0; }
-  .op-content { padding: 14px 14px 24px; }
-  .op-title { font-size: 18px; }
-  .op-step { padding: 12px 14px; }
-  .op-list { padding: 6px 14px 10px; }
-
-  /* Chat context bar compact */
-  .chat-context-bar { padding: 5px 12px; }
-  .nav-tab-icon { font-size: 16px; }
-}
-
+  
 @media (max-width: 480px) {
   .nav-tab { padding: 0 8px; }
   .chat-msgs { padding: 8px; }
@@ -1082,33 +814,6 @@ mark {
   .op-card-header { padding: 10px 13px 8px; }
 }
 
-.ai-ask-btn {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  font-size: 12.5px;
-  padding: 9px 14px;
-  border: 1px solid rgba(77,159,255,.3);
-  border-radius: var(--r2);
-  background: rgba(77,159,255,.07);
-  color: var(--blue);
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  transition: all .12s;
-  text-align: center;
-  -webkit-tap-highlight-color: transparent;
-}
-.ai-ask-btn:hover { background: rgba(77,159,255,.15); border-color: var(--blue); }
-.ai-ask-btn:active { transform: scale(.98); }
-
-.db-empty {
-  grid-column: 1/-1;
-  text-align: center;
-  color: var(--text3);
-  padding: 60px 20px;
-  font-size: 13px;
-}
 
 /* ── OPERATION PANEL ─────────────────────────── */
 #opPanel { flex: 1; display: none; overflow: hidden; }
@@ -1307,17 +1012,16 @@ mark {
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <button class="btn-ham" id="hamBtn" onclick="toggleSidebar()" aria-label="메뉴">☰</button>
   <div class="logo">
     <span class="logo-name">MRI Guide</span>
     <span class="logo-sub">by AiRSMed</span>
   </div>
   <nav class="nav-tabs">
-    <button class="nav-tab on" id="tabChat" onclick="switchTab('chat')">
-      <span class="nav-tab-icon">💬</span><span class="nav-tab-text"> AI 질문</span>
-    </button>
-    <button class="nav-tab" id="tabDB" onclick="switchTab('db')">
+    <button class="nav-tab on" id="tabDB" onclick="switchTab('db')">
       <span class="nav-tab-icon">📋</span><span class="nav-tab-text"> 이슈 DB</span>
+    </button>
+    <button class="nav-tab" id="tabNLM" onclick="switchTab('nlm')">
+      <span class="nav-tab-icon">🔬</span><span class="nav-tab-text"> NLM 검색</span>
     </button>
     <button class="nav-tab" id="tabParam" onclick="switchTab('param')">
       <span class="nav-tab-icon">📐</span><span class="nav-tab-text"> 파라미터</span>
@@ -1332,65 +1036,21 @@ mark {
 </div>
 
 <!-- Mobile overlay -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-<div class="main">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="mainSidebar">
-    <button class="pb" style="color:var(--text3);font-size:11px;margin-bottom:4px;" onclick="closeSidebar()">✕ 닫기</button>
-    <div class="sidebar-section">부위 선택</div>
-    <button class="pb on" data-part="all"        onclick="setPart(this)"><span class="pb-icon">◎</span> 전체</button>
-    <button class="pb" data-part="Brain"         onclick="setPart(this)"><span class="pb-icon">🧠</span> Brain</button>
-    <button class="pb" data-part="C-Spine"       onclick="setPart(this)"><span class="pb-icon">▸</span> C-Spine</button>
-    <button class="pb" data-part="T-Spine"       onclick="setPart(this)"><span class="pb-icon">▸</span> T-Spine</button>
-    <button class="pb" data-part="L-Spine"       onclick="setPart(this)"><span class="pb-icon">▸</span> L-Spine</button>
-    <button class="pb" data-part="Whole Spine"   onclick="setPart(this)"><span class="pb-icon">▸</span> Whole Spine</button>
-    <button class="pb" data-part="Shoulder"      onclick="setPart(this)"><span class="pb-icon">▸</span> Shoulder</button>
-    <button class="pb" data-part="Knee"          onclick="setPart(this)"><span class="pb-icon">▸</span> Knee</button>
-    <button class="pb" data-part="Hip"           onclick="setPart(this)"><span class="pb-icon">▸</span> Hip</button>
-    <button class="pb" data-part="Ankle"         onclick="setPart(this)"><span class="pb-icon">▸</span> Ankle</button>
-    <button class="pb" data-part="Wrist"         onclick="setPart(this)"><span class="pb-icon">▸</span> Wrist</button>
-    <button class="pb" data-part="Elbow"         onclick="setPart(this)"><span class="pb-icon">▸</span> Elbow</button>
-    <button class="pb" data-part="Foot"          onclick="setPart(this)"><span class="pb-icon">▸</span> Foot</button>
-    <button class="pb" data-part="Abdomen"       onclick="setPart(this)"><span class="pb-icon">▸</span> Abdomen</button>
-  </aside>
-
-  <!-- CHAT PANEL -->
-  <div id="chatPanel">
-    <div class="chat-context-bar">
-      <span class="context-label">현재 부위</span>
-      <span class="context-pill" id="plabel">전체</span>
-    </div>
-    <div class="chat-msgs" id="chatMsgs">
-      <div class="msg ai">안녕하세요! MRI 파라미터 및 아티팩트에 대해 질문해주세요.<br>좌측에서 부위를 선택하거나 이미지를 첨부할 수 있어요.</div>
-    </div>
-    <div id="imgRow" style="display:none" class="img-strip">
-      <button class="btn-clear-img" onclick="clearImgs()">✕ 삭제</button>
-    </div>
-    <div class="chat-input-area">
-      <div class="chat-input-row">
-        <textarea class="chat-textarea" id="qinput" placeholder="파라미터, artifact, 이슈 등 질문하세요…" rows="2"
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ask();}"></textarea>
-        <label class="btn-attach" title="이미지 첨부">
-          📎<input type="file" accept="image/*" multiple style="display:none" onchange="addImgs(this)">
-        </label>
-        <button class="btn-send" id="sbtn" onclick="ask()">전송 ↵</button>
-      </div>
-    </div>
+  <!-- NLM PANEL -->
+  <div id="nlmPanel" style="display:none;flex:1;flex-direction:column;overflow-y:auto;">
+    <div id="nlmLauncher"></div>
   </div>
 
   <!-- DB PANEL -->
   <div id="dbPanel">
 
-    <!-- NotebookLM 런처 -->
-    <div id="nlmLauncher"></div>
-
     <!-- 이슈 DB 브라우저 -->
     <div id="issueSection" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div class="db-toolbar">
         <div class="search-wrap">
-          <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="renderDB()">
+          <input id="dbSearch" type="text" placeholder="키워드로 필터링…" oninput="syncSearch('db', this.value)">
         </div>
         <div class="filter-group">
           <button class="df on" data-cat="all"   onclick="setDBCat(this)">전체</button>
@@ -2670,7 +2330,7 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 // ============ STATE ============
 const CAT_LABEL = {brain:'Brain / Neuro', spine:'Spine', msk:'MSK', field:'현장 이슈 사례', case:'Case Study'};
 const CAT_TAG_CLASS = {brain:'tag-brain', spine:'tag-spine', msk:'tag-msk', field:'tag-field', case:'tag-case'};
-let part = 'all', busy = false, uploadedImgs = [], dbCat = 'all';
+let dbCat = 'all';
 
 // ============ MOBILE SIDEBAR ============
 function isMobile() { return window.innerWidth <= 768; }
@@ -2678,17 +2338,9 @@ function isMobile() { return window.innerWidth <= 768; }
 function toggleSidebar() {
   if (document.getElementById('tabOp').classList.contains('on'))    { openOpNav();    return; }
   if (document.getElementById('tabParam').classList.contains('on')) { openParamNav(); return; }
-  const s = document.getElementById('mainSidebar');
-  const o = document.getElementById('sidebarOverlay');
-  const open = s.classList.contains('open');
-  if (open) { s.classList.remove('open'); o.classList.remove('open'); }
-  else       { s.classList.add('open');   o.classList.add('open'); }
 }
 
-function closeSidebar() {
-  document.getElementById('mainSidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-}
+
 
 function openOpNav() {
   const nav = document.getElementById('opNav');
@@ -2708,32 +2360,35 @@ function closeOpNav() {
 function updateMobileUI(tab) {
   const menuBtn  = document.getElementById('opMenuBtn');
   const pmenuBtn = document.getElementById('paramMenuBtn');
-  const hamBtn   = document.getElementById('hamBtn');
   if (menuBtn)  menuBtn.style.display  = (isMobile() && tab === 'op')    ? 'block' : 'none';
   if (pmenuBtn) pmenuBtn.style.display = (isMobile() && tab === 'param') ? 'block' : 'none';
-  if (hamBtn)   hamBtn.style.display   = (isMobile() && tab === 'chat')  ? 'flex'  : 'none';
 }
 
 window.addEventListener('resize', () => {
-  const tab = document.getElementById('tabChat').classList.contains('on') ? 'chat'
-            : document.getElementById('tabDB').classList.contains('on') ? 'db' : 'op';
+  const tab = document.getElementById('tabDB').classList.contains('on') ? 'db'
+            : document.getElementById('tabNLM')?.classList.contains('on') ? 'nlm'
+            : document.getElementById('tabParam')?.classList.contains('on') ? 'param' : 'op';
   updateMobileUI(tab);
-  if (!isMobile()) { closeSidebar(); closeOpNav(); }
+  if (!isMobile()) { closeOpNav(); }
 });
 
 // ============ TAB SWITCH ============
 function switchTab(tab) {
-  document.getElementById('chatPanel').style.display = tab === 'chat' ? 'flex' : 'none';
+  // 패널 표시/숨김
+  document.getElementById('nlmPanel').style.display  = tab === 'nlm'   ? 'flex' : 'none';
   document.getElementById('dbPanel').classList.toggle('on', tab === 'db');
   document.getElementById('paramPanel').style.display = tab === 'param' ? 'flex' : 'none';
   document.getElementById('opPanel').classList.toggle('on', tab === 'op');
-  document.getElementById('tabChat').classList.toggle('on', tab === 'chat');
-  document.getElementById('tabDB').classList.toggle('on', tab === 'db');
+  // 탭 활성화
+  document.getElementById('tabNLM').classList.toggle('on',   tab === 'nlm');
+  document.getElementById('tabDB').classList.toggle('on',    tab === 'db');
   document.getElementById('tabParam').classList.toggle('on', tab === 'param');
-  document.getElementById('tabOp').classList.toggle('on', tab === 'op');
-  if (tab === 'db') { renderDB(); renderNLMLauncher(); }
-  if (tab === 'param') renderCurrentParamPage('pp-brain');
-  closeSidebar(); closeOpNav();
+  document.getElementById('tabOp').classList.toggle('on',    tab === 'op');
+
+  if (tab === 'db')    { renderDB(); }
+  if (tab === 'nlm')   { renderNLMLauncher(); }
+  if (tab === 'param') { renderCurrentParamPage('pp-brain'); }
+  closeOpNav();
   updateMobileUI(tab);
 }
 
@@ -2747,13 +2402,7 @@ function setOpPage(el) {
 }
 
 // ============ PART SELECT ============
-function setPart(el) {
-  document.querySelectorAll('.pb').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  part = el.dataset.part;
-  document.getElementById('plabel').textContent = (part === 'all' ? '전체' : part);
-  if (isMobile()) closeSidebar();
-}
+
 
 // ============ IMAGE UPLOAD ============
 function addImgs(input) {
@@ -2796,154 +2445,7 @@ function clearImgs() {
 }
 
 // ============ CHAT ============
-// 마지막 질문 저장 (재시도용)
-let lastQuestion = { text: '', imgSrc: null, imgMime: null, part: 'all' };
 
-// ── 공통 SSE 스트림 읽기 헬퍼 ──
-// endpoint: '/api/ask' | '/api/drive-search'
-// onToken(text): 토큰 단위 콜백
-// onDone(data): 완료 콜백 (sources 등 포함)
-// onError(msg, retryable): 에러 콜백
-async function readSSE(endpoint, body, onToken, onDone, onError) {
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-
-  if (!res.ok || !res.body) {
-    const data = await res.json().catch(() => ({}));
-    onError(data.error || `HTTP ${res.status}`, data.retryable ?? (res.status === 503));
-    return;
-  }
-
-  const reader  = res.body.getReader();
-  const decoder = new TextDecoder();
-  let buf = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buf += decoder.decode(value, { stream: true });
-    const lines = buf.split('\n');
-    buf = lines.pop();
-
-    for (const line of lines) {
-      if (!line.startsWith('data:')) continue;
-      try {
-        const d = JSON.parse(line.slice(5).trim());
-        if (d.token)  { onToken(d.token); continue; }
-        if (d.error)  { onError(d.error, d.retryable ?? false); continue; }
-        if (d.done)   { onDone(d); continue; }
-      } catch {}
-    }
-  }
-}
-
-// ── AI 질문 탭 (스트리밍) ──
-async function ask(retryOverride) {
-  if (busy) return;
-  const q       = retryOverride?.text ?? document.getElementById('qinput').value.trim();
-  const selImg  = retryOverride ? null : document.querySelector('.img-thumb.sel');
-  const imgSrc  = retryOverride?.imgSrc  ?? selImg?.src ?? null;
-  const imgMime = retryOverride?.imgMime ?? (imgSrc ? imgSrc.split(';')[0].split(':')[1] : null);
-  if (!q && !imgSrc) return;
-
-  if (!retryOverride) lastQuestion = { text: q, imgSrc, imgMime, part };
-
-  busy = true;
-  document.getElementById('sbtn').disabled = true;
-  const ch = document.getElementById('chatMsgs');
-
-  if (q && !retryOverride) {
-    const um = document.createElement('div');
-    um.className = 'msg user';
-    um.textContent = (part !== 'all' ? `[${part}] ` : '') + q;
-    ch.appendChild(um);
-    document.getElementById('qinput').value = '';
-  }
-
-  const msgId = 'ai_' + Date.now();
-  const am = document.createElement('div');
-  am.className = 'msg ai loading';
-  am.id = msgId;
-  am.innerHTML = '<div class="dot-pulse"><span></span><span></span><span></span></div>';
-  ch.appendChild(am);
-  ch.scrollTop = ch.scrollHeight;
-
-  const partCtx  = (retryOverride?.part ?? part) !== 'all' ? `[${retryOverride?.part ?? part} 부위 관련 질문]\n` : '';
-  const userText = partCtx + (q || '이 MRI 이미지에서 artifact를 찾아 원인과 해결 방법을 알려주세요.');
-
-  const reqBody = { system: SYS, messages: [{ role:'user', content: userText }] };
-  if (imgSrc) reqBody.image = { base64: imgSrc.split(',')[1], mimeType: imgMime };
-
-  let accumulated = '';
-  let errored = false;
-
-  await readSSE('/api/ask', reqBody,
-    (token) => {
-      // 첫 토큰 도착 시 로딩 제거
-      const el = document.getElementById(msgId);
-      if (!el) return;
-      if (el.classList.contains('loading')) {
-        el.classList.remove('loading');
-        el.innerHTML = '';
-      }
-      accumulated += token;
-      el.innerHTML = fmt(accumulated);
-      ch.scrollTop = ch.scrollHeight;
-    },
-    (data) => {
-      const el = document.getElementById(msgId);
-      if (el && accumulated) el.innerHTML = fmt(accumulated);
-    },
-    (msg, retryable) => {
-      errored = true;
-      const el = document.getElementById(msgId);
-      if (!el) return;
-      el.classList.remove('loading');
-      if (retryable) {
-        el.innerHTML = `<span style="color:var(--yellow)">⏳ 응답이 느립니다. 5초 후 자동 재시도...</span>`;
-        ch.scrollTop = ch.scrollHeight;
-        busy = false;
-        document.getElementById('sbtn').disabled = false;
-        setTimeout(() => { el.remove(); ask({ ...lastQuestion }); }, 5000);
-        return;
-      }
-      el.innerHTML = `<span style="color:var(--red)">오류: ${msg}</span>
-        <button onclick="retryLast()" style="margin-top:8px;display:block;padding:5px 14px;border:1px solid rgba(77,159,255,.3);border-radius:var(--r);background:rgba(77,159,255,.07);color:var(--blue);cursor:pointer;font-family:inherit;font-size:11.5px;">↩ 다시 시도</button>`;
-    }
-  ).catch(e => {
-    errored = true;
-    const el = document.getElementById(msgId);
-    if (el) { el.classList.remove('loading'); el.innerHTML = `<span style="color:var(--red)">네트워크 오류: ${e.message}</span>`; }
-  });
-
-  if (!errored) {
-    busy = false;
-    document.getElementById('sbtn').disabled = false;
-    ch.scrollTop = ch.scrollHeight;
-  }
-}
-
-function retryLast() {
-  if (!lastQuestion.text && !lastQuestion.imgSrc) return;
-  ask({ ...lastQuestion });
-}
-
-function fmt(t) {
-  return t
-    .replace(/\*\*(Siemens[^*]*)\*\*/g, '<span class="vtag vs">$1</span>')
-    .replace(/\*\*(Philips[^*]*)\*\*/g, '<span class="vtag vp">$1</span>')
-    .replace(/\*\*(GE[^*]*)\*\*/g, '<span class="vtag vg">$1</span>')
-    .replace(/\*\*(Canon[^*]*)\*\*/g, '<span class="vtag vc">$1</span>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/^#{1,3} (.+)$/gm, '<h4>$1</h4>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>[^<]*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
-    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(77,159,255,.35)">$1</a>')
-    .replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
-}
 
 // ══════════════════════════════════════════════
 // NotebookLM 런처
@@ -2978,6 +2480,7 @@ function renderNLMLauncher() {
     <div class="nlm-search-row">
       <input class="nlm-input" id="nlmQuery" type="text"
         placeholder="예: Shoulder PDWI FS 3T 파라미터 알려줘"
+        oninput="syncSearch('nlm', this.value)"
         onkeydown="if(event.key==='Enter')nlmGo()">
       <button class="nlm-go-btn" onclick="nlmGo()">검색 →</button>
     </div>
@@ -2996,9 +2499,26 @@ function renderNLMLauncher() {
 }
 
 function nlmGoQuery(q) {
-  const inp = document.getElementById('nlmQuery');
-  if (inp) inp.value = q;
+  syncSearch('nlm', q);
   nlmGo();
+}
+
+// 양방향 동기화 — 이슈 DB 검색창 ↔ NotebookLM 검색창
+function syncSearch(from, val) {
+  const dbInput  = document.getElementById('dbSearch');
+  const nlmInput = document.getElementById('nlmQuery');
+
+  if (from === 'db') {
+    // DB에서 입력 → NLM 검색창 동기화 (탭 전환 없이 값만)
+    if (nlmInput && nlmInput.value !== val) {
+      nlmInput.value = val;
+      nlmInput.classList.toggle('synced', val.length > 0);
+    }
+    renderDB();
+  } else {
+    // NLM에서 입력 → DB 검색창 동기화
+    if (dbInput && dbInput.value !== val) dbInput.value = val;
+  }
 }
 
 function nlmGo() {
@@ -3102,7 +2622,6 @@ function renderDB() {
           </div>
           ${issue.tip ? `<div class="db-tip">💡 ${hl(issue.tip,q)}</div>` : ''}
           ${issue.images ? renderSlider(issue.images, cardId) : ''}
-          <button class="ai-ask-btn" onclick="event.stopPropagation();askFromDB('${issue.name.replace(/'/g,"\\'")}')">💬 AI에게 더 물어보기</button>
         </div>
       </div>`;
     });
@@ -3113,17 +2632,6 @@ function renderDB() {
   document.getElementById('dbCount').textContent = `${total}건`;
 }
 
-function renderSlider(images, prefix) {
-  if (!images || images.length === 0) return '';
-  if (images.length === 1) {
-    return `<div class="img-slider"><img class="img-slider-main" src="${images[0]}" alt="예시 이미지"></div>`;
-  }
-  const dots = images.map((_, i) => `<span class="img-dot${i===0?' on':''}" onclick="event.stopPropagation();slideImg('${prefix}',${i})"></span>`).join('');
-  return `<div class="img-slider">
-    <img class="img-slider-main" id="${prefix}_slider" src="${images[0]}" alt="예시 이미지">
-    <div class="img-dots">${dots}</div>
-  </div>`;
-}
 
 function slideImg(prefix, idx) {
   const dots = document.querySelectorAll(`#${prefix} .img-dot`);
@@ -3139,17 +2647,12 @@ function toggleCard(bodyId, cardId) {
   }
 }
 
-function askFromDB(name) {
-  switchTab('chat');
-  document.getElementById('qinput').value = name + '에 대해 자세히 설명해주세요.';
-  ask();
-}
 
 // Initial render
 renderDB();
 renderNLMLauncher();
 // Init mobile UI
-updateMobileUI('chat');
+updateMobileUI('db');
 
 // ============ PARAMETER GUIDE DATA ============
 const TYPE_CLS = {
