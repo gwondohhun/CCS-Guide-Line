@@ -1977,10 +1977,18 @@ mark {
         <!-- ─── ELBOW ─── -->
         <div class="param-page" id="pp-elbow">
           <div class="op-title">Elbow 파라미터</div>
-          <div class="op-title-sub">팔꿈치 MRI — 1.5T 기준</div>
-          <div class="param-field on" data-group="elbow" data-ft="1p5t">
+          <div class="op-title-sub">팔꿈치 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'elbow','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'elbow','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="elbow" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="elbow-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="elbow" data-ft="1p5t">
             <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
-            <div class="param-seq-grid" id="elbow-grid"></div>
+            <div class="param-seq-grid" id="elbow-1p5t-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8020a3f5dcad287b3aeb" target="_blank">↗ 노션 원본 보기</a>
         </div>
@@ -1988,10 +1996,18 @@ mark {
         <!-- ─── WRIST ─── -->
         <div class="param-page" id="pp-wrist">
           <div class="op-title">Wrist 파라미터</div>
-          <div class="op-title-sub">손목 MRI — 1.5T 기준</div>
-          <div class="param-field on" data-group="wrist" data-ft="1p5t">
+          <div class="op-title-sub">손목 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'wrist','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'wrist','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="wrist" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="wrist-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="wrist" data-ft="1p5t">
             <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
-            <div class="param-seq-grid" id="wrist-grid"></div>
+            <div class="param-seq-grid" id="wrist-1p5t-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae8034b25ee7b8859be547" target="_blank">↗ 노션 원본 보기</a>
         </div>
@@ -2029,10 +2045,18 @@ mark {
         <!-- ─── ANKLE ─── -->
         <div class="param-page" id="pp-ankle">
           <div class="op-title">Ankle 파라미터</div>
-          <div class="op-title-sub">발목 MRI — 1.5T 기준</div>
-          <div class="param-field on" data-group="ankle" data-ft="1p5t">
+          <div class="op-title-sub">발목 MRI — 3T / 1.5T 가이드라인</div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'ankle','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'ankle','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="ankle" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="ankle-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="ankle" data-ft="1p5t">
             <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
-            <div class="param-seq-grid" id="ankle-grid"></div>
+            <div class="param-seq-grid" id="ankle-1p5t-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80bbb8e3f355c1b6a15b" target="_blank">↗ 노션 원본 보기</a>
         </div>
@@ -2041,8 +2065,17 @@ mark {
         <div class="param-page" id="pp-foot">
           <div class="op-title">Foot 파라미터</div>
           <div class="op-title-sub">발 MRI — 3T / 1.5T 가이드라인</div>
-          <div class="param-field on" data-group="foot" data-ft="both">
-            <div class="param-seq-grid" id="foot-grid"></div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'foot','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'foot','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="foot" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="foot-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="foot" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="foot-1p5t-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae808d8b4ff480bf2a6409" target="_blank">↗ 노션 원본 보기</a>
         </div>
@@ -2051,8 +2084,17 @@ mark {
         <div class="param-page" id="pp-hand">
           <div class="op-title">Hand 파라미터</div>
           <div class="op-title-sub">손 MRI — 3T / 1.5T 가이드라인</div>
-          <div class="param-field on" data-group="hand" data-ft="both">
-            <div class="param-seq-grid" id="hand-grid"></div>
+          <div class="param-field-tabs">
+            <button class="pft on" onclick="setFieldTab(this,'hand','3t')">3T</button>
+            <button class="pft" onclick="setFieldTab(this,'hand','1p5t')">1.5T</button>
+          </div>
+          <div class="param-field on" data-group="hand" data-ft="3t">
+            <div class="param-badge-row"><span class="field-badge fb-3t">3 Tesla</span></div>
+            <div class="param-seq-grid" id="hand-3t-grid"></div>
+          </div>
+          <div class="param-field" data-group="hand" data-ft="1p5t">
+            <div class="param-badge-row"><span class="field-badge fb-1p5t">1.5 Tesla</span></div>
+            <div class="param-seq-grid" id="hand-1p5t-grid"></div>
           </div>
           <a class="op-notion-link" href="https://www.notion.so/30a4e87839ae80268e8dda75250b5166" target="_blank">↗ 노션 원본 보기</a>
         </div>
@@ -3664,7 +3706,483 @@ seq('T1WI FS','TSE',[
 ]),
 ],
 
-// ═══════════════ MSK - Shoulder, Knee, Hip, Ankle, Wrist, Elbow, Hand, Foot ═══════════════
+// ═══════════════════════════════ ANKLE 3T ════════════════════════════════
+'ankle-3t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD',hi('≤90ms')],['ETL','6–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+]),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.35–0.45mm'),[['AX','0.35–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.45–0.6mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['ETD',hi('≤90ms')],['ETL','6–10'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T2WI','TSE',[
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.55–0.7mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX','1'],['ETD','≤40ms'],['ETL','3–5'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','9–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.5–0.7mm'],
+  ['PAT','off–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('16–23ms')],['TR','450–800ms'],['FA','20–30° (원본 유지)'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.55–0.65mm'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+],
+
+// ═══════════════════════════════ ANKLE 1.5T ═══════════════════════════════
+'ankle-1p5t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.5mm',[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['ETD',hi('≤90ms')],['ETL','6–20'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 70%↑)']]],
+],'1.5T PDWI FS: SAG phase dir = FH (3T와 동일)'),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm'],
+  ['ETD','≤90ms'],['ETL','6–10'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+]),
+seq('T2WI','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm'],
+  ['ETD','120–160ms'],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.55–0.7mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','9–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.5–0.7mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],
+  ['TI',hi('180–230ms (Ankle 1.5T는 3T와 동일!)')],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
+  ['NEX','',[['AX','2'],['COR','2'],['SAG','1']]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 20%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 80%↑)']]],
+],'⚠️ Ankle 1.5T STIR TI = 180–230ms — Wrist/Elbow/Foot 1.5T(150–180ms)와 다름!'),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('16–23ms (3T와 동일)')],['TR','450–800ms'],['FA','20–30°'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.55–0.65mm'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+]),
+],
+
+// ═══════════════════════════════ WRIST 3T ════════════════════════════════
+'wrist-3t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.35–0.45mm'),[['AX','0.35–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.40–0.55mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+]),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['ETD',hi('≤90ms')],['ETL','6–10'],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+]),
+seq('T2WI','TSE',[
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['ETD','120–160ms'],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.40–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel',hi('0.3–0.4mm')],['Phase voxel','0.35–0.5mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.45–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','100–140ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+]),
+],
+
+// ═══════════════════════════════ WRIST 1.5T ═══════════════════════════════
+'wrist-1p5t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.40–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.3–0.4mm'],['Phase voxel','0.35–0.5mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],
+  ['TI',hi('150–180ms (3T: 180–230ms와 다름!)')],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.45–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','100–140ms'],
+  ['Phase dir','',[['AX','RL (OS 10%↑)'],['COR','FH (OS 50%↑)'],['SAG','AP (OS 20%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+]),
+],
+
+// ═══════════════════════════════ ELBOW 3T ════════════════════════════════
+'elbow-3t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.4–0.55mm'),[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+]),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
+  ['ETD',hi('≤90ms')],['ETL','6–10'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+]),
+seq('T2WI','TSE',[
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
+  ['ETD','120–160ms'],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.4–0.6mm'],['Phase voxel','0.50–0.75mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.65mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+]),
+],
+
+// ═══════════════════════════════ ELBOW 1.5T ═══════════════════════════════
+'elbow-1p5t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.4–0.6mm'],['Phase voxel','0.50–0.75mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.3–0.45mm'],['Phase voxel','0.4–0.55mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],
+  ['TI',hi('150–180ms (3T: 180–230ms와 다름!)')],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.50–0.7mm'],
+  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+]),
+],
+
+// ═══════════════════════════════ HAND 3T ══════════════════════════════════
+'hand-3t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.45–0.6mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX',hig('1–2')],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+]),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.3–0.4mm')],['Phase voxel','0.35–0.5mm'],
+  ['ETD',hi('≤90ms')],['ETL','6–10'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2WI','TSE',[
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.3–0.4mm'],['Phase voxel','0.35–0.5mm'],
+  ['ETD','120–160ms'],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.40–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel',hi('0.3–0.4mm')],['Phase voxel','0.35–0.5mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.5–0.7mm'],
+  ['NEX',hig('1–2')],['ETD','100–140ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+],
+
+// ═══════════════════════════════ HAND 1.5T ════════════════════════════════
+'hand-1p5t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.45–0.6mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.40–0.6mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.3–0.4mm'],['Phase voxel','0.35–0.5mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.40–0.55mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],
+  ['TI',hi('180–230ms (Hand 1.5T는 3T와 동일!)')],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.5–0.7mm'],
+  ['ETD','100–140ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+],'⚠️ Hand 1.5T STIR TI = 180–230ms — Wrist/Elbow/Foot 1.5T(150–180ms)와 다름!'),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+]),
+],
+
+// ═══════════════════════════════ FOOT 3T ══════════════════════════════════
+'foot-3t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['PAT',hi('2–2.5 ← 필수'),null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD',hi('≤90ms')],['ETL','6–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
+],'Foot 3T PAT 2–2.5 필수 (Ankle off–1.7과 다름!)'),
+seq('PDWI','TSE',[
+  ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.50–0.65mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','≤90ms'],
+]),
+seq('T2WI','TSE',[
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.50–0.65mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','120–160ms'],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.50–0.65mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.50–0.65mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.4–0.5mm'],['Phase voxel','0.50–0.65mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2.0–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+],
+
+// ═══════════════════════════════ FOOT 1.5T ════════════════════════════════
+'foot-1p5t': [
+seq('PDWI FS','TSE',[
+  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
+  ['Freq voxel',hi('0.45–0.55mm')+'  (3T: 0.4–0.5mm)'],['Phase voxel','0.6–0.75mm (scan% 70%↑)'],
+  ['PAT','1.5–2.0  ← 3T(2.0–2.5)보다 낮음',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['NEX','1'],['ETD',hi('≤90ms')],['ETL','6–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2WI FS','TSE',[
+  ['TE','60–80ms'],['TR','2500–6000ms'],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.6–0.75mm'],
+  ['PAT','1.5–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+]),
+seq('T1WI','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.6–0.75mm'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','≤40ms'],['ETL','3–5'],
+]),
+seq('T1WI FS','TSE',[
+  ['TE','8–15ms'],['TR','450–700ms'],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.6–0.75mm'],
+  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],
+]),
+seq('T2 STIR','IR TSE',[
+  ['TE','50–70ms'],['TR','2500–4000ms'],
+  ['TI',hi('150–180ms (3T: 180–230ms와 다름!)')],
+  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.6–0.75mm'],
+  ['PAT','1.5–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','AP (OS 10%↑)']]],
+]),
+seq('T2* GRE (mFFE)','GRE',[
+  ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–2'}]],
+]),
+],
+
+};
 'shoulder-3t': [
 seq('PDWI FS','TSE',[
   ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
@@ -4105,6 +4623,11 @@ function setFieldTab(btn, group, ft) {
     'lspine-3t':'lspine-3t-grid','lspine-1p5t':'lspine-1p5t-grid',
     'shoulder-3t':'shoulder-3t-grid','shoulder-1p5t':'shoulder-1p5t-grid',
     'knee-3t':'knee-3t-grid','knee-1p5t':'knee-1p5t-grid',
+    'ankle-3t':'ankle-3t-grid','ankle-1p5t':'ankle-1p5t-grid',
+    'wrist-3t':'wrist-3t-grid','wrist-1p5t':'wrist-1p5t-grid',
+    'elbow-3t':'elbow-3t-grid','elbow-1p5t':'elbow-1p5t-grid',
+    'hand-3t':'hand-3t-grid','hand-1p5t':'hand-1p5t-grid',
+    'foot-3t':'foot-3t-grid','foot-1p5t':'foot-1p5t-grid',
   };
   const key = group+'-'+ft;
   if (gridMap[key]) renderParamGrid(gridMap[key], key);
@@ -4118,13 +4641,13 @@ function renderCurrentParamPage(pageId) {
     'pp-lspine':   [['lspine-3t-grid','lspine-3t'],['lspine-1p5t-grid','lspine-1p5t']],
     'pp-wholespine':[['wholespine-grid','wholespine-grid']],
     'pp-shoulder': [['shoulder-3t-grid','shoulder-3t'],['shoulder-1p5t-grid','shoulder-1p5t']],
-    'pp-elbow':    [['elbow-grid','elbow-grid']],
-    'pp-wrist':    [['wrist-grid','wrist-grid']],
-    'pp-hand':     [['hand-grid','hand-grid']],
+    'pp-elbow':    [['elbow-3t-grid','elbow-3t'],['elbow-1p5t-grid','elbow-1p5t']],
+    'pp-wrist':    [['wrist-3t-grid','wrist-3t'],['wrist-1p5t-grid','wrist-1p5t']],
+    'pp-hand':     [['hand-3t-grid','hand-3t'],['hand-1p5t-grid','hand-1p5t']],
     'pp-hip':      [['hip-grid','hip-grid']],
     'pp-knee':     [['knee-3t-grid','knee-3t'],['knee-1p5t-grid','knee-1p5t']],
-    'pp-ankle':    [['ankle-grid','ankle-grid']],
-    'pp-foot':     [['foot-grid','foot-grid']],
+    'pp-ankle':    [['ankle-3t-grid','ankle-3t'],['ankle-1p5t-grid','ankle-1p5t']],
+    'pp-foot':     [['foot-3t-grid','foot-3t'],['foot-1p5t-grid','foot-1p5t']],
   };
   (map[pageId]||[]).forEach(([gid,dk]) => renderParamGrid(gid, dk));
 }
