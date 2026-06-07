@@ -413,60 +413,68 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r3);
-  overflow: hidden;
   cursor: pointer;
   transition: border-color .15s, box-shadow .15s;
   -webkit-tap-highlight-color: transparent;
 }
 .db-card:active { transform: scale(.995); }
 .db-card.expanded {
-  border-color: rgba(77,159,255,.4);
-  box-shadow: 0 0 0 1px rgba(77,159,255,.1), 0 4px 20px rgba(0,0,0,.35);
+  border-color: rgba(77,159,255,.45);
+  box-shadow: 0 0 0 1px rgba(77,159,255,.12), 0 4px 20px rgba(0,0,0,.3);
 }
 
-/* 카드 헤더 */
+/* 카드 헤더 — 태그는 첫 줄, 제목은 두 번째 줄 */
 .db-card-head {
-  padding: 13px 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding: 12px 14px 11px;
   background: var(--surface2);
   border-bottom: 1px solid transparent;
   transition: background .12s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
 }
 .db-card.expanded .db-card-head {
   border-bottom-color: var(--border);
-  background: rgba(77,159,255,.04);
+  background: rgba(77,159,255,.05);
+}
+/* 태그 + 화살표 행 */
+.db-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 .db-cat-tag {
-  font-size: 9px;
-  padding: 3px 8px;
+  font-size: 9.5px;
+  padding: 3px 9px;
   border-radius: 20px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .5px;
+  letter-spacing: .6px;
   flex-shrink: 0;
 }
-.tag-brain  { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
-.tag-spine  { background: rgba(52,211,153,.1);   color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
-.tag-msk    { background: rgba(251,146,60,.1);   color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
-.tag-field  { background: rgba(248,113,113,.1);  color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
-.tag-case   { background: rgba(34,211,238,.1);   color: var(--cyan);   border: 1px solid rgba(34,211,238,.2); }
+.tag-brain  { background: rgba(167,139,250,.15); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+.tag-spine  { background: rgba(52,211,153,.12);  color: var(--green);  border: 1px solid rgba(52,211,153,.25); }
+.tag-msk    { background: rgba(251,146,60,.12);  color: var(--orange); border: 1px solid rgba(251,146,60,.25); }
+.tag-field  { background: rgba(248,113,113,.12); color: var(--red);    border: 1px solid rgba(248,113,113,.25); }
+.tag-case   { background: rgba(34,211,238,.12);  color: var(--cyan);   border: 1px solid rgba(34,211,238,.25); }
 
 .db-card-name {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
-  flex: 1;
-  line-height: 1.35;
+  line-height: 1.45;
   color: var(--text);
+  word-break: keep-all;
+  padding-right: 4px;
 }
 .db-chevron {
   font-size: 10px;
   color: var(--text3);
   transition: transform .2s;
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -476,36 +484,36 @@ body {
 .db-card.expanded .db-chevron {
   transform: rotate(180deg);
   color: var(--blue);
-  background: rgba(77,159,255,.1);
+  background: rgba(77,159,255,.12);
 }
 
 /* 카드 바디 */
-.db-card-body { display: none; padding: 13px 15px 15px; }
-.db-card-body.open { display: block; animation: slideDown .14s ease; }
-@keyframes slideDown { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+.db-card-body { display: none; padding: 14px 14px 16px; }
+.db-card-body.open { display: block; animation: fadeIn .18s ease; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
 /* 원인/해결 섹션 — 세로 스택 */
 .db-summary {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 .db-box {
   background: var(--bg2);
   border-radius: var(--r2);
-  padding: 10px 12px;
+  padding: 11px 13px 12px;
   border-left: 3px solid var(--border2);
 }
 .db-box:first-child { border-left-color: var(--yellow); }
 .db-box:last-child  { border-left-color: var(--green);  }
 
 .db-box-label {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .6px;
-  margin-bottom: 7px;
+  margin-bottom: 9px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -514,30 +522,30 @@ body {
 .lbl-sol   { color: var(--green); }
 
 .db-box-content {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 .db-box-row {
   display: flex;
-  gap: 7px;
+  gap: 8px;
   align-items: flex-start;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .db-box-row:last-child { margin-bottom: 0; }
-.db-bullet-cause { color: var(--yellow); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
-.db-bullet-sol   { color: var(--green);  font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+.db-bullet-cause { color: var(--yellow); font-size: 11px; flex-shrink: 0; margin-top: 4px; }
+.db-bullet-sol   { color: var(--green);  font-size: 11px; flex-shrink: 0; margin-top: 4px; }
 
 .db-tip {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--text2);
   background: rgba(77,159,255,.06);
   border: 1px solid rgba(77,159,255,.15);
   border-left: 3px solid var(--blue);
-  padding: 8px 11px;
+  padding: 9px 12px;
   border-radius: 0 var(--r2) var(--r2) 0;
-  margin-bottom: 8px;
-  line-height: 1.55;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 
 mark {
@@ -1070,8 +1078,9 @@ mark {
   .chat-msgs { padding: 8px; }
   .chat-input-area { padding: 6px 8px; }
   .db-grid { padding: 8px; gap: 6px; }
-  .db-card-name { font-size: 13px; }
-  .db-box-content { font-size: 12.5px; }
+  .db-card-name { font-size: 13.5px; }
+  .db-box-content { font-size: 13px; }
+  .db-card-head { padding: 10px 12px 10px; gap: 5px; }
   .op-content { padding: 10px 10px 20px; }
   .op-title { font-size: 16px; margin-bottom: 3px; }
   .op-title-sub { font-size: 11px; margin-bottom: 14px; }
@@ -3093,7 +3102,7 @@ function renderDB() {
 
       const cardId = `card_${cat}_${idx}`;
       const bodyId = `body_${cat}_${idx}`;
-      const autoOpen = isSearch;
+      const autoOpen = true; // 항상 펼친 상태
 
       // 원인 줄 목록
       const causeLines = (issue.cause||'').split('\n').map(l=>l.trim()).filter(Boolean);
@@ -3108,9 +3117,11 @@ function renderDB() {
 
       html += `<div class="db-card${autoOpen?' expanded':''}" id="${cardId}" onclick="toggleCard('${bodyId}','${cardId}')">
         <div class="db-card-head">
-          <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${CAT_LABEL[cat]||cat}</span>
+          <div class="db-head-top">
+            <span class="db-cat-tag ${CAT_TAG_CLASS[cat]}">${CAT_LABEL[cat]||cat}</span>
+            <span class="db-chevron">▼</span>
+          </div>
           <span class="db-card-name">${hl(issue.name,q)}</span>
-          <span class="db-chevron">▼</span>
         </div>
         <div class="db-card-body${autoOpen?' open':''}" id="${bodyId}">
           <div class="db-summary">
