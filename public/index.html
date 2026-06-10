@@ -2440,9 +2440,42 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 - Phase dir: SAG=FH(OS 70%↑) / AXL=AP(OS 30%↑)
 
 ---
-## T-SPINE 파라미터
-- C-Spine과 동일 파라미터 적용
-- Phase dir: SAG=FH, AXL=RL
+## T-SPINE 파라미터 (3T)
+
+### T1WI
+- TE: 8–15ms | TR: 450–700ms | Freq: AX 0.5–0.7 / COR·SAG 0.6–0.8mm | Phase: 0.9–1.1mm (scan% 70%↑)
+- NEX: AX·SAG 2 권장 | ETD: ≤40ms | ETL: 3–5 | Refocusing FA: 110–150°
+- Phase dir: AX=AP(50%↑) / COR=FH(70%↑) / SAG=FH(70%↑)
+
+### T1WI FS
+- TE: 12–15ms | TR: 450–700ms | Freq: AX 0.5–0.8 / SAG 0.7–0.9mm | NEX: AX 2 권장, SAG 1–2
+- ETD: ≤40ms | ETL: 3–5 | Refocusing FA: 110–150°
+
+### T2WI
+- TE: 90–120ms | TR: 2500–6000ms (Drive ON) | Freq: AX 0.5–0.7 / COR·SAG 0.55–0.75mm
+- ETD: 180–240ms | ETL: 15–26 | Refocusing FA: 110–150°
+- Phase dir: AX=AP(50%↑) / COR·SAG=FH(70%↑)
+
+### T2WI FS
+- TE: 70–100ms | TR: 2500–6000ms | Freq: 0.55–0.75mm | ETD: 140–200ms | ETL: 14–22
+
+### T2 STIR
+- TE: 50–70ms | TI: 180–230ms | ETD: ≤140ms | ETL: 11–15
+
+### T1 FLAIR
+- TE: 15–25ms | TR: 1600–2200ms | TI: 734–980ms (table value) | ETD: ≤50ms | ETL: 4–6
+
+### T1WI DIXON FS
+- TE: 12–20ms | TR: 500–800ms | Freq: 0.7–0.9mm | ETD: 36–50ms | ETL: 3–5 | Echo spacing: 11–14ms
+
+### T2WI DIXON FS
+- TE: 80–110ms | TR: 2500–6000ms | Freq: AX 0.5–0.7 / SAG 0.6–0.7mm | ETD: 160–220ms | ETL: 15–20
+
+## T-SPINE 파라미터 (1.5T)
+- T1WI: Freq AX·COR·SAG 0.6–0.8mm (3T보다 큼) | 나머지 3T 동일
+- T1WI FS: Freq AX 0.5–0.8 / SAG 0.7–0.9mm | Phase AX 0.7–0.85 / SAG 0.9–1.2mm
+- T2 STIR: TI 140–180ms (3T 180–230과 다름!)
+- T2WI / T2WI FS / DIXON: 3T와 동일 범위
 
 ---
 ## L-SPINE 파라미터 (3T)
@@ -2506,11 +2539,34 @@ const SYS = `당신은 AiRSMed CCS팀 전용 MRI 파라미터 전문 AI입니다
 - T1WI FS: NEX SAG 1–2(2 권장), AXL 1–2(2 권장) | ETD ≤40ms
 
 ---
-## WHOLE SPINE
-- T2WI SAG: 2–3 station 멀티 스테이션
-- TE: 90–120ms | TR: 2500–6000ms | Freq: 0.6–0.8mm | Phase: 0.9–1.2mm
-- Phase dir: SAG=FH (OS 70%↑), COR=FH (OS 70%↑)
-- Station 간 overlap 충분히 확보
+## WHOLE SPINE (3T) — 2–3 station 멀티 스테이션
+- 플레인: COR·SAG 위주 / scan% 60%↑ / Station 간 overlap 충분히 확보
+
+### T1WI
+- TE: 8–15ms | TR: 450–700ms | Freq COR·SAG: 0.6–0.8mm | Phase: 1.0–1.2mm
+- ETD: ≤40ms | ETL: 3–5 | Phase dir: COR·SAG=FH(70%↑)
+
+### T1WI FS
+- TE: 12–15ms | TR: 450–700ms | Freq SAG only: 0.7–0.85mm | Phase SAG: 0.9–1.2mm
+- ETD: ≤40ms | ETL: 3–5 (SAG only)
+
+### T2WI
+- TE: 90–120ms | TR: 2500–6000ms | Freq COR·SAG: 0.6–0.8mm | Phase: 0.9–1.2mm
+- ETD: 180–240ms | ETL: 15–26 | Phase dir: COR·SAG=FH(70%↑)
+
+### T2 STIR
+- TE: 50–70ms | TI: 180–230ms | Freq COR·SAG: 0.7–0.9mm | ETD: ≤140ms | ETL: 11–15
+
+### T1WI DIXON FS
+- TE: 12–20ms | TR: 500–800ms | Freq COR·SAG: 0.7–0.9mm | ETD: 36–50ms | ETL: 3–5
+
+### T2WI DIXON FS
+- TE: 80–110ms | TR: 2500–6000ms | Freq SAG: 0.6–0.7mm | ETD: 160–220ms | ETL: 15–20
+
+## WHOLE SPINE (1.5T)
+- T1WI: Freq COR·SAG 0.6–0.8mm (3T 동일) | T1WI FS: SAG only 0.7–0.85mm
+- T2WI: Freq 0.6–0.8mm (3T 동일) | T2 STIR: TI 180–230ms (3T 동일)
+- 전 시퀀스 3T와 거의 동일, voxel만 미세 차이
 
 ---
 ## MSK - SHOULDER
@@ -4015,107 +4071,150 @@ seq('T2* GRE (mFFE)','GRE',[
 seq('PDWI FS','TSE',[
   ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
   ['Freq voxel',hi('0.4–0.55mm'),[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
-  ['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)',[['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['NEX','AX:1 / COR:1 / SAG:1'],['Echo spacing','8.5–11ms'],['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
   ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('PDWI','TSE',[
   ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
-  ['ETD',hi('≤90ms')],['ETL','6–10'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI','TSE',[
   ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
-  ['ETD','120–160ms'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI FS','TSE',[
-  ['TE','60–80ms'],['TR','2500–6000ms'],
-  ['Freq voxel','0.4–0.6mm'],['Phase voxel','0.50–0.75mm'],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.45–0.55mm',[['AX','0.45–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)',[['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel',hi('0.3–0.45mm')],['Phase voxel','0.4–0.55mm'],
+  ['Freq voxel',hi('0.3–0.45mm'),[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.55mm (scan% 70%↑)',[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['ETD','≤40ms'],['ETL','3–5'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI FS','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel',hi('0.4–0.55mm')],['Phase voxel','0.50–0.65mm'],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.5–0.65mm (scan% 70%↑)',[['AX','0.5–0.65mm'],['COR','0.5–0.65mm'],['SAG','0.5–0.65mm']]],
+  ['PAT','off–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2 STIR','IR TSE',[
   ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
-  ['ETD','120–160ms'],['ETL','12–20'],
+  ['Freq voxel','0.4–0.55mm',[['AX','0.4–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)',[['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2* GRE (mFFE)','GRE',[
-  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30° (원본 유지)'],
+  ['Freq voxel','0.4–0.50mm',[['AX','0.4–0.50mm'],['COR','0.45–0.50mm'],['SAG','0.45–0.50mm']]],
+  ['Phase voxel','0.50–0.6mm (scan% 70%↑)',[['AX','0.50–0.6mm'],['COR','0.50–0.6mm'],['SAG','0.50–0.6mm']]],
   ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['NEX','1'],['Echo spacing','7–10ms'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
 ]),
 ],
 
-// ═══════════════════════════════ ELBOW 1.5T ═══════════════════════════════
 'elbow-1p5t': [
 seq('PDWI FS','TSE',[
   ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm (scan% 70%↑)'],
+  ['Freq voxel',hi('0.4–0.55mm'),[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)',[['AX','0.50–0.65mm'],['COR','0.50–0.65mm'],['SAG','0.50–0.65mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],
+  ['NEX','AX:1 / COR:1 / SAG:1'],['Echo spacing','8.5–11ms'],['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('PDWI','TSE',[
   ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.3–0.45mm'],['Phase voxel','0.4–0.6mm (scan% 70%↑)'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
-  ['Flow comp','',[['AX','Slice or off'],['COR','Freq or off'],['SAG','Freq or off']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI','TSE',[
   ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.3–0.45mm'],['Phase voxel','0.4–0.6mm (scan% 70%↑)'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
-  ['Flow comp','',[['AX','Slice or off'],['COR','Freq or off'],['SAG','Freq or off']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI FS','TSE',[
-  ['TE','60–80ms'],['TR','2500–6000ms'],
-  ['Freq voxel','0.4–0.6mm'],['Phase voxel','0.50–0.75mm'],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.45–0.55mm',[['AX','0.45–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.50–0.7mm (scan% 70%↑)',[['AX','0.50–0.7mm'],['COR','0.50–0.7mm'],['SAG','0.50–0.7mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.3–0.45mm'],['Phase voxel','0.4–0.55mm'],
+  ['Freq voxel',hi('0.3–0.45mm'),[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.55mm (scan% 70%↑)',[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['ETD','≤40ms'],['ETL','3–5'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI FS','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.65mm'],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.5–0.7mm (scan% 70%↑)',[['AX','0.5–0.7mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
+  ['PAT','off–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2 STIR','IR TSE',[
-  ['TE','50–70ms'],['TR','2500–4000ms'],
-  ['TI',hi('150–180ms (3T: 180–230ms와 다름!)')],
-  ['Freq voxel','0.45–0.55mm'],['Phase voxel','0.50–0.7mm'],
-  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('150–180ms')+'  (3T: 180–230ms) (150=FAT bright / 180=FAT dark)'],
+  ['Freq voxel','0.45–0.55mm',[['AX','0.45–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.50–0.65mm (scan% 70%↑)',[['AX','0.50–0.7mm'],['COR','0.50–0.7mm'],['SAG','0.50–0.7mm']]],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2* GRE (mFFE)','GRE',[
-  ['TE','14–20ms'],['TR','450–800ms'],['FA','20–30°'],
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30° (원본 유지)'],
+  ['Freq voxel','0.4–0.50mm',[['AX','0.4–0.50mm'],['COR','0.45–0.50mm'],['SAG','0.45–0.50mm']]],
+  ['Phase voxel','0.50–0.6mm (scan% 70%↑)',[['AX','0.50–0.6mm'],['COR','0.50–0.6mm'],['SAG','0.50–0.6mm']]],
   ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['NEX','1'],['Echo spacing','7–10ms'],
+  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','FH (OS 50%↑)'],['SAG','FH (OS 50%↑)']]],
 ]),
 ],
 
-// ═══════════════════════════════ HAND 3T ══════════════════════════════════
 'hand-3t': [
 seq('PDWI FS','TSE',[
   ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
@@ -4434,43 +4533,54 @@ seq('PDWI FS','TSE',[
   ['Freq voxel',hi('0.4–0.55mm'),[['AX','0.4–0.55mm'],['COR','0.4–0.55mm'],['SAG','0.4–0.55mm']]],
   ['Phase voxel','0.50–0.7mm (scan% 70%↑)',[['AX','0.50–0.7mm'],['COR','0.50–0.7mm'],['SAG','0.50–0.7mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','AX:1 / COR:1 / SAG:1'],
-  ['Echo spacing','8.5–11ms'],['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['NEX','AX:1 / COR:1 / SAG:1'],['Echo spacing','8.5–11ms'],['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
-  ['Flow comp','',[['AX','Slice or off'],['COR','Freq or off'],['SAG','Freq or off']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('PDWI','TSE',[
   ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.50–0.7mm (scan% 70%↑)'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['ETD','120–160ms'],['ETL','12–20'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI','TSE',[
-  ['TE',hi('80–100ms')],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.55–0.75mm (scan% 70%↑)'],
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.3–0.45mm',[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['ETD','160–200ms'],['ETL','16–22'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI FS','TSE',[
   ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.55–0.75mm (scan% 70%↑)'],
+  ['Freq voxel','0.45–0.6mm',[['AX','0.45–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
+  ['Phase voxel','0.55–0.75mm (scan% 70%↑)',[['AX','0.55–0.75mm'],['COR','0.55–0.75mm'],['SAG','0.55–0.75mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],['ETL','12–20'],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel',hi('0.3–0.45mm'),[['AX','0.3–0.45mm'],['COR','0.3–0.45mm'],['SAG','0.3–0.45mm']]],
-  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.4–0.6mm'],['SAG','0.4–0.6mm']]],
+  ['Freq voxel',hi('0.3–0.45mm'),[['AX','0.3–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.4–0.6mm (scan% 70%↑)',[['AX','0.4–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['ETD','≤40ms'],['ETL','3–5'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI FS','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
   ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
   ['Phase voxel','0.5–0.7mm (scan% 70%↑)',[['AX','0.5–0.7mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
-  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+  ['PAT','off–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2 STIR','IR TSE',[
   ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
@@ -4481,60 +4591,85 @@ seq('T2 STIR','IR TSE',[
 ]),
 seq('T2* GRE (mFFE)','GRE',[
   ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30° (원본 유지)'],
-  ['Freq voxel','0.4–0.55mm'],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
-  ['PAT','1.7–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['Freq voxel','0.4–0.55mm',[['AX','0.4–0.5mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.55–0.7mm (scan% 70%↑)',[['AX','0.55–0.7mm'],['COR','0.55–0.7mm'],['SAG','0.55–0.7mm']]],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['NEX','1'],['Echo spacing','7–10ms'],
   ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
 ]),
 ],
 
+
 'shoulder-1p5t': [
 seq('PDWI FS','TSE',[
   ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel',hi('0.45–0.55mm')+'  (3T: 0.4–0.55mm)'],['Phase voxel','0.55–0.7mm (scan% 70%↑)'],
+  ['Freq voxel',hi('0.45–0.55mm'),[['AX','0.45–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.55–0.7mm (scan% 70%↑)',[['AX','0.55–0.7mm'],['COR','0.55–0.7mm'],['SAG','0.55–0.7mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','AX:1 / COR:1 / SAG:1'],['ETD',hi('120–160ms')],['ETL','12–20'],
+  ['NEX','AX:1 / COR:1 / SAG:1'],['Echo spacing','8.5–11ms'],['ETD',hi('120–160ms')],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('PDWI','TSE',[
   ['TE','25–35ms'],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.35–0.45mm'],['Phase voxel','0.45–0.6mm (scan% 70%↑)'],
+  ['Freq voxel','0.35–0.45mm',[['AX','0.35–0.45mm'],['COR','0.35–0.45mm'],['SAG','0.35–0.45mm']]],
+  ['Phase voxel','0.45–0.6mm (scan% 70%↑)',[['AX','0.45–0.6mm'],['COR','0.45–0.6mm'],['SAG','0.45–0.6mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤90ms'],['ETL','6–10'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
-  ['Flow comp','',[['AX','Slice or off'],['COR','Freq or off'],['SAG','Freq or off']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI','TSE',[
   ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.35–0.5mm'],['Phase voxel','0.45–0.65mm (scan% 70%↑)'],
+  ['Freq voxel','0.35–0.5mm',[['AX','0.35–0.5mm'],['COR','0.35–0.5mm'],['SAG','0.35–0.5mm']]],
+  ['Phase voxel','0.45–0.65mm (scan% 70%↑)',[['AX','0.45–0.65mm'],['COR','0.45–0.65mm'],['SAG','0.45–0.65mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX','1'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
   ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
-  ['Flow comp','',[['AX','Slice or off'],['COR','Freq or off'],['SAG','Freq or off']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2WI FS','TSE',[
-  ['TE','60–80ms'],['TR','2500–6000ms (Drive ON)'],
-  ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.55–0.75mm'],
+  ['TE',hi('60–80ms')],['TR','2500–6000ms (Drive ON)'],
+  ['Freq voxel','0.5–0.6mm',[['AX','0.5–0.6mm'],['COR','0.5–0.6mm'],['SAG','0.5–0.6mm']]],
+  ['Phase voxel','0.6–0.75mm (scan% 70%↑)',[['AX','0.6–0.75mm'],['COR','0.6–0.75mm'],['SAG','0.6–0.75mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','120–160ms'],['ETL','12–20'],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','9–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.3–0.45mm'],['Phase voxel','0.4–0.6mm'],
+  ['Freq voxel',hi('0.35–0.5mm'),[['AX','0.35–0.5mm'],['COR','0.35–0.5mm'],['SAG','0.35–0.5mm']]],
+  ['Phase voxel','0.45–0.65mm (scan% 70%↑)',[['AX','0.45–0.65mm'],['COR','0.45–0.65mm'],['SAG','0.45–0.65mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['ETD','≤40ms'],['ETL','3–5'],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T1WI FS','TSE',[
   ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel',hi('0.4–0.5mm')],['Phase voxel','0.5–0.7mm'],
-  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['NEX',hig('1–2 (2 권장)')],['ETD','≤40ms'],['ETL','3–5'],
+  ['Freq voxel',hi('0.4–0.5mm'),[['AX','0.4–0.5mm'],['COR','0.4–0.5mm'],['SAG','0.4–0.5mm']]],
+  ['Phase voxel','0.5–0.7mm (scan% 70%↑)',[['AX','0.5–0.7mm'],['COR','0.5–0.7mm'],['SAG','0.5–0.7mm']]],
+  ['PAT','off–2.0',null,[{vendor:'Philips',val:'SENSE 1.5–2.0'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–1.75'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
+  ['NEX',hig('1–2 (2 권장)')],['Echo spacing','8.5–11ms'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','Slice or off'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2 STIR','IR TSE',[
-  ['TE','50–70ms'],['TR','2300–4000ms'],['TI',hi('140–170ms (3T: 180–230ms와 다름!)')],
-  ['ETD','≤140ms'],['ETL','11–15'],
+  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')+'  (180=FAT bright / 230=FAT dark)'],
+  ['Freq voxel','0.45–0.6mm'],['Phase voxel','0.6–0.8mm (scan% 70%↑)'],
+  ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2.0'},{vendor:'Canon',val:'SPEEDER off–1.7'}]],
+  ['NEX','1'],['Echo spacing','8.5–11ms'],['ETD','120–160ms'],['ETL','12–20'],['Refocusing FA','110–130°'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['AX','off or Slice'],['COR','off or Freq'],['SAG','off or Freq']]],
 ]),
 seq('T2* GRE (mFFE)','GRE',[
-  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30°'],
-  ['Freq voxel','0.45–0.55mm'],
+  ['TE',hi('14–20ms')],['TR','450–800ms'],['FA','20–30° (원본 유지)'],
+  ['Freq voxel','0.45–0.55mm',[['AX','0.45–0.55mm'],['COR','0.45–0.55mm'],['SAG','0.45–0.55mm']]],
+  ['Phase voxel','0.55–0.7mm (scan% 70%↑)',[['AX','0.55–0.7mm'],['COR','0.55–0.7mm'],['SAG','0.55–0.7mm']]],
+  ['PAT','1.5–2.2',null,[{vendor:'Philips',val:'SENSE 1.7–2.2'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ASSET/ARC 1.75–2.0'},{vendor:'Canon',val:'SPEEDER 1.5–1.7'}]],
+  ['NEX','1'],['Echo spacing','7–10ms'],
+  ['Phase dir','',[['AX','AP (OS 40%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
 ]),
 ],
 
@@ -4729,10 +4864,10 @@ seq('T1WI','TSE',[
 ]),
 seq('T1WI FS','TSE',[
   ['TE','12–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.65–0.9mm',[['AX','0.6–0.8mm'],['SAG','0.65–0.9mm']]],
-  ['Phase voxel','0.9–1.2mm (scan% 70%↑)'],
+  ['Freq voxel','0.7–0.9mm',[['AX','0.5–0.8mm'],['SAG','0.7–0.9mm']]],
+  ['Phase voxel','0.9–1.2mm (scan% 70%↑)',[['AX','0.7–0.85mm'],['SAG','0.9–1.2mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['NEX',hig('1–2 (AX/SAG 2 권장)')],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['NEX',hig('1–2 (AX: 2 권장, SAG: 1–2 권장)')],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
   ['Phase dir','',[['AX','AP (OS 50%↑)'],['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
   ['Flow comp','',[['AX','Slice or off'],['COR','Freq'],['SAG','Freq']]],
 ]),
@@ -4802,12 +4937,12 @@ seq('T1WI','TSE',[
 ]),
 seq('T1WI FS','TSE',[
   ['TE','12–15ms'],['TR','450–700ms'],
-  ['Freq voxel','',[['COR','0.6–0.8mm'],['SAG','0.6–0.8mm']]],
-  ['Phase voxel','0.9–1.2mm (scan% 60%↑)',[['COR','1.0–1.2mm'],['SAG','1.0–1.2mm']]],
+  ['Freq voxel','0.65–0.85mm (SAG only)',[['SAG','0.7–0.85mm']]],
+  ['Phase voxel','0.9–1.2mm (SAG, scan% 60%↑)',[['SAG','0.9–1.2mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['NEX','1'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
-  ['Phase dir','',[['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
-  ['Flow comp','',[['COR','Freq'],['SAG','Freq']]],
+  ['NEX','1 (SAG)'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['SAG','Freq']]],
 ]),
 seq('T2WI','TSE',[
   ['TE',hi('90–120ms')],['TR','2500–6000ms (Drive ON)'],
@@ -4859,12 +4994,12 @@ seq('T1WI','TSE',[
 ]),
 seq('T1WI FS','TSE',[
   ['TE','12–15ms'],['TR','450–700ms'],
-  ['Freq voxel','',[['COR','0.6–0.8mm'],['SAG','0.6–0.8mm']]],
-  ['Phase voxel','0.9–1.2mm (scan% 60%↑)',[['COR','1.0–1.2mm'],['SAG','1.0–1.2mm']]],
+  ['Freq voxel','0.65–0.85mm (SAG only)',[['SAG','0.7–0.85mm']]],
+  ['Phase voxel','0.9–1.2mm (SAG, scan% 60%↑)',[['SAG','0.9–1.2mm']]],
   ['PAT','off–2',null,[{vendor:'Philips',val:'SENSE off–1.7'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ASSET/ARC off–2'},{vendor:'Canon',val:'SPEEDER off–1.5–1.7'}]],
-  ['NEX','1'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
-  ['Phase dir','',[['COR','FH (OS 70%↑)'],['SAG','FH (OS 70%↑)']]],
-  ['Flow comp','',[['COR','Freq'],['SAG','Freq']]],
+  ['NEX','1 (SAG)'],['ETD','≤40ms'],['ETL','3–5'],['Refocusing FA','110–150°'],
+  ['Phase dir','',[['SAG','FH (OS 70%↑)']]],
+  ['Flow comp','',[['SAG','Freq']]],
 ]),
 seq('T2WI','TSE',[
   ['TE',hi('90–120ms')],['TR','2500–6000ms (Drive ON)'],
@@ -5085,56 +5220,6 @@ seq('T2* GRE (Multi Echo)','GRE',[
 ]),
 ],
 
-
-'hip-grid': [
-seq('PDWI FS (3T)','TSE',[
-  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel',hi('0.7–0.9mm'),[['AX','0.7–0.9mm'],['COR','0.7–0.9mm'],['SAG','0.7–0.9mm']]],
-  ['Phase voxel','0.9–1.1mm (scan% 70%↑)',[['AX','0.9–1.1mm'],['COR','0.9–1.1mm'],['SAG','0.9–1.1mm']]],
-  ['PAT','2–2.5  ← 필수',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA off–2 (COR: PAT3 가능)'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['NEX','',[['AX','1–2'],['COR','1–2 (2 권장)'],['SAG','1']]],
-  ['ETD',hi('≤90ms')],['ETL','6–10'],['Refocusing FA','110–130°'],
-  ['Phase dir','',[['AX','AP (OS 10%↑)'],['COR','RL (OS 20%↑)'],['SAG','FH (OS 50%↑)']]],
-]),
-seq('PDWI FS (1.5T)','TSE',[
-  ['TE',hi('25–35ms')],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel',hi('0.75–0.95mm')+'  (3T: 0.7–0.9mm)'],['Phase voxel','0.95–1.2mm (scan% 70%↑)'],
-  ['PAT','2–2.5  ← 필수',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA off–2 (COR: PAT3 가능)'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['NEX','',[['AX','1–2'],['COR','1–2 (2 권장)'],['SAG','1']]],
-  ['ETD',hi('≤90ms')],['ETL','6–10'],
-  ['Phase dir','',[['AX','AP (OS 20%↑)'],['COR','RL (OS 30%↑)'],['SAG','FH (OS 50%↑)']]],
-],'1.5T: Phase OS 3T보다 큼 (AX 10→20%↑, COR 20→30%↑)'),
-seq('T2WI (3T)','TSE',[
-  ['TE',hi('80–100ms')],['TR','2300–6000ms (Drive ON)'],
-  ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.9–1.2mm (scan% 70%↑)'],
-  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA 2'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['ETD','160–200ms'],['ETL','14–22'],
-]),
-seq('T2WI FS','TSE',[
-  ['TE','70–100ms'],['TR','2300–6000ms'],
-  ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.9–1.2mm'],
-  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['NEX',hig('COR 2 권장')],['ETD','140–200ms'],['ETL','14–22'],
-]),
-seq('T1WI','TSE',[
-  ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.6–0.8mm'],['Phase voxel','0.9–1.2mm'],
-  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['ETD','≤40ms'],['ETL','3–5'],
-]),
-seq('T1WI FS','TSE',[
-  ['TE','8–15ms'],['TR','450–700ms'],
-  ['Freq voxel','0.65–0.85mm'],['Phase voxel','0.9–1.2mm'],
-  ['PAT','2–2.5',null,[{vendor:'Philips',val:'SENSE 2–2.5'},{vendor:'Siemens',val:'GRAPPA off–2'},{vendor:'GE',val:'ARC 2.0–2.5'},{vendor:'Canon',val:'SPEEDER 2'}]],
-  ['NEX',hig('COR 2 권장')],['ETD','≤40ms'],['ETL','3–5'],
-]),
-seq('T2 STIR','IR TSE',[
-  ['TE','50–70ms'],['TR','2500–4000ms'],['TI',hi('180–230ms')],
-  ['Freq voxel','0.7–0.9mm'],['ETD','120–160ms'],['ETL','12–20'],
-]),
-
-
-],
 
 };
 // ============ PARAMETER PANEL FUNCTIONS ============
